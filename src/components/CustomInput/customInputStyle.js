@@ -1,9 +1,11 @@
-import {
-  primaryColor,
-  dangerColor,
-  successColor,
-  defaultFont
-} from "assets/jss/material-kit-react.js";
+const primaryColor = "#9c27b0";
+const dangerColor = "#f44336";
+const successColor = "#4caf50";
+const defaultFont = {
+  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  fontWeight: "300",
+  lineHeight: "1.5em"
+};
 
 const customInputStyle = {
   disabled: {

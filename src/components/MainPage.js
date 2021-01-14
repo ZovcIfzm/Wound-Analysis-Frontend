@@ -2,7 +2,7 @@ import React from "react";
 import Cropper from "./ImageCropper/imageCropper";
 import Button from "@material-ui/core/Button";
 
-import CustomInput from "components/CustomInput/CustomInput.js";
+import CustomInput from "./CustomInput/CustomInput.js";
 import styles from "./style.js";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";

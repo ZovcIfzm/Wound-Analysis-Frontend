@@ -1,0 +1,5 @@
+@material-ui/core
+classnames
+react-easy-crop
+react-router-dom
+typeface-roboto-slab
