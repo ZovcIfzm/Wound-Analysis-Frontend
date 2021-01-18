@@ -66,12 +66,12 @@ class MainPage extends React.Component {
           if (!response.ok) throw Error(response.statusText);
           return response.json();
         })
-        .then((data) => {
+        .then((matrix) => {
           this.setState({
             analyzed: true,
-            currentImage: data["drawn_image"],
-            edgedImage: data["edged_image"],
-            areas: data.areas,
+            currentImage: matrix[3][3]["drawn_image"],
+            edgedImage: matrix[3][3]["edged_image"],
+            areas: matrix[3][3]["areas"],
           });
         })
         .catch((error) => console.log(error));
