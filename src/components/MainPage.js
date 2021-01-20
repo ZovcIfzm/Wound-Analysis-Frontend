@@ -22,6 +22,7 @@ class MainPage extends React.Component {
     lowerMaskTwo: "150, 100, 20",
     upperMaskOne: "30, 255, 177",
     upperMaskTwo: "180, 255, 177",
+    testText: "test"
   };
 
   completeCrop = (image, imageFile) => {
@@ -64,6 +65,9 @@ class MainPage extends React.Component {
       fetch(url, analyze_options)
         .then((response) => {
           if (!response.ok) throw Error(response.statusText);
+          this.setState({
+            testText: "fetched"
+          })
           return response.json();
         })
         .then((data) => {
@@ -72,6 +76,7 @@ class MainPage extends React.Component {
             currentImage: data["drawn_image"],
             edgedImage: data["edged_image"],
             areas: data["areas"],
+            testText: "afterFetched"
           });
         })
         .catch((error) => console.log(error));
@@ -137,6 +142,7 @@ class MainPage extends React.Component {
           />
           <div className={classes.title}>
             <h2>Automatic Wound Area Measurement</h2>
+            {this.state.testText}
           </div>
           <div className={classes.row}>
             <div className={classes.column}>
