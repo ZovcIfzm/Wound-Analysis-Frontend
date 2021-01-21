@@ -12,6 +12,7 @@ import MaskSelector from "./MaskSelector/index.js";
 class MainPage extends React.Component {
   state = {
     currentImage: null,
+    currentImages: null,
     currentImageFile: null,
     edgedImage: null,
     analyzed: false,
@@ -43,13 +44,31 @@ class MainPage extends React.Component {
     }
   };
 
-  analyzeImage = async (event) => {
+  changeMask = async (mask) => {
     this.setState({
-      testText: "in analyze"
+      lowerMaskOne: mask["lower_range"][0],
+      lowerMaskTwo: mask["lower_range"][1],
+      upperMaskOne: mask["upper_range"][0],
+      upperMaskTwo: mask["upper_range"][1],
     })
-    event.preventDefault();
+  };
+  reanalyzeImage = async (obj) => {
+    this.setState({
+      lowerMaskOne: obj["lower_range"][0],
+      lowerMaskTwo: obj["lower_range"][1],
+      upperMaskOne: obj["upper_range"][0],
+      upperMaskTwo: obj["upper_range"][1],
+    }, () => {
+      this.analyzeImage()
+    })
+  };
+  analyzeImage = async () => {
+    /*this.setState({
+      testText: "in analyze"
+    })*/
     if (this.state.currentImage && this.state.imageWidth) {
-      const url = "https://gallagher-wound-analysis-api.herokuapp.com/measure";
+      //const url = "https://gallagher-wound-analysis-api.herokuapp.com/measure";
+      const url = "/measure"
       const form = new FormData();
       form.append("file", this.state.currentImageFile);
       form.append("mode", "run");
@@ -68,19 +87,21 @@ class MainPage extends React.Component {
       fetch(url, analyze_options)
         .then((response) => {
           if (!response.ok) throw Error(response.statusText);
-          this.setState({
+          /*this.setState({
             testText: "fetched"
-          })
+          })*/
           return response.json();
         })
-        .then((data) => {
+        .then((matrix) => {
           this.setState({
             analyzed: true,
-            currentImage: data["drawn_image"],
-            edgedImage: data["edged_image"],
-            areas: data["areas"],
-            testText: "afterFetched"
+            currentImage: matrix[1][1]["drawn_image"],
+            edgedImage: matrix[1][1]["edged_image"],
+            currentImages: matrix,
+            areas: matrix[1][1]["areas"]
           });
+          alert("Images analyzed")
+          //testText: "afterFetched"
         })
         .catch((error) => console.log(error));
     } else if (this.state.currentImage && !this.state.imageWidth) {
@@ -133,19 +154,8 @@ class MainPage extends React.Component {
     return (
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
-          <MaskSelector
-            lowerMaskOne={this.state.lowerMaskOne}
-            lowerMaskTwo={this.state.lowerMaskTwo}
-            upperMaskOne={this.state.upperMaskOne}
-            upperMaskTwo={this.state.upperMaskTwo}
-            onChangeLowerOne={this.handleLowerMaskOneChange.bind(this)}
-            onChangeLowerTwo={this.handleLowerMaskTwoChange.bind(this)}
-            onChangeUpperOne={this.handleUpperMaskOneChange.bind(this)}
-            onChangeUpperTwo={this.handleUpperMaskTwoChange.bind(this)}
-          />
           <div className={classes.title}>
             <h2>Automatic Wound Area Measurement</h2>
-            {this.state.testText}
           </div>
           <div className={classes.row}>
             <div className={classes.column}>
@@ -195,7 +205,7 @@ class MainPage extends React.Component {
                 </div>
               ) : this.state.analyzed ? (
                 <>
-                  <h4>Image with border</h4>
+                  <h4>Image with current mask</h4>
                   <img
                     src={"data:image/png;base64," + this.state.currentImage}
                     className={classes.images}
@@ -211,7 +221,7 @@ class MainPage extends React.Component {
               ) : null}
             </div>
           </div>
-          <h3>Areas:</h3>
+          <h3>Current areas:</h3>
           {this.state.areas.map((value) => (
             <p>{value} u^2</p>
           ))}
@@ -223,6 +233,34 @@ class MainPage extends React.Component {
           >
             Measure area
           </Button>
+          { this.state.analyzed ?
+          <div className={classes.column}>
+            {this.state.currentImages.map((row) => (
+              <div className={classes.row}>
+              {row.map((obj) => (
+                <img
+                src={"data:image/png;base64," + obj["drawn_image"]}
+                className={classes.gridImage}
+                alt=""
+                onClick={() => this.reanalyzeImage(obj)}
+                />
+              ))}
+              </div>
+            ))}
+          </div>
+          : null
+          }
+        <MaskSelector
+            lowerMaskOne={this.state.lowerMaskOne}
+            lowerMaskTwo={this.state.lowerMaskTwo}
+            upperMaskOne={this.state.upperMaskOne}
+            upperMaskTwo={this.state.upperMaskTwo}
+            onChangeLowerOne={this.handleLowerMaskOneChange.bind(this)}
+            onChangeLowerTwo={this.handleLowerMaskTwoChange.bind(this)}
+            onChangeUpperOne={this.handleUpperMaskOneChange.bind(this)}
+            onChangeUpperTwo={this.handleUpperMaskTwoChange.bind(this)}
+            changeMask={this.changeMask}
+          />
         </div>
       </div>
     );

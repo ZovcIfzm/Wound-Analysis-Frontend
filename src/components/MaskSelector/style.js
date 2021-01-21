@@ -13,6 +13,12 @@ const styles = {
     flex: 1,
     flexDirection: "column",
   },
+  exampleImage: {
+    display: "flex",
+    flex: 1,
+    width: "100%",
+    alignSelf: "center"
+  }
 };
 
 export default styles;

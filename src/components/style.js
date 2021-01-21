@@ -66,6 +66,12 @@ const styles = {
     width: "70%",
     alignSelf: "center",
   },
+  gridImage: {
+    display: "flex",
+    flex: 1,
+    width: "33%",
+    alignSelf: "center"
+  },
 
   cropButton: {
     display: "flex",
