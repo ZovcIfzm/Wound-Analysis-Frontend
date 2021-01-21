@@ -182,13 +182,7 @@ class MainPage extends React.Component {
             </div>
             <div className={classes.column}>
               <h3>Image</h3>
-              {this.state.useCrop ? (
-                <Cropper
-                  currentImage={this.state.currentImage}
-                  completeCrop={this.completeCrop}
-                />
-              ) : this.state.currentImage && !this.state.analyzed ? (
-                <div className={classes.column}>
+              <div className={classes.column}>
                   <img
                     src={this.state.currentImage}
                     className={classes.images}
@@ -203,17 +197,16 @@ class MainPage extends React.Component {
                     Crop Image
                   </Button>
                 </div>
+              {this.state.useCrop ? (
+                <Cropper
+                  currentImage={this.state.currentImage}
+                  completeCrop={this.completeCrop}
+                />
               ) : this.state.analyzed ? (
                 <>
                   <h4>Image with current mask</h4>
                   <img
                     src={"data:image/png;base64," + this.state.currentImage}
-                    className={classes.images}
-                    alt=""
-                  />
-                  <h4>Border generated</h4>
-                  <img
-                    src={"data:image/png;base64," + this.state.edgedImage}
                     className={classes.images}
                     alt=""
                   />
