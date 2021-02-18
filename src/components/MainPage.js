@@ -8,6 +8,7 @@ import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 
 import MaskSelector from "./MaskSelector/index.js";
+import DebugToolbar from "./DebugToolbar/index.js";
 
 class MainPage extends React.Component {
   state = {
@@ -23,6 +24,8 @@ class MainPage extends React.Component {
     lowerMaskTwo: "150, 100, 20",
     upperMaskOne: "30, 255, 177",
     upperMaskTwo: "180, 255, 177",
+
+    testImage: null,
   };
 
   completeCrop = (image, imageFile) => {
@@ -72,7 +75,6 @@ class MainPage extends React.Component {
       form.append("file", this.state.currentImageFile);
       form.append("mode", "run");
       form.append("width", this.state.imageWidth);
-      console.log(this.state.lowerMaskOne);
       form.append("lower_mask_one", this.state.lowerMaskOne);
       form.append("lower_mask_two", this.state.lowerMaskTwo);
       form.append("upper_mask_one", this.state.upperMaskOne);
@@ -147,6 +149,12 @@ class MainPage extends React.Component {
       upperMaskTwo: event.target.value,
     });
   };
+
+  handleChangeTestImage = (image) => {
+    this.setState({
+      testImage: image,
+    })
+  }
 
   render() {
     const { classes } = this.props;
@@ -242,7 +250,7 @@ class MainPage extends React.Component {
           </div>
           : null
           }
-        <MaskSelector
+          <MaskSelector
             lowerMaskOne={this.state.lowerMaskOne}
             lowerMaskTwo={this.state.lowerMaskTwo}
             upperMaskOne={this.state.upperMaskOne}
@@ -253,6 +261,11 @@ class MainPage extends React.Component {
             onChangeUpperTwo={this.handleUpperMaskTwoChange.bind(this)}
             changeMask={this.changeMask}
           />
+          <DebugToolbar
+            currentImageFile={this.state.currentImageFile}
+            testImage={this.state.testImage}
+            changeTestImage={this.handleChangeTestImage.bind(this)}
+          />   
         </div>
       </div>
     );
