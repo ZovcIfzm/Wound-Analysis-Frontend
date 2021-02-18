@@ -66,8 +66,8 @@ class MainPage extends React.Component {
       testText: "in analyze"
     })*/
     if (this.state.currentImage && this.state.imageWidth) {
-      //const url = "https://gallagher-wound-analysis-api.herokuapp.com/measure";
-      const url = "/measure"
+      const url = "https://gallagher-wound-analysis-api.herokuapp.com/measure";
+      //const url = "/measure"
       const form = new FormData();
       form.append("file", this.state.currentImageFile);
       form.append("mode", "run");
