@@ -28,6 +28,17 @@ class MainPage extends React.Component {
     testImage: null,
   };
 
+  getBase64(file, cb) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        cb(reader.result)
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+  }
+
   completeCrop = (image, imageFile) => {
     this.setState({
       useCrop: false,
@@ -39,9 +50,12 @@ class MainPage extends React.Component {
   onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let imgFile = event.target.files[0];
-      this.setState({
-        currentImage: URL.createObjectURL(imgFile),
-        currentImageFile: imgFile,
+      //let idCardBase64 = '';
+      this.getBase64(imgFile, (result) => {
+        this.setState({
+          currentImage: result,
+          currentImageFile: imgFile,
+        });
       });
     }
   };
@@ -213,7 +227,7 @@ class MainPage extends React.Component {
                 <>
                   <h4>Image with current mask</h4>
                   <img
-                    src={"data:image/png;base64," + this.state.currentImage}
+                    src={this.state.currentImage}
                     className={classes.images}
                     alt=""
                   />
@@ -239,7 +253,7 @@ class MainPage extends React.Component {
               <div className={classes.row}>
               {row.map((obj) => (
                 <img
-                src={"data:image/png;base64," + obj["drawn_image"]}
+                src={obj["drawn_image"]}
                 className={classes.gridImage}
                 alt=""
                 onClick={() => this.reanalyzeImage(obj)}

@@ -10,6 +10,8 @@ import maskCImg from "../../assets/maskCImg.JPG"
 import maskDImg from "../../assets/maskDImg.JPG"
 import maskEImg from "../../assets/maskEImg.JPG"
 
+import { maskConstants } from "./constants.js"
+
 const useStyles = makeStyles(style);
 
 function MaskSelector(props) {
@@ -60,14 +62,7 @@ function MaskSelector(props) {
         <Button
             variant="contained"
             color="primary"
-            onClick={() => props.changeMask({
-              "lower_range": [
-                [0, 75, 70], [160, 75, 70]
-              ],
-              "upper_range": [
-                [20, 255, 200], [180, 255, 200]
-              ]
-            })}
+            onClick={() => props.changeMask(maskConstants["A"])}
           >
             Select Lightest Mask
         </Button>
@@ -82,14 +77,7 @@ function MaskSelector(props) {
         <Button
             variant="contained"
             color="primary"
-            onClick={() => props.changeMask({
-              "lower_range": [
-                [0, 95, 30], [150, 95, 30]
-              ],
-              "upper_range": [
-                [30, 255, 197], [180, 255, 197]
-              ]
-            })}
+            onClick={() => props.changeMask(maskConstants["B"])}
           >
             Select Light Mask
         </Button>
@@ -104,14 +92,7 @@ function MaskSelector(props) {
         <Button
             variant="contained"
             color="primary"
-            onClick={() => props.changeMask({
-              "lower_range": [
-                [0, 100, 20], [150, 100, 20]
-              ],
-              "upper_range": [
-                [30, 255, 177], [180, 255, 177]
-              ]
-            })}
+            onClick={() => props.changeMask(maskConstants["C"])}
           >
             Select Standard Mask
         </Button>
@@ -126,14 +107,7 @@ function MaskSelector(props) {
         <Button
             variant="contained"
             color="primary"
-            onClick={() => props.changeMask({
-              "lower_range": [
-                [0, 105, 20], [150, 105, 20]
-              ],
-              "upper_range": [
-                [30, 255, 167], [180, 255, 167]
-              ]
-            })}
+            onClick={() => props.changeMask(maskConstants["D"])}
           >
             Select Darker Mask
         </Button>
@@ -148,14 +122,7 @@ function MaskSelector(props) {
         <Button
             variant="contained"
             color="primary"
-            onClick={() => props.changeMask({
-              "lower_range": [
-                [0, 110, 0], [150, 110, 0]
-              ],
-              "upper_range": [
-                [30, 255, 153], [180, 255, 153]
-              ]
-            })}
+            onClick={() => props.changeMask(maskConstants["E"])}
           >
             Select Darkest Mask
         </Button>
