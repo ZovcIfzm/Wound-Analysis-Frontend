@@ -10,6 +10,8 @@ import { withStyles } from "@material-ui/core/styles";
 import MaskSelector from "./MaskSelector/index.js";
 import DebugToolbar from "./DebugToolbar/index.js";
 
+import { maskConstants } from "./MaskSelector/constants.js"
+
 class MainPage extends React.Component {
   state = {
     currentImage: null,
@@ -20,10 +22,10 @@ class MainPage extends React.Component {
     imageWidth: null,
     useCrop: false,
     areas: [],
-    lowerMaskOne: "0, 100, 20",
-    lowerMaskTwo: "150, 100, 20",
-    upperMaskOne: "30, 255, 177",
-    upperMaskTwo: "180, 255, 177",
+    lowerMaskOne: maskConstants["A"]["lower_range"][0],
+    lowerMaskTwo: maskConstants["A"]["lower_range"][1],
+    upperMaskOne: maskConstants["A"]["upper_range"][0],
+    upperMaskTwo: maskConstants["A"]["upper_range"][1],
 
     testImage: null,
   };
