@@ -85,9 +85,6 @@ class MainPage extends React.Component {
     })
   };
   analyzeImage = async () => {
-    /*this.setState({
-      testText: "in analyze"
-    })*/
     if (this.state.currentImage && this.state.imageWidth) {
       //const url = "https://gallagher-wound-analysis-api.herokuapp.com/measure";
       const url = "/measure"
@@ -108,9 +105,6 @@ class MainPage extends React.Component {
       fetch(url, analyze_options)
         .then((response) => {
           if (!response.ok) throw Error(response.statusText);
-          /*this.setState({
-            testText: "fetched"
-          })*/
           return response.json();
         })
         .then((matrix) => {
@@ -122,7 +116,6 @@ class MainPage extends React.Component {
             areas: matrix[1][1]["areas"]
           });
           alert("Images analyzed")
-          //testText: "afterFetched"
         })
         .catch((error) => console.log(error));
     } else if (this.state.currentImage && !this.state.imageWidth) {
@@ -194,11 +187,18 @@ class MainPage extends React.Component {
             <div className={classes.column}>
               <div className={classes.button} style={{ flex: 1 }}>
                 <h3>Upload Image</h3>
-                <input
-                  type="file"
-                  name="myImage"
-                  onChange={this.onImageChange}
-                />
+                <Button
+                        variant="contained"
+                        component="label"
+                    >
+                    Upload Image
+                    <input
+                        type="file"
+                        name="myImage"
+                        hidden
+                        onChange={this.onImageChange}
+                    />
+                    </Button>
               </div>
               <div style={{ width: "25%", flex: 1 }}>
                 <CustomInput
