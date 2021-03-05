@@ -1,16 +1,16 @@
 import React from "react";
-import Cropper from "./ImageCropper/imageCropper";
+import Cropper from "../ImageCropper/imageCropper";
 import Button from "@material-ui/core/Button";
 
-import CustomInput from "./CustomInput/CustomInput.js";
+import CustomInput from "../CustomInput/CustomInput.js";
 import styles from "./style.js";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 
-import MaskSelector from "./MaskSelector/index.js";
-import DebugToolbar from "./DebugToolbar/index.js";
+import MaskSelector from "../MaskSelector/index.js";
+import DebugToolbar from "../DebugToolbar/index.js";
 
-import { maskConstants } from "./MaskSelector/constants.js"
+import { maskConstants } from "../MaskSelector/constants.js"
 
 class MainPage extends React.Component {
   state = {
@@ -29,6 +29,10 @@ class MainPage extends React.Component {
 
     testImage: null,
   };
+
+  goToHome = () => {
+    this.props.history.push('/home');
+  }
 
   getBase64(file, cb) {
     let reader = new FileReader();
@@ -177,6 +181,12 @@ class MainPage extends React.Component {
     return (
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
+            <Button 
+                variant="contained"
+                color="primary"
+                onClick={this.goToHome}>
+                Back to Homepage
+            </Button>
           <div className={classes.title}>
             <h2>Automatic Wound Area Measurement</h2>
           </div>
