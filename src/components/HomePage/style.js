@@ -72,6 +72,12 @@ const styles = {
       width: "33%",
       alignSelf: "center"
     },
+    colImage: {
+      display: "flex",
+      flex: 1,
+      width: "80%",
+      alignSelf: "center"
+    },
   
     cropButton: {
       display: "flex",

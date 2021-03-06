@@ -12,10 +12,13 @@ import DebugToolbar from "../DebugToolbar/index.js";
 
 import { maskConstants } from "../MaskSelector/constants.js"
 
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router";
 
 class HomePage extends React.Component {
-        
+    state = {
+        zipImgList: []
+    };
+
     uploadDayZip = async (event) => {
         const zipFile = event.target.files[0]
         if (zipFile) {
@@ -33,8 +36,12 @@ class HomePage extends React.Component {
             if (!response.ok) throw Error(response.statusText);
             return response.json();
             })
-            .then((matrix) => {
+            .then((imgList) => {
                 alert("Images analyzed")
+                console.log("imgList: ", imgList[0])
+                this.setState({
+                    zipImgList: imgList
+                })
             })
             .catch((error) => console.log(error));
         } 
@@ -45,7 +52,15 @@ class HomePage extends React.Component {
 
     goToMain = () => {
         this.props.history.push('/main');
-    }
+    };
+
+    reanalyzeImage = async (obj) => {
+        this.props.history.push({
+            pathname: '/main',
+            state: { obj: obj }
+        })
+    };
+
     render() {
         const { classes } = this.props;
         return (
@@ -76,6 +91,16 @@ class HomePage extends React.Component {
                         onChange={this.uploadDayZip}
                     />
                     </Button>
+                </div>
+                <div className={classes.column}>
+                    {this.state.zipImgList.map((obj) => (
+                    <img
+                    src={obj["drawn_image"]}
+                    className={classes.colImage}
+                    alt=""
+                    onClick={() => this.reanalyzeImage(obj)}
+                    />
+                    ))}
                 </div>
             </div>
         )

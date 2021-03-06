@@ -26,9 +26,18 @@ class MainPage extends React.Component {
     lowerMaskTwo: maskConstants["A"]["lower_range"][1],
     upperMaskOne: maskConstants["A"]["upper_range"][0],
     upperMaskTwo: maskConstants["A"]["upper_range"][1],
-
     testImage: null,
+    obj: null,
   };
+
+
+  onComponentDidMount(){
+    if (this.state.obj != null){
+      this.setState({
+        currentImage: this.state.obj["drawn_image"]
+      })
+    }
+  }
 
   goToHome = () => {
     this.props.history.push('/home');
@@ -49,7 +58,7 @@ class MainPage extends React.Component {
     this.setState({
       useCrop: false,
       currentImage: image,
-      currentImageFile: imageFile,
+      originalImage: image,
     });
   };
 
@@ -60,6 +69,7 @@ class MainPage extends React.Component {
       this.getBase64(imgFile, (result) => {
         this.setState({
           currentImage: result,
+          originalImage: result,
           currentImageFile: imgFile,
         });
       });
@@ -88,8 +98,11 @@ class MainPage extends React.Component {
     if (this.state.currentImage && this.state.imageWidth) {
       //const url = "https://gallagher-wound-analysis-api.herokuapp.com/measure";
       const url = "/measure"
+
+      const blob = await fetch(this.state.originalImage).then((res) => res.blob());
+
       const form = new FormData();
-      form.append("file", this.state.currentImageFile);
+      form.append("file", blob);
       form.append("mode", "run");
       form.append("width", this.state.imageWidth);
       form.append("lower_mask_one", this.state.lowerMaskOne);
@@ -111,6 +124,7 @@ class MainPage extends React.Component {
           this.setState({
             analyzed: true,
             currentImage: matrix[1][1]["drawn_image"],
+            originalImage: matrix[1][1]["original_image"],
             edgedImage: matrix[1][1]["edged_image"],
             currentImages: matrix,
             areas: matrix[1][1]["areas"]
@@ -232,7 +246,7 @@ class MainPage extends React.Component {
                 </div>
               {this.state.useCrop ? (
                 <Cropper
-                  currentImage={this.state.currentImage}
+                  currentImage={URL.createObjectURL(this.state.currentImageFile)}
                   completeCrop={this.completeCrop}
                 />
               ) : this.state.analyzed ? (
