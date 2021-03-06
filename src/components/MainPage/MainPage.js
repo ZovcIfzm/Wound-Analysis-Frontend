@@ -15,6 +15,7 @@ import { maskConstants } from "../MaskSelector/constants.js"
 class MainPage extends React.Component {
   state = {
     currentImage: null,
+    originalImage: null,
     currentImages: null,
     edgedImage: null,
     analyzed: false,
@@ -38,7 +39,7 @@ class MainPage extends React.Component {
       const obj = this.props.location.state.obj
       this.setState({
         currentImage: obj["drawn_image"],
-        originalImage: obj["original_image"]
+        originalImage: obj["orig"]
       })
     }
   }
@@ -106,6 +107,7 @@ class MainPage extends React.Component {
 
       const form = new FormData();
       form.append("file", blob);
+      form.append("base64", this.state.originalImage);
       form.append("mode", "run");
       form.append("width", this.state.imageWidth);
       form.append("lower_mask_one", this.state.lowerMaskOne);
@@ -127,6 +129,7 @@ class MainPage extends React.Component {
           this.setState({
             analyzed: true,
             currentImage: matrix[1][1]["drawn_image"],
+            originalImage: matrix[1][1]["orig"],
             edgedImage: matrix[1][1]["edged_image"],
             currentImages: matrix,
             areas: matrix[1][1]["areas"]
