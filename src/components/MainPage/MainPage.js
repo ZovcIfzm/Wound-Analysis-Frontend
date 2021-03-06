@@ -16,7 +16,6 @@ class MainPage extends React.Component {
   state = {
     currentImage: null,
     currentImages: null,
-    currentImageFile: null,
     edgedImage: null,
     analyzed: false,
     imageWidth: null,
@@ -30,11 +29,16 @@ class MainPage extends React.Component {
     obj: null,
   };
 
-
-  onComponentDidMount(){
-    if (this.state.obj != null){
+  componentDidMount(){
+    console.log("in did mount")
+    console.log(this.props.location)
+    if (this.props.location.state != null){
+      console.log("in state")
+      console.log(this.props.location.state)
+      const obj = this.props.location.state.obj
       this.setState({
-        currentImage: this.state.obj["drawn_image"]
+        currentImage: obj["drawn_image"],
+        originalImage: obj["original_image"]
       })
     }
   }
@@ -70,7 +74,6 @@ class MainPage extends React.Component {
         this.setState({
           currentImage: result,
           originalImage: result,
-          currentImageFile: imgFile,
         });
       });
     }
@@ -124,7 +127,6 @@ class MainPage extends React.Component {
           this.setState({
             analyzed: true,
             currentImage: matrix[1][1]["drawn_image"],
-            originalImage: matrix[1][1]["original_image"],
             edgedImage: matrix[1][1]["edged_image"],
             currentImages: matrix,
             areas: matrix[1][1]["areas"]
@@ -246,7 +248,7 @@ class MainPage extends React.Component {
                 </div>
               {this.state.useCrop ? (
                 <Cropper
-                  currentImage={URL.createObjectURL(this.state.currentImageFile)}
+                  currentImage={this.state.originalImage}
                   completeCrop={this.completeCrop}
                 />
               ) : this.state.analyzed ? (
@@ -302,7 +304,7 @@ class MainPage extends React.Component {
             changeMask={this.changeMask}
           />
           <DebugToolbar
-            currentImageFile={this.state.currentImageFile}
+            originalImage={this.state.originalImage}
             testImage={this.state.testImage}
             changeTestImage={this.handleChangeTestImage.bind(this)}
           />   

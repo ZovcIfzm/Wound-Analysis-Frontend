@@ -22,7 +22,7 @@ function DebugToolbar(props) {
               const url = "https://gallagher-wound-analysis-api.herokuapp.com/testImage";
               //const url = "/testImage"
               const form = new FormData();
-              form.append("file", props.currentImageFile);
+              form.append("file", props.originalImage);
               const analyze_options = {
                 method: "POST",
                 body: form,
