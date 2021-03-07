@@ -1,11 +1,12 @@
 import React from "react";
 import Cropper from "../ImageCropper/imageCropper";
-import Button from "@material-ui/core/Button";
+
+import { Button, Checkbox, Tooltip, TextField } from '@material-ui/core';
+import { withStyles } from "@material-ui/core/styles";
 
 import CustomInput from "../CustomInput/CustomInput.js";
 import styles from "./style.js";
 import classNames from "classnames";
-import { withStyles } from "@material-ui/core/styles";
 
 import MaskSelector from "../MaskSelector/index.js";
 import DebugToolbar from "../DebugToolbar/index.js";
@@ -19,7 +20,7 @@ class MainPage extends React.Component {
     currentImages: null,
     edgedImage: null,
     analyzed: false,
-    imageWidth: null,
+    imageWidth: 2.54,
     useCrop: false,
     areas: [],
     lowerMaskOne: maskConstants["A"]["lower_range"][0],
@@ -28,16 +29,25 @@ class MainPage extends React.Component {
     upperMaskTwo: maskConstants["A"]["upper_range"][1],
     testImage: null,
     obj: null,
+    manualWidth: false,
   };
 
   componentDidMount(){
     if (this.props.location.state != null){
       console.log(this.props.location.state)
       const obj = this.props.location.state.obj
-      this.setState({
-        currentImage: obj["drawn_image"],
-        originalImage: obj["orig"]
-      })
+      if (obj["drawn_image"]){ 
+        this.setState({
+          currentImage: obj["drawn_image"],
+          originalImage: obj["orig"]
+        }) 
+      }
+      else{
+        this.setState({
+          currentImage: obj["orig"],
+          originalImage: obj["orig"]
+        }) 
+      }
     }
   }
 
@@ -98,10 +108,12 @@ class MainPage extends React.Component {
   analyzeImage = async () => {
     if (this.state.currentImage && this.state.imageWidth) {
       //const url = "https://gallagher-wound-analysis-api.herokuapp.com/measure";
+      console.log("manual: ", this.state.manualWidth)
       const url = "/measure"
       const form = new FormData();
       form.append("base64", this.state.originalImage);
       form.append("width", this.state.imageWidth);
+      form.append("manual_width", this.state.manualWidth)
       form.append("lower_mask_one", this.state.lowerMaskOne);
       form.append("lower_mask_two", this.state.lowerMaskTwo);
       form.append("upper_mask_one", this.state.upperMaskOne);
@@ -118,15 +130,20 @@ class MainPage extends React.Component {
           return response.json();
         })
         .then((matrix) => {
-          this.setState({
-            analyzed: true,
-            currentImage: matrix[1][1]["drawn_image"],
-            originalImage: matrix[1][1]["orig"],
-            edgedImage: matrix[1][1]["edged_image"],
-            currentImages: matrix,
-            areas: matrix[1][1]["areas"]
-          });
-          alert("Images analyzed")
+          if (matrix[1][1]["error"] == false){
+            this.setState({
+              analyzed: true,
+              currentImage: matrix[1][1]["drawn_image"],
+              originalImage: matrix[1][1]["orig"],
+              edgedImage: matrix[1][1]["edged_image"],
+              currentImages: matrix,
+              areas: matrix[1][1]["areas"]
+            });
+            alert("Images analyzed")
+          }
+          else{
+            alert(matrix[1][1]["error_message"])
+          }
         })
         .catch((error) => console.log(error));
     } else if (this.state.currentImage && !this.state.imageWidth) {
@@ -138,7 +155,7 @@ class MainPage extends React.Component {
     }
   };
 
-  handleOnChange = (event) => {
+  handleWidthChange = (event) => {
     this.setState({
       imageWidth: event.target.value,
     });
@@ -180,6 +197,10 @@ class MainPage extends React.Component {
     })
   }
 
+  handleCheckbox = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -211,17 +232,25 @@ class MainPage extends React.Component {
                     />
                     </Button>
               </div>
-              <div style={{ width: "25%", flex: 1 }}>
-                <CustomInput
-                  labelText="Enter real image width"
-                  id="float"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                  inputProps={{
-                    onChange: this.handleOnChange,
-                  }}
-                />
+              <div style={{ width: "35%", flex: 1 }}>
+                <Tooltip title="This is the length of the green line, if manual, this is the width of the image" placement="top-start">
+                  <TextField
+                    id="standard-number"
+                    label="Enter reference width (cm)"
+                    defaultValue={this.state.imageWidth}
+                    InputProps={{
+                      onChange: this.handleWidthChange,
+                    }}
+                  />
+                </Tooltip>
+                <div className={classes.row}>
+                  <Checkbox
+                    checked={this.state.manualWidth}
+                    onChange={this.handleCheckbox('manualWidth')}
+                    value="manualWidth"
+                  />
+                  <div className={classes.centeredText}>Set width to manual</div>
+                </div>
               </div>
             </div>
             <div className={classes.column}>
