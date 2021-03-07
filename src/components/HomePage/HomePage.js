@@ -138,8 +138,8 @@ class HomePage extends React.Component {
 
 
     modifyLowerSat = (val) => {
-        let newLowerMaskOne = this.state.lowerMaskOne;
-        let newLowerMaskTwo = this.state.lowerMaskTwo;
+        let newLowerMaskOne = [...this.state.lowerMaskOne];
+        let newLowerMaskTwo = [...this.state.lowerMaskTwo];
         newLowerMaskOne[1] += val;
         newLowerMaskTwo[1] += val;    
 
@@ -156,8 +156,8 @@ class HomePage extends React.Component {
         })
     }
     modifyUpperSat = (val) => {
-        let newUpperMaskOne = this.state.upperMaskOne;
-        let newUpperMaskTwo = this.state.upperMaskTwo;
+        let newUpperMaskOne = [...this.state.upperMaskOne];
+        let newUpperMaskTwo = [...this.state.upperMaskTwo];
         newUpperMaskOne[1] += val;    
         newUpperMaskTwo[1] += val;
 
@@ -175,8 +175,8 @@ class HomePage extends React.Component {
     }
 
     modifyLowerVal = (val) => {
-        let newLowerMaskOne = this.state.lowerMaskOne;
-        let newLowerMaskTwo = this.state.lowerMaskTwo;
+        let newLowerMaskOne = [...this.state.lowerMaskOne];
+        let newLowerMaskTwo = [...this.state.lowerMaskTwo];
         newLowerMaskOne[2] += val;
         newLowerMaskTwo[2] += val;    
 
@@ -193,8 +193,8 @@ class HomePage extends React.Component {
         })
     }
     modifyUpperVal = (val) => {
-        let newUpperMaskOne = this.state.upperMaskOne;
-        let newUpperMaskTwo = this.state.upperMaskTwo;
+        let newUpperMaskOne = [...this.state.upperMaskOne];
+        let newUpperMaskTwo = [...this.state.upperMaskTwo];
         newUpperMaskOne[2] += val;    
         newUpperMaskTwo[2] += val;
 
@@ -212,8 +212,8 @@ class HomePage extends React.Component {
     }
 
     modifyHueRange = (val) => {    
-        let newLowerMaskTwo = this.state.lowerMaskTwo;
-        let newUpperMaskOne = this.state.upperMaskOne;
+        let newLowerMaskTwo = [...this.state.lowerMaskTwo];
+        let newUpperMaskOne = [...this.state.upperMaskOne];
         
         newLowerMaskTwo[0] -= val;    
         newUpperMaskOne[0] += val;    
