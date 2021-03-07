@@ -30,10 +30,11 @@ class HomePage extends React.Component {
             body: form,
         };
         fetch(url, analyze_options)
-            .then((response) => {
+        .then((response) => {
             if (!response.ok) throw Error(response.statusText);
-                return response.json();
+            return response.json();
             })
+        .catch((error) => console.log(error));
     }
 
     uploadDayZip = async (event) => {
