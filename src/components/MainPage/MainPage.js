@@ -349,37 +349,41 @@ class MainPage extends React.Component {
             </div>
 
             <div className={classes.column}>
+              
               {this.state.useCrop ? (
                 <Cropper
                   currentImage={this.state.originalImage}
                   completeCrop={this.completeCrop}
                 />
-                ) : this.state.analyzed ? (
-                  <>
-                    <h4>Image with current mask</h4>
-                    <img
-                      src={this.state.currentImage}
-                      className={classes.images}
-                      alt=""
-                    />
-                  </>
                 ) : <>
-                    <h3>Image</h3>
-                    <div className={classes.column}>
-                        <img
-                          src={this.state.currentImage}
-                          className={classes.images}
-                          alt=""
-                        />
-                        <Button
-                          className={classes.cropButton}
-                          variant="contained"
-                          color="primary"
-                          onClick={this.handleCropChange}
-                        >
-                          Crop Image
-                        </Button>
-                      </div>
+                        {       
+                          this.state.analyzed ? (
+                            <>
+                              <h4>Image with current mask</h4>
+                              <img
+                                src={this.state.currentImage}
+                                className={classes.images}
+                                alt=""
+                              />
+                            </>
+                          ) : null
+                        }
+                      <h3>Image</h3>
+                      <div className={classes.column}>
+                          <img
+                            src={this.state.currentImage}
+                            className={classes.images}
+                            alt=""
+                          />
+                          <Button
+                            className={classes.cropButton}
+                            variant="contained"
+                            color="primary"
+                            onClick={this.handleCropChange}
+                          >
+                            Crop Image
+                          </Button>
+                        </div>
                     </>
               }
             </div>
