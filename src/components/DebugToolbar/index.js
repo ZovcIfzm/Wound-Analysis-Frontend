@@ -12,7 +12,7 @@ function DebugToolbar(props) {
   const classes = useStyles();
   const placeholder = "hue, sat, val";
   return (
-    <div className={classes.row}>    
+    <div className={classes.column}>    
       Debugging Toolbar:  
       <div className={classes.column}>
         <Button
@@ -40,7 +40,6 @@ function DebugToolbar(props) {
           >
             Test Sending/Retrieving Image from API
         </Button>
-        Best for:
         <img
           src={"data:image/png;base64," + props.testImage}
           className={classes.exampleImage}

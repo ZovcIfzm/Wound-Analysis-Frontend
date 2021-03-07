@@ -4,7 +4,6 @@ import Cropper from "../ImageCropper/imageCropper";
 import { Button, Checkbox, Tooltip, TextField } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
-import CustomInput from "../CustomInput/CustomInput.js";
 import styles from "./style.js";
 import classNames from "classnames";
 
@@ -385,6 +384,19 @@ class MainPage extends React.Component {
               }
             </div>
           </div>
+          <div style={{"height":20}}/>
+          <MaskSelector
+              lowerMaskOne={this.state.lowerMaskOne}
+              lowerMaskTwo={this.state.lowerMaskTwo}
+              upperMaskOne={this.state.upperMaskOne}
+              upperMaskTwo={this.state.upperMaskTwo}
+              onChangeLowerOne={this.handleLowerMaskOneChange.bind(this)}
+              onChangeLowerTwo={this.handleLowerMaskTwoChange.bind(this)}
+              onChangeUpperOne={this.handleUpperMaskOneChange.bind(this)}
+              onChangeUpperTwo={this.handleUpperMaskTwoChange.bind(this)}
+              changeMask={this.changeMask}
+          />
+          <div style={{"height":20}}/>
           <div className={classes.row}>
             <div className={classes.column}>
               <h3>Current areas:</h3>
@@ -484,17 +496,6 @@ class MainPage extends React.Component {
               </div>
             </div>
           </div>
-          <MaskSelector
-            lowerMaskOne={this.state.lowerMaskOne}
-            lowerMaskTwo={this.state.lowerMaskTwo}
-            upperMaskOne={this.state.upperMaskOne}
-            upperMaskTwo={this.state.upperMaskTwo}
-            onChangeLowerOne={this.handleLowerMaskOneChange.bind(this)}
-            onChangeLowerTwo={this.handleLowerMaskTwoChange.bind(this)}
-            onChangeUpperOne={this.handleUpperMaskOneChange.bind(this)}
-            onChangeUpperTwo={this.handleUpperMaskTwoChange.bind(this)}
-            changeMask={this.changeMask}
-          />
           { this.state.analyzed ?
           <div className={classes.column}>
             {this.state.currentImages.map((row) => (
@@ -512,6 +513,7 @@ class MainPage extends React.Component {
           </div>
           : null
           }
+          <div style={{"height": 100}}/>
           <DebugToolbar
             originalImage={this.state.originalImage}
             testImage={this.state.testImage}
