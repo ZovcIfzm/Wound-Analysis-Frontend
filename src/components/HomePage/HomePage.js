@@ -21,20 +21,10 @@ class HomePage extends React.Component {
         manualWidth: false,
     };
 
-    uploadDayZip = async (event) => {
-        const zipFile = event.target.files[0]
-        if (zipFile) {
-        const url = "https://gallagher-wound-analysis-api.herokuapp.com/zipMeasure";
-        //const url = "/zipMeasure"
+    componentDidMount(){
+        const url = "https://gallagher-wound-analysis-api.herokuapp.com/";
         const form = new FormData();
-        form.append("file", zipFile);
-        form.append("width", this.state.imageWidth);
-        form.append("manual_width", this.state.manualWidth)
-        form.append("lower_mask_one", this.state.lowerMaskOne);
-        form.append("lower_mask_two", this.state.lowerMaskTwo);
-        form.append("upper_mask_one", this.state.upperMaskOne);
-        form.append("upper_mask_two", this.state.upperMaskTwo);
-        //Then analyze
+        form.append("wakeup", "wakeup server");
         const analyze_options = {
             method: "POST",
             body: form,
@@ -42,17 +32,43 @@ class HomePage extends React.Component {
         fetch(url, analyze_options)
             .then((response) => {
             if (!response.ok) throw Error(response.statusText);
-            return response.json();
+                return response.json();
             })
-            .then((imgList) => {
-                alert("Images analyzed")
-                console.log("imgList: ", imgList[0])
-                this.setState({
-                    zipImgList: imgList
-                })
-            })
-            .catch((error) => console.log(error));
         } 
+    }
+
+    uploadDayZip = async (event) => {
+        const zipFile = event.target.files[0]
+        if (zipFile) {
+            const url = "https://gallagher-wound-analysis-api.herokuapp.com/zipMeasure";
+            //const url = "/zipMeasure"
+            const form = new FormData();
+            form.append("file", zipFile);
+            form.append("width", this.state.imageWidth);
+            form.append("manual_width", this.state.manualWidth)
+            form.append("lower_mask_one", this.state.lowerMaskOne);
+            form.append("lower_mask_two", this.state.lowerMaskTwo);
+            form.append("upper_mask_one", this.state.upperMaskOne);
+            form.append("upper_mask_two", this.state.upperMaskTwo);
+            //Then analyze
+            const analyze_options = {
+                method: "POST",
+                body: form,
+            };
+            fetch(url, analyze_options)
+                .then((response) => {
+                if (!response.ok) throw Error(response.statusText);
+                return response.json();
+                })
+                .then((imgList) => {
+                    alert("Images analyzed")
+                    console.log("imgList: ", imgList[0])
+                    this.setState({
+                        zipImgList: imgList
+                    })
+                })
+                .catch((error) => console.log(error));
+            } 
         else {
             alert("Please upload an zip file");
         }
