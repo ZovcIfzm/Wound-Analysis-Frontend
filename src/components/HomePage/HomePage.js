@@ -58,16 +58,23 @@ class HomePage extends React.Component {
             fetch(url, analyze_options)
                 .then((response) => {
                 if (!response.ok) throw Error(response.statusText);
-                return response.json();
+                    return response.json();
                 })
                 .then((imgList) => {
                     alert("Images analyzed")
-                    console.log("imgList: ", imgList[0])
                     this.setState({
                         zipImgList: imgList
                     })
                 })
-                .catch((error) => console.log(error));
+                .catch(error){
+                    if (error instanceof TypeError){
+                        alert("Too many images, make a smaller Zip file")
+                    }
+                    else{
+                        console.log(error)
+                        alert("Unknown error, let Alex know about this. Error:", error)
+                    }
+                }                 
             } 
         else {
             alert("Please upload an zip file");
