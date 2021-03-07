@@ -66,7 +66,7 @@ class HomePage extends React.Component {
                         zipImgList: imgList
                     })
                 })
-                .catch(error){
+                .catch((error) => {
                     if (error instanceof TypeError){
                         alert("Too many images, make a smaller Zip file")
                     }
@@ -74,7 +74,7 @@ class HomePage extends React.Component {
                         console.log(error)
                         alert("Unknown error, let Alex know about this. Error:", error)
                     }
-                }                 
+                })                 
             } 
         else {
             alert("Please upload an zip file");
