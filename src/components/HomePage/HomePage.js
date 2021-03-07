@@ -99,31 +99,31 @@ class HomePage extends React.Component {
         
     handleWidthChange = (event) => {
         this.setState({
-        imageWidth: event.target.value,
+            imageWidth: event.target.value,
         });
     };
         
     handleLowerMaskOneChange = (event) => {
         this.setState({
-        lowerMaskOne: event.target.value,
+            lowerMaskOne: event.target.value,
         });
     };
 
     handleLowerMaskTwoChange = (event) => {
         this.setState({
-        lowerMaskTwo: event.target.value,
+            lowerMaskTwo: event.target.value,
         });
     };
 
     handleUpperMaskOneChange = (event) => {
         this.setState({
-        upperMaskOne: event.target.value,
+            upperMaskOne: event.target.value,
         });
     };
 
     handleUpperMaskTwoChange = (event) => {
         this.setState({
-        upperMaskTwo: event.target.value,
+            upperMaskTwo: event.target.value,
         });
     };
         
@@ -138,8 +138,8 @@ class HomePage extends React.Component {
 
 
     modifyLowerSat = (val) => {
-        const newLowerMaskOne = this.state.lowerMaskOne;
-        const newLowerMaskTwo = this.state.lowerMaskTwo;
+        let newLowerMaskOne = this.state.lowerMaskOne;
+        let newLowerMaskTwo = this.state.lowerMaskTwo;
         newLowerMaskOne[1] += val;
         newLowerMaskTwo[1] += val;    
 
@@ -156,79 +156,79 @@ class HomePage extends React.Component {
         })
     }
     modifyUpperSat = (val) => {
-    const newUpperMaskOne = this.state.upperMaskOne;
-    const newUpperMaskTwo = this.state.upperMaskTwo;
-    newUpperMaskOne[1] += val;    
-    newUpperMaskTwo[1] += val;
+        let newUpperMaskOne = this.state.upperMaskOne;
+        let newUpperMaskTwo = this.state.upperMaskTwo;
+        newUpperMaskOne[1] += val;    
+        newUpperMaskTwo[1] += val;
 
-    if (newUpperMaskOne[1] > 255){
-        newUpperMaskOne[1] = 255;
-    }
-    if (newUpperMaskTwo[1] > 255){
-        newUpperMaskTwo[1] = 255;
-    }
+        if (newUpperMaskOne[1] > 255){
+            newUpperMaskOne[1] = 255;
+        }
+        if (newUpperMaskTwo[1] > 255){
+            newUpperMaskTwo[1] = 255;
+        }
 
-    this.setState({
-        upperMaskOne: newUpperMaskOne,
-        upperMaskTwo: newUpperMaskTwo,
-    })
+        this.setState({
+            upperMaskOne: newUpperMaskOne,
+            upperMaskTwo: newUpperMaskTwo,
+        })
     }
 
     modifyLowerVal = (val) => {
-    const newLowerMaskOne = this.state.lowerMaskOne;
-    const newLowerMaskTwo = this.state.lowerMaskTwo;
-    newLowerMaskOne[2] += val;
-    newLowerMaskTwo[2] += val;    
+        let newLowerMaskOne = this.state.lowerMaskOne;
+        let newLowerMaskTwo = this.state.lowerMaskTwo;
+        newLowerMaskOne[2] += val;
+        newLowerMaskTwo[2] += val;    
 
-    if (newLowerMaskOne[2] > 255){
-        newLowerMaskOne[2] = 255;
-    }
-    if (newLowerMaskTwo[2] > 255){
-        newLowerMaskTwo[2] = 255;
-    }
+        if (newLowerMaskOne[2] > 255){
+            newLowerMaskOne[2] = 255;
+        }
+        if (newLowerMaskTwo[2] > 255){
+            newLowerMaskTwo[2] = 255;
+        }
 
-    this.setState({
-        lowerMaskOne: newLowerMaskOne,
-        lowerMaskTwo: newLowerMaskTwo,
-    })
+        this.setState({
+            lowerMaskOne: newLowerMaskOne,
+            lowerMaskTwo: newLowerMaskTwo,
+        })
     }
     modifyUpperVal = (val) => {
-    const newUpperMaskOne = this.state.upperMaskOne;
-    const newUpperMaskTwo = this.state.upperMaskTwo;
-    newUpperMaskOne[2] += val;    
-    newUpperMaskTwo[2] += val;
+        let newUpperMaskOne = this.state.upperMaskOne;
+        let newUpperMaskTwo = this.state.upperMaskTwo;
+        newUpperMaskOne[2] += val;    
+        newUpperMaskTwo[2] += val;
 
-    if (newUpperMaskOne[2] > 255){
-        newUpperMaskOne[2] = 255;
-    }
-    if (newUpperMaskTwo[2] > 255){
-        newUpperMaskTwo[2] = 255;
-    }
+        if (newUpperMaskOne[2] > 255){
+            newUpperMaskOne[2] = 255;
+        }
+        if (newUpperMaskTwo[2] > 255){
+            newUpperMaskTwo[2] = 255;
+        }
 
-    this.setState({
-        upperMaskOne: newUpperMaskOne,
-        upperMaskTwo: newUpperMaskTwo,
-    })
+        this.setState({
+            upperMaskOne: newUpperMaskOne,
+            upperMaskTwo: newUpperMaskTwo,
+        })
     }
 
     modifyHueRange = (val) => {    
-    const newLowerMaskTwo = this.state.lowerMaskTwo;
-    const newUpperMaskOne = this.state.upperMaskOne;
-    
-    newLowerMaskTwo[0] -= val;    
-    newUpperMaskOne[0] += val;    
+        let newLowerMaskTwo = this.state.lowerMaskTwo;
+        let newUpperMaskOne = this.state.upperMaskOne;
+        
+        newLowerMaskTwo[0] -= val;    
+        newUpperMaskOne[0] += val;    
 
-    if (newLowerMaskTwo[0] < 0){
-        newLowerMaskTwo[0] = 0;
-    }
-    if (newUpperMaskOne[0] > 180){
-        newUpperMaskOne[0] = 180;
-    }
+        if (newLowerMaskTwo[0] < 0){
+            newLowerMaskTwo[0] = 0;
+        }
+        if (newUpperMaskOne[0] > 180){
+            newUpperMaskOne[0] = 180;
+        }
 
-    this.setState({
-        lowerMaskTwo: newLowerMaskTwo,
-        upperMaskOne: newUpperMaskOne,
-    })
+        this.setState({
+            lowerMaskTwo: newLowerMaskTwo,
+            upperMaskOne: newUpperMaskOne,
+        })
     }
 
     render() {

@@ -201,8 +201,8 @@ class MainPage extends React.Component {
   };
 
   modifyLowerSat = (val) => {
-    const newLowerMaskOne = this.state.lowerMaskOne;
-    const newLowerMaskTwo = this.state.lowerMaskTwo;
+    let newLowerMaskOne = this.state.lowerMaskOne;
+    let newLowerMaskTwo = this.state.lowerMaskTwo;
     newLowerMaskOne[1] += val;
     newLowerMaskTwo[1] += val;    
 
@@ -219,8 +219,8 @@ class MainPage extends React.Component {
     })
   }
   modifyUpperSat = (val) => {
-    const newUpperMaskOne = this.state.upperMaskOne;
-    const newUpperMaskTwo = this.state.upperMaskTwo;
+    let newUpperMaskOne = this.state.upperMaskOne;
+    let newUpperMaskTwo = this.state.upperMaskTwo;
     newUpperMaskOne[1] += val;    
     newUpperMaskTwo[1] += val;
 
@@ -238,8 +238,8 @@ class MainPage extends React.Component {
   }
 
   modifyLowerVal = (val) => {
-    const newLowerMaskOne = this.state.lowerMaskOne;
-    const newLowerMaskTwo = this.state.lowerMaskTwo;
+    let newLowerMaskOne = this.state.lowerMaskOne;
+    let newLowerMaskTwo = this.state.lowerMaskTwo;
     newLowerMaskOne[2] += val;
     newLowerMaskTwo[2] += val;    
 
@@ -256,8 +256,8 @@ class MainPage extends React.Component {
     })
   }
   modifyUpperVal = (val) => {
-    const newUpperMaskOne = this.state.upperMaskOne;
-    const newUpperMaskTwo = this.state.upperMaskTwo;
+    let newUpperMaskOne = this.state.upperMaskOne;
+    let newUpperMaskTwo = this.state.upperMaskTwo;
     newUpperMaskOne[2] += val;    
     newUpperMaskTwo[2] += val;
 
@@ -275,8 +275,8 @@ class MainPage extends React.Component {
   }
 
   modifyHueRange = (val) => {    
-    const newLowerMaskTwo = this.state.lowerMaskTwo;
-    const newUpperMaskOne = this.state.upperMaskOne;
+    let newLowerMaskTwo = this.state.lowerMaskTwo;
+    let newUpperMaskOne = this.state.upperMaskOne;
     
     newLowerMaskTwo[0] -= val;    
     newUpperMaskOne[0] += val;    
