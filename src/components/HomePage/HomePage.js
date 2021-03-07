@@ -22,10 +22,10 @@ class HomePage extends React.Component {
     };
 
     componentDidMount(){
-        const url = "https://gallagher-wound-analysis-api.herokuapp.com/";
-        const form = new FormData();
+        let url = "https://gallagher-wound-analysis-api.herokuapp.com/";
+        let form = new FormData();
         form.append("wakeup", "wakeup server");
-        const analyze_options = {
+        let analyze_options = {
             method: "POST",
             body: form,
         };
@@ -38,11 +38,11 @@ class HomePage extends React.Component {
     }
 
     uploadDayZip = async (event) => {
-        const zipFile = event.target.files[0]
+        let zipFile = event.target.files[0]
         if (zipFile) {
-            const url = "https://gallagher-wound-analysis-api.herokuapp.com/zipMeasure";
-            //const url = "/zipMeasure"
-            const form = new FormData();
+            let url = "https://gallagher-wound-analysis-api.herokuapp.com/zipMeasure";
+            //let url = "/zipMeasure"
+            let form = new FormData();
             form.append("file", zipFile);
             form.append("width", this.state.imageWidth);
             form.append("manual_width", this.state.manualWidth)
@@ -51,7 +51,7 @@ class HomePage extends React.Component {
             form.append("upper_mask_one", this.state.upperMaskOne);
             form.append("upper_mask_two", this.state.upperMaskTwo);
             //Then analyze
-            const analyze_options = {
+            let analyze_options = {
                 method: "POST",
                 body: form,
             };
