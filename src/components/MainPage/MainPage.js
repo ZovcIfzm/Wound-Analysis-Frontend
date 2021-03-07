@@ -31,10 +31,7 @@ class MainPage extends React.Component {
   };
 
   componentDidMount(){
-    console.log("in did mount")
-    console.log(this.props.location)
     if (this.props.location.state != null){
-      console.log("in state")
       console.log(this.props.location.state)
       const obj = this.props.location.state.obj
       this.setState({
@@ -59,7 +56,7 @@ class MainPage extends React.Component {
     };
   }
 
-  completeCrop = (image, imageFile) => {
+  completeCrop = (image) => {
     this.setState({
       useCrop: false,
       currentImage: image,
@@ -102,13 +99,8 @@ class MainPage extends React.Component {
     if (this.state.currentImage && this.state.imageWidth) {
       //const url = "https://gallagher-wound-analysis-api.herokuapp.com/measure";
       const url = "/measure"
-
-      const blob = await fetch(this.state.originalImage).then((res) => res.blob());
-
       const form = new FormData();
-      form.append("file", blob);
       form.append("base64", this.state.originalImage);
-      form.append("mode", "run");
       form.append("width", this.state.imageWidth);
       form.append("lower_mask_one", this.state.lowerMaskOne);
       form.append("lower_mask_two", this.state.lowerMaskTwo);
@@ -254,16 +246,17 @@ class MainPage extends React.Component {
                   currentImage={this.state.originalImage}
                   completeCrop={this.completeCrop}
                 />
-              ) : this.state.analyzed ? (
-                <>
-                  <h4>Image with current mask</h4>
-                  <img
-                    src={this.state.currentImage}
-                    className={classes.images}
-                    alt=""
-                  />
-                </>
-              ) : null}
+                ) : this.state.analyzed ? (
+                  <>
+                    <h4>Image with current mask</h4>
+                    <img
+                      src={this.state.currentImage}
+                      className={classes.images}
+                      alt=""
+                    />
+                  </>
+                ) : null
+              }
             </div>
           </div>
           <h3>Current areas:</h3>

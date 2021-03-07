@@ -94,12 +94,33 @@ class HomePage extends React.Component {
                 </div>
                 <div className={classes.column}>
                     {this.state.zipImgList.map((obj) => (
-                    <img
-                    src={obj["drawn_image"]}
-                    className={classes.colImage}
-                    alt=""
-                    onClick={() => this.reanalyzeImage(obj)}
-                    />
+                        <>
+                            {
+                                obj["error"] === false 
+                                ?   <div className={classes.row}>
+                                        <img
+                                            src={obj["drawn_image"]}
+                                            className={classes.colImage}
+                                            alt=""
+                                            onClick={() => this.reanalyzeImage(obj)}
+                                        />
+                                        <div className={classes.column}>
+                                            <h3>Areas</h3>
+                                            {
+                                                obj["areas"].map((area)=>(
+                                                    <h5>{area}</h5>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
+                                :   <img
+                                        src={obj["orig"]}
+                                        className={classes.colImage}
+                                        alt=""
+                                        onClick={() => this.reanalyzeImage(obj)}
+                                    />
+                            }
+                        </>
                     ))}
                 </div>
             </div>
