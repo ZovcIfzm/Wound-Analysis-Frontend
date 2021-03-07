@@ -24,8 +24,8 @@ class HomePage extends React.Component {
     uploadDayZip = async (event) => {
         const zipFile = event.target.files[0]
         if (zipFile) {
-        //const url = "https://gallagher-wound-analysis-api.herokuapp.com/zipMeasure";
-        const url = "/zipMeasure"
+        const url = "https://gallagher-wound-analysis-api.herokuapp.com/zipMeasure";
+        //const url = "/zipMeasure"
         const form = new FormData();
         form.append("file", zipFile);
         form.append("width", this.state.imageWidth);
