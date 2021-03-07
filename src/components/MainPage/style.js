@@ -81,6 +81,11 @@ const styles = {
     width: "50%",
     alignSelf: "center",
   },
+  hsvButton: {
+    display: "flex",
+    flex: 1,
+    alignSelf: "center",
+  }
 };
 
 export default styles;

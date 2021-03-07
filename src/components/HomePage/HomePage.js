@@ -65,31 +65,32 @@ class HomePage extends React.Component {
         const { classes } = this.props;
         return (
             <div className={classNames(classes.main, classes.mainRaised)}>
-                <div className={classes.container}>
-                    <div className={classes.title}>
-                        <h2>Automatic Wound Area Measurement</h2>
+                <div className={classes.column}>
+                    <div className={classes.container}>
+                        <div className={classes.title}>
+                            <h2>Automatic Wound Area Measurement</h2>
+                        </div>
                     </div>
-                </div>
-                <Button 
-                    className={classes.cropButton}
-                    variant="contained"
-                    color="primary"
-                    onClick={this.goToMain}>
-                    Single wound measurement
-                </Button>
-                <div className={classes.button} style={{ flex: 1 }}>
+                    <Button 
+                        className={classes.cropButton}
+                        variant="contained"
+                        color="primary"
+                        onClick={this.goToMain}>
+                        Single wound measurement
+                    </Button>
                     <h3>Upload Zip File (One Day)</h3>
                     <Button
                         variant="contained"
                         component="label"
+                        className={classes.cropButton}
                     >
-                    Upload File
-                    <input
-                        type="file"
-                        name="myImage"
-                        hidden
-                        onChange={this.uploadDayZip}
-                    />
+                        Upload File
+                        <input
+                            type="file"
+                            name="myImage"
+                            hidden
+                            onChange={this.uploadDayZip}
+                        />
                     </Button>
                 </div>
                 <div className={classes.column}>

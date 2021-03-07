@@ -8,6 +8,7 @@ const styles = {
       display: "flex",
       flex: 1,
       flexDirection: "column",
+      textAlign: "center"
     },
     cropperContainer: {
       width: 50,
@@ -82,7 +83,7 @@ const styles = {
     cropButton: {
       display: "flex",
       flex: 1,
-      width: "50%",
+      width: "25%",
       alignSelf: "center",
     },
   };

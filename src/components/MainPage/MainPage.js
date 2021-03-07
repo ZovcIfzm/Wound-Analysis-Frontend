@@ -201,6 +201,100 @@ class MainPage extends React.Component {
     this.setState({ [name]: event.target.checked });
   };
 
+  modifyLowerSat = (val) => {
+    const newLowerMaskOne = this.state.lowerMaskOne;
+    const newLowerMaskTwo = this.state.lowerMaskTwo;
+    newLowerMaskOne[1] += val;
+    newLowerMaskTwo[1] += val;    
+
+    if (newLowerMaskOne[1] > 255){
+      newLowerMaskOne[1] = 255;
+    }
+    if (newLowerMaskTwo[1] > 255){
+      newLowerMaskTwo[1] = 255;
+    }
+
+    this.setState({
+      lowerMaskOne: newLowerMaskOne,
+      lowerMaskTwo: newLowerMaskTwo,
+    })
+  }
+  modifyUpperSat = (val) => {
+    const newUpperMaskOne = this.state.upperMaskOne;
+    const newUpperMaskTwo = this.state.upperMaskTwo;
+    newUpperMaskOne[1] += val;    
+    newUpperMaskTwo[1] += val;
+
+    if (newUpperMaskOne[1] > 255){
+      newUpperMaskOne[1] = 255;
+    }
+    if (newUpperMaskTwo[1] > 255){
+      newUpperMaskTwo[1] = 255;
+    }
+
+    this.setState({
+      upperMaskOne: newUpperMaskOne,
+      upperMaskTwo: newUpperMaskTwo,
+    })
+  }
+
+  modifyLowerVal = (val) => {
+    const newLowerMaskOne = this.state.lowerMaskOne;
+    const newLowerMaskTwo = this.state.lowerMaskTwo;
+    newLowerMaskOne[2] += val;
+    newLowerMaskTwo[2] += val;    
+
+    if (newLowerMaskOne[2] > 255){
+      newLowerMaskOne[2] = 255;
+    }
+    if (newLowerMaskTwo[2] > 255){
+      newLowerMaskTwo[2] = 255;
+    }
+
+    this.setState({
+      lowerMaskOne: newLowerMaskOne,
+      lowerMaskTwo: newLowerMaskTwo,
+    })
+  }
+  modifyUpperVal = (val) => {
+    const newUpperMaskOne = this.state.upperMaskOne;
+    const newUpperMaskTwo = this.state.upperMaskTwo;
+    newUpperMaskOne[2] += val;    
+    newUpperMaskTwo[2] += val;
+
+    if (newUpperMaskOne[2] > 255){
+      newUpperMaskOne[2] = 255;
+    }
+    if (newUpperMaskTwo[2] > 255){
+      newUpperMaskTwo[2] = 255;
+    }
+
+    this.setState({
+      upperMaskOne: newUpperMaskOne,
+      upperMaskTwo: newUpperMaskTwo,
+    })
+  }
+
+  modifyHueRange = (val) => {    
+    const newLowerMaskTwo = this.state.lowerMaskTwo;
+    const newUpperMaskOne = this.state.upperMaskOne;
+    
+    newLowerMaskTwo[0] -= val;    
+    newUpperMaskOne[0] += val;    
+
+    if (newLowerMaskTwo[0] < 0){
+      newLowerMaskTwo[0] = 0;
+    }
+    if (newUpperMaskOne[0] > 180){
+      newUpperMaskOne[0] = 180;
+    }
+
+    this.setState({
+      lowerMaskTwo: newLowerMaskTwo,
+      upperMaskOne: newUpperMaskOne,
+    })
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -232,7 +326,8 @@ class MainPage extends React.Component {
                     />
                     </Button>
               </div>
-              <div style={{ width: "35%", flex: 1 }}>
+              <div className={classes.column}>
+                <div style={{"height": 40}}/>
                 <Tooltip title="This is the length of the green line, if manual, this is the width of the image" placement="top-start">
                   <TextField
                     id="standard-number"
@@ -253,23 +348,8 @@ class MainPage extends React.Component {
                 </div>
               </div>
             </div>
+
             <div className={classes.column}>
-              <h3>Image</h3>
-              <div className={classes.column}>
-                  <img
-                    src={this.state.currentImage}
-                    className={classes.images}
-                    alt=""
-                  />
-                  <Button
-                    className={classes.cropButton}
-                    variant="contained"
-                    color="primary"
-                    onClick={this.handleCropChange}
-                  >
-                    Crop Image
-                  </Button>
-                </div>
               {this.state.useCrop ? (
                 <Cropper
                   currentImage={this.state.originalImage}
@@ -284,22 +364,137 @@ class MainPage extends React.Component {
                       alt=""
                     />
                   </>
-                ) : null
+                ) : <>
+                    <h3>Image</h3>
+                    <div className={classes.column}>
+                        <img
+                          src={this.state.currentImage}
+                          className={classes.images}
+                          alt=""
+                        />
+                        <Button
+                          className={classes.cropButton}
+                          variant="contained"
+                          color="primary"
+                          onClick={this.handleCropChange}
+                        >
+                          Crop Image
+                        </Button>
+                      </div>
+                    </>
               }
             </div>
           </div>
-          <h3>Current areas:</h3>
-          {this.state.areas.map((value) => (
-            <p>{value} u^2</p>
-          ))}
+          <div className={classes.row}>
+            <div className={classes.column}>
+              <h3>Current areas:</h3>
+              {this.state.areas.map((value) => (
+                <p>{value} u^2</p>
+              ))}
 
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.analyzeImage}
-          >
-            Measure area
-          </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.analyzeImage}
+                className={classes.cropButton}
+              >
+                Measure area
+              </Button>
+            </div>
+            <div className={classes.row}>
+              <div className={classes.column}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{"backgroundColor": "maroon"}}
+                  onClick={()=>this.modifyLowerSat(5)}
+                  className={classes.hsvButton}
+                >
+                  Look for redder wounds (+sat)
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{"backgroundColor": "pink"}}
+                  onClick={()=>this.modifyLowerSat(-5)}
+                  className={classes.hsvButton}
+                >
+                  Look for pinker wounds (-sat)
+                </Button>
+              </div>
+              <div className={classes.column}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{"backgroundColor": "#800200"}}
+                  onClick={()=>this.modifyLowerVal(5)}
+                  className={classes.hsvButton}
+                >
+                  Look for brighter wounds (+val)
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{"backgroundColor": "black"}}
+                  onClick={()=>this.modifyLowerVal(-5)}
+                  className={classes.hsvButton}
+                >
+                  Look for darker wounds (-val)
+                </Button>
+              </div>
+              <div className={classes.column}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{"backgroundColor": "green"}}
+                    onClick={()=>this.modifyUpperVal(-5)}
+                    className={classes.hsvButton}
+                  >
+                    Include more skin (+upperVal)
+                </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{"backgroundColor": "green"}}
+                    onClick={()=>this.modifyUpperVal(-5)}
+                    className={classes.hsvButton}
+                  >
+                    Ignore more skin (-upperVal)
+                </Button>
+              </div>
+              <div className={classes.column}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{"backgroundColor": "green"}}
+                    onClick={()=>this.modifyHueRange(5)}
+                    className={classes.hsvButton}
+                  >
+                    Include more wound colors (+hue range)
+                </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{"backgroundColor": "green"}}
+                    onClick={()=>this.modifyHueRange(-5)}
+                    className={classes.hsvButton}
+                  >
+                    Reduce range of possible colors (-hue range)
+                </Button>
+              </div>
+            </div>
+          </div>
+          <MaskSelector
+            lowerMaskOne={this.state.lowerMaskOne}
+            lowerMaskTwo={this.state.lowerMaskTwo}
+            upperMaskOne={this.state.upperMaskOne}
+            upperMaskTwo={this.state.upperMaskTwo}
+            onChangeLowerOne={this.handleLowerMaskOneChange.bind(this)}
+            onChangeLowerTwo={this.handleLowerMaskTwoChange.bind(this)}
+            onChangeUpperOne={this.handleUpperMaskOneChange.bind(this)}
+            onChangeUpperTwo={this.handleUpperMaskTwoChange.bind(this)}
+            changeMask={this.changeMask}
+          />
           { this.state.analyzed ?
           <div className={classes.column}>
             {this.state.currentImages.map((row) => (
@@ -317,17 +512,6 @@ class MainPage extends React.Component {
           </div>
           : null
           }
-          <MaskSelector
-            lowerMaskOne={this.state.lowerMaskOne}
-            lowerMaskTwo={this.state.lowerMaskTwo}
-            upperMaskOne={this.state.upperMaskOne}
-            upperMaskTwo={this.state.upperMaskTwo}
-            onChangeLowerOne={this.handleLowerMaskOneChange.bind(this)}
-            onChangeLowerTwo={this.handleLowerMaskTwoChange.bind(this)}
-            onChangeUpperOne={this.handleUpperMaskOneChange.bind(this)}
-            onChangeUpperTwo={this.handleUpperMaskTwoChange.bind(this)}
-            changeMask={this.changeMask}
-          />
           <DebugToolbar
             originalImage={this.state.originalImage}
             testImage={this.state.testImage}
