@@ -459,7 +459,7 @@ class MainPage extends React.Component {
                     variant="contained"
                     color="primary"
                     style={{"backgroundColor": "green"}}
-                    onClick={()=>this.modifyUpperVal(-5)}
+                    onClick={()=>this.modifyUpperVal(5)}
                     className={classes.hsvButton}
                   >
                     Include more skin (+upperVal)

@@ -34,7 +34,6 @@ class HomePage extends React.Component {
             if (!response.ok) throw Error(response.statusText);
                 return response.json();
             })
-        } 
     }
 
     uploadDayZip = async (event) => {
@@ -315,7 +314,7 @@ class HomePage extends React.Component {
                                 variant="contained"
                                 color="primary"
                                 style={{"backgroundColor": "green"}}
-                                onClick={()=>this.modifyUpperVal(-5)}
+                                onClick={()=>this.modifyUpperVal(5)}
                                 className={classes.hsvButton}
                             >
                                 Include more skin (+upperVal)
