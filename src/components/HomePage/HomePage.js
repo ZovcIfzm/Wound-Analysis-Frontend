@@ -13,16 +13,24 @@ import { maskConstants } from "../MaskSelector/constants.js"
 class HomePage extends React.Component {
     state = {
         zipImgList: [],
-        lowerMaskOne: maskConstants["A"]["lower_range"][0],
-        lowerMaskTwo: maskConstants["A"]["lower_range"][1],
-        upperMaskOne: maskConstants["A"]["upper_range"][0],
-        upperMaskTwo: maskConstants["A"]["upper_range"][1],
+        lowerMaskOne: maskConstants["B"]["lower_range"][0],
+        lowerMaskTwo: maskConstants["B"]["lower_range"][1],
+        upperMaskOne: maskConstants["B"]["upper_range"][0],
+        upperMaskTwo: maskConstants["B"]["upper_range"][1],
         imageWidth: 2.54,
         manualWidth: false,
     };
 
     componentDidMount(){
+        if (this.props.location.state != null){
+            const inState = this.props.location.state
+            this.setState({
+                zipImgList: inState.zipImgList
+            }) 
+        }
+
         let url = "https://gallagher-wound-analysis-api.herokuapp.com/";
+        //const url = "/"
         let form = new FormData();
         form.append("wakeup", "wakeup server");
         let analyze_options = {
@@ -32,7 +40,7 @@ class HomePage extends React.Component {
         fetch(url, analyze_options)
         .then((response) => {
             if (!response.ok) throw Error(response.statusText);
-            return response.json();
+                return response.json();
             })
         .catch((error) => console.log(error));
     }
@@ -51,7 +59,7 @@ class HomePage extends React.Component {
             form.append("upper_mask_one", this.state.upperMaskOne);
             form.append("upper_mask_two", this.state.upperMaskTwo);
             //Then analyze
-            let analyze_options = {
+            const analyze_options = {
                 method: "POST",
                 body: form,
             };
@@ -82,13 +90,22 @@ class HomePage extends React.Component {
     };
 
     goToMain = () => {
-        this.props.history.push('/main');
+        if (this.state.zipImgList != null){
+            this.props.history.push({
+                pathname: '/main',
+                state: { obj: null, zipImgList: this.state.zipImgList }
+            })
+        }
+        else{
+            this.props.history.push('/main');
+        }
     };
 
-    reanalyzeImage = async (obj) => {
+    reanalyzeImage = async (obj, i) => {
+        obj["id"] = i;
         this.props.history.push({
             pathname: '/main',
-            state: { obj: obj }
+            state: { obj: obj, zipImgList: this.state.zipImgList }
         })
     };
 
@@ -138,77 +155,93 @@ class HomePage extends React.Component {
 
 
     modifyLowerSat = (val) => {
-        let newLowerMaskOne = [...this.state.lowerMaskOne];
-        let newLowerMaskTwo = [...this.state.lowerMaskTwo];
-        newLowerMaskOne[1] += val;
-        newLowerMaskTwo[1] += val;    
+    let newLowerMaskOne = [...this.state.lowerMaskOne];
+    let newLowerMaskTwo = [...this.state.lowerMaskTwo];
+    newLowerMaskOne[1] += val;
+    newLowerMaskTwo[1] += val;    
 
-        if (newLowerMaskOne[1] > 255){
-            newLowerMaskOne[1] = 255;
-        }
-        if (newLowerMaskTwo[1] > 255){
-            newLowerMaskTwo[1] = 255;
-        }
-
+    if (newLowerMaskOne[1] > 255){
+        newLowerMaskOne[1] = 255;
+    }
+    if (newLowerMaskTwo[1] > 255){
+        newLowerMaskTwo[1] = 255;
+    }
+    if (newLowerMaskOne[1] > this.state.upperMaskOne[1] || newLowerMaskTwo[1] > this.state.upperMaskTwo[1]){
+        alert("Cannot increase lower sat above upper sat")
+    }
+    else{
         this.setState({
-            lowerMaskOne: newLowerMaskOne,
-            lowerMaskTwo: newLowerMaskTwo,
+        lowerMaskOne: newLowerMaskOne,
+        lowerMaskTwo: newLowerMaskTwo,
         })
     }
+    }
     modifyUpperSat = (val) => {
-        let newUpperMaskOne = [...this.state.upperMaskOne];
-        let newUpperMaskTwo = [...this.state.upperMaskTwo];
-        newUpperMaskOne[1] += val;    
-        newUpperMaskTwo[1] += val;
+    let newUpperMaskOne = [...this.state.upperMaskOne];
+    let newUpperMaskTwo = [...this.state.upperMaskTwo];
+    newUpperMaskOne[1] += val;    
+    newUpperMaskTwo[1] += val;
 
-        if (newUpperMaskOne[1] > 255){
-            newUpperMaskOne[1] = 255;
-        }
-        if (newUpperMaskTwo[1] > 255){
-            newUpperMaskTwo[1] = 255;
-        }
-
+    if (newUpperMaskOne[1] > 255){
+        newUpperMaskOne[1] = 255;
+    }
+    if (newUpperMaskTwo[1] > 255){
+        newUpperMaskTwo[1] = 255;
+    }
+    if (newUpperMaskOne[1] < this.state.lowerMaskOne[1] || newUpperMaskTwo[1] < this.state.lowerMaskTwo[1]){
+        alert("Cannot lower upper sat below lower sat")
+    }
+    else{
         this.setState({
-            upperMaskOne: newUpperMaskOne,
-            upperMaskTwo: newUpperMaskTwo,
+        upperMaskOne: newUpperMaskOne,
+        upperMaskTwo: newUpperMaskTwo,
         })
+    }
     }
 
     modifyLowerVal = (val) => {
-        let newLowerMaskOne = [...this.state.lowerMaskOne];
-        let newLowerMaskTwo = [...this.state.lowerMaskTwo];
-        newLowerMaskOne[2] += val;
-        newLowerMaskTwo[2] += val;    
+    let newLowerMaskOne = [...this.state.lowerMaskOne];
+    let newLowerMaskTwo = [...this.state.lowerMaskTwo];
+    newLowerMaskOne[2] += val;
+    newLowerMaskTwo[2] += val;    
 
-        if (newLowerMaskOne[2] > 255){
-            newLowerMaskOne[2] = 255;
-        }
-        if (newLowerMaskTwo[2] > 255){
-            newLowerMaskTwo[2] = 255;
-        }
-
+    if (newLowerMaskOne[2] > 255){
+        newLowerMaskOne[2] = 255;
+    }
+    if (newLowerMaskTwo[2] > 255){
+        newLowerMaskTwo[2] = 255;
+    }
+    if (newLowerMaskOne[2] > this.state.upperMaskOne[2] || newLowerMaskTwo[2] > this.state.upperMaskTwo[2]){
+        alert("Cannot increase lower val above upper val")
+    }
+    else{
         this.setState({
-            lowerMaskOne: newLowerMaskOne,
-            lowerMaskTwo: newLowerMaskTwo,
+        lowerMaskOne: newLowerMaskOne,
+        lowerMaskTwo: newLowerMaskTwo,
         })
     }
+    }
     modifyUpperVal = (val) => {
-        let newUpperMaskOne = [...this.state.upperMaskOne];
-        let newUpperMaskTwo = [...this.state.upperMaskTwo];
-        newUpperMaskOne[2] += val;    
-        newUpperMaskTwo[2] += val;
+    let newUpperMaskOne = [...this.state.upperMaskOne];
+    let newUpperMaskTwo = [...this.state.upperMaskTwo];
+    newUpperMaskOne[2] += val;    
+    newUpperMaskTwo[2] += val;
 
-        if (newUpperMaskOne[2] > 255){
-            newUpperMaskOne[2] = 255;
-        }
-        if (newUpperMaskTwo[2] > 255){
-            newUpperMaskTwo[2] = 255;
-        }
-
+    if (newUpperMaskOne[2] > 255){
+        newUpperMaskOne[2] = 255;
+    }
+    if (newUpperMaskTwo[2] > 255){
+        newUpperMaskTwo[2] = 255;
+    }
+    if (newUpperMaskOne[2] < this.state.lowerMaskOne[2] || newUpperMaskTwo[2] < this.state.lowerMaskTwo[2]){
+        alert("Cannot lower upper val below lower val")
+    }
+    else{
         this.setState({
-            upperMaskOne: newUpperMaskOne,
-            upperMaskTwo: newUpperMaskTwo,
+        upperMaskOne: newUpperMaskOne,
+        upperMaskTwo: newUpperMaskTwo,
         })
+    }
     }
 
     modifyHueRange = (val) => {    
@@ -334,7 +367,7 @@ class HomePage extends React.Component {
                                 onClick={()=>this.modifyUpperVal(-5)}
                                 className={classes.hsvButton}
                             >
-                                Ignore more skin (-upperVal)
+                                Include less skin (-upperVal)
                             </Button>
                         </div>
                         <div className={classes.column}>
@@ -377,8 +410,8 @@ class HomePage extends React.Component {
                         </Button>
                     </div>
                     <div className={classes.column}>
-                        {this.state.zipImgList.map((obj) => (
-                            <>
+                        {this.state.zipImgList.map((obj, i) => (
+                            <div key={i} id={"zipImg"+i}>
                                 {
                                     obj["error"] === false 
                                     ?   <div className={classes.row}>
@@ -386,25 +419,29 @@ class HomePage extends React.Component {
                                                 src={obj["drawn_image"]}
                                                 className={classes.colImage}
                                                 alt=""
-                                                onClick={() => this.reanalyzeImage(obj)}
+                                                onClick={() => this.reanalyzeImage(obj, i)}
                                             />
                                             <div className={classes.column}>
+                                                <h3>Image: {i}</h3>
                                                 <h3>Areas</h3>
                                                 {
                                                     obj["areas"].map((area)=>(
-                                                        <h5>{area}</h5>
+                                                        <h5>{area}cm^2</h5>
                                                     ))
                                                 }
                                             </div>
                                         </div>
-                                    :   <img
-                                            src={obj["orig"]}
-                                            className={classes.colImage}
-                                            alt=""
-                                            onClick={() => this.reanalyzeImage(obj)}
-                                        />
+                                    :   <div className={classes.row}>
+                                            <img
+                                                src={obj["orig"]}
+                                                className={classes.colImage}
+                                                alt=""
+                                                onClick={() => this.reanalyzeImage(obj, i)}
+                                            />
+                                            <p>Error: {obj["error_message"]}</p>
+                                        </div>
                                 }
-                            </>
+                            </div>
                         ))}
                     </div>
                 </div>

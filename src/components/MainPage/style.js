@@ -8,6 +8,7 @@ const styles = {
     display: "flex",
     flex: 1,
     flexDirection: "column",
+    textAlign: "center"
   },
   cropperContainer: {
     width: 50,
