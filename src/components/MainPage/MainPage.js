@@ -535,7 +535,7 @@ class MainPage extends React.Component {
           </div>
           { this.state.analyzed ?
           <div className={classes.column}>
-            <p>Stricter farther right and down</p>
+            <p>Stricter farther right (+sat) and down (+val)</p>
             {this.state.currentImages.map((row, i) => (
               <div key={i} className={classes.row}>
               {row.map((obj) => (
