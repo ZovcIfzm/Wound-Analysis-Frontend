@@ -13,7 +13,7 @@ import DebugToolbar from "../DebugToolbar/index.js";
 import { maskConstants } from "../MaskSelector/constants.js"
 import {base_url} from "../../constants.js"
 
-class MainPage extends React.Component {
+class SingleAnalysisPage extends React.Component {
   state = {
     currentImage: null,
     originalImage: null,
@@ -61,16 +61,20 @@ class MainPage extends React.Component {
     }
   }
 
-  goToHome = () => {
+  goToMulti = () => {
     if (this.state.zipImgList != null){
       this.props.history.push({
-        pathname: '/home',
+        pathname: '/multi',
         state: { zipImgList: this.state.zipImgList }
       })
     }
     else{
-      this.props.history.push('/home');
+      this.props.history.push('/multi');
     }
+  }
+  
+  goToHome = () => {
+    this.props.history.push('/home');
   }
 
   getBase64(file, cb) {
@@ -333,14 +337,25 @@ class MainPage extends React.Component {
     return (
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
-            <Button 
-                variant="contained"
-                color="primary"
-                onClick={this.goToHome}>
-                Back to Homepage
-            </Button>
+          <div className={classes.row}>
+              <Button 
+                  className={classes.cropButton}
+                  variant="contained"
+                  color="primary"
+                  onClick={this.goToHome}>
+                  Go to home page
+              </Button>
+              <Button 
+                  className={classes.cropButton}
+                  variant="contained"
+                  color="primary"
+                  onClick={this.goToMulti}>
+                  Go to multi-image measurement
+              </Button>
+            </div>
           <div className={classes.title}>
             <h2>Automatic Wound Area Measurement</h2>
+            <h4>Single-image measurement</h4>
           </div>
           <div className={classes.row}>
             <div className={classes.column}>
@@ -564,4 +579,4 @@ class MainPage extends React.Component {
   }
 }
 
-export default withStyles(styles)(MainPage);
+export default withStyles(styles)(SingleAnalysisPage);

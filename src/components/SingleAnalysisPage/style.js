@@ -19,6 +19,7 @@ const styles = {
     marginRight: "auto",
     marginLeft: "auto",
     width: "100%",
+    justifyContent: "center",
     "@media (min-width: 576px)": {
       maxWidth: "540px",
     },
