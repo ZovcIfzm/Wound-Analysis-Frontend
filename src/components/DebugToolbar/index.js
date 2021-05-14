@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import style from "./style.js";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-
+import {base_url} from "../../constants.js"
 const useStyles = makeStyles(style);
 
 
@@ -19,7 +19,7 @@ function DebugToolbar(props) {
             variant="contained"
             color="primary"
             onClick={() => {
-              const url = "https://gallagher-wound-analysis-api.herokuapp.com/testImage";
+              const url = base_url + "/testImage";
               //const url = "/testImage"
               const form = new FormData();
               form.append("file", props.originalImage);

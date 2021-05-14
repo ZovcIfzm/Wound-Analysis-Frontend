@@ -11,6 +11,7 @@ import MaskSelector from "../MaskSelector/index.js";
 import DebugToolbar from "../DebugToolbar/index.js";
 
 import { maskConstants } from "../MaskSelector/constants.js"
+import {base_url} from "../../constants.js"
 
 class MainPage extends React.Component {
   state = {
@@ -124,7 +125,7 @@ class MainPage extends React.Component {
   };
   analyzeImage = async () => {
     if (this.state.currentImage && this.state.imageWidth) {
-      const url = "https://gallagher-wound-analysis-api.herokuapp.com/measure";
+      const url = base_url + "/measure";
       //const url = "/measure"
       const form = new FormData();
       form.append("base64", this.state.originalImage);

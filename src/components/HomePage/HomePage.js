@@ -9,6 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 import MaskSelector from "../MaskSelector/index.js";
 
 import { maskConstants } from "../MaskSelector/constants.js"
+import {base_url} from "../../constants.js"
 
 class HomePage extends React.Component {
     state = {
@@ -29,7 +30,7 @@ class HomePage extends React.Component {
             }) 
         }
 
-        let url = "https://gallagher-wound-analysis-api.herokuapp.com/";
+        let url = base_url;
         //const url = "/"
         let form = new FormData();
         form.append("wakeup", "wakeup server");
@@ -48,7 +49,7 @@ class HomePage extends React.Component {
     uploadDayZip = async (event) => {
         let zipFile = event.target.files[0]
         if (zipFile) {
-            let url = "https://gallagher-wound-analysis-api.herokuapp.com/zipMeasure";
+            let url = base_url + "/zipMeasure";
             //let url = "/zipMeasure"
             let form = new FormData();
             form.append("file", zipFile);
