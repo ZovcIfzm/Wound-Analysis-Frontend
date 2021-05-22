@@ -168,7 +168,7 @@ class HomePage extends React.Component {
                             />
                             <h4>Warnings/Closure</h4>
                             <li>Make sure the width of the green line is correctly measured, as that is what is being used as reference for the wound area. Depending on lighting conditions, the software may not correctly process all of the green line.</li>
-                            <li>In order not to reset the images already analyzed in multi-image analysis, only move between the multi and single analysis pages. If you move to the home page, it will reset and you will have to upload a zip file again. In a future release we will fix this functionality.</li>
+                            <li>For some reason, if you've already send a zip file for analysis and want to send another zip file, you need to first reload the page. I've tried tracking down this bug for hours and hours and I've been unable to solve it, since it's not critical, I've put it on the backlog while I work on other more critical tasks.</li>
                             <li>Since this web application is hosted for free on Heroku, after a long period of inactivity the frontend app and backend server will shutdown, so if you load the page after a long time it will likely give you an error at first. Don't worry, this is just because the server is stopped. After you tried to open the page (url request), it asked Heroku to restart the server and by the time it gives you the error, it has already started up again and you can just reload the page and you'll see the app.</li>
                         </div>
                     </div>
