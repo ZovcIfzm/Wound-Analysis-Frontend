@@ -50,7 +50,7 @@ function MultiAnalysisPage(props) {
             form.append("lower_mask_two", lowerMaskTwo);
             form.append("upper_mask_one", upperMaskOne);
             form.append("upper_mask_two", upperMaskTwo);
-            form.append("automask", isManualMask);
+            form.append("manual_mask", isManualMask);
             
             //Then analyze
             const analyze_options = {

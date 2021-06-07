@@ -115,7 +115,7 @@ function SingleAnalysisPage (props) {
       form.append("lower_mask_two", lowMaskTwo);
       form.append("upper_mask_one", upMaskOne);
       form.append("upper_mask_two", upMaskTwo);
-      form.append("automask", isManualMask);
+      form.append("manual_mask", isManualMask);
 
       //Then analyze
       const analyze_options = {
@@ -163,8 +163,8 @@ function SingleAnalysisPage (props) {
     setTestImage(image)
   }
 
-  const isManualWidth = event => {
-    setManualWidth(event.target.checked)
+  const isManualWidth = () => {
+    setManualWidth(!manualWidth)
   };
 
   return (
