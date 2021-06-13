@@ -1,16 +1,16 @@
-### Setup
+### Project intro
+This project allows you to upload images of mice with wounds, and find the area of their wounds. This project consists of three components. Frontend interface, backend api, and ml models. Each component has it's own repository. For basic wound area measurement, just frontend and backend is required.
 
-This is the frontend application.
-run npm start within frontend
-The app will be running on localhost:3000
+### Frontend Setup
+* Clone the project.
+* Run npm install
+* Run npm run, the app will automatically open on your browser.
 
-### Example images of interface and analysis
+### Backend Setup
+* Follow the instructions on the backend repository to setup the backend.
 
-<img src="https://github.com/ZovcIfzm/Wound-Analysis-Backend/blob/master/readme-imgs/readme1.jpg" width="720">  
-<img src="https://github.com/ZovcIfzm/Wound-Analysis-Backend/blob/master/readme-imgs/readme2.jpg" width="720">  
-<img src="https://github.com/ZovcIfzm/Wound-Analysis-Backend/blob/master/readme-imgs/readme3.jpg" width="720">
+The website interface (frontend) will be running on localhost:3000
+The api (backend) will be running on localhost:5000
 
-
-### To address later
-Input forms for uploading files may not need a "name" field. Investigate and remove if unneeded
+### Note to self: to address later
 Look into using RaisedButton instead of Button
