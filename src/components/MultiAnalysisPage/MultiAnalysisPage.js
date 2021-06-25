@@ -9,7 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 import MaskSelector from "../MaskSelector/index.js";
 
 import { maskConstants } from "../MaskSelector/constants.js"
-import {base_url} from "../../constants.js"
+import {base_url, base_ml_url} from "../../constants.js"
 
 import { Context } from "../context";
 
@@ -22,6 +22,7 @@ function MultiAnalysisPage(props) {
 
     useEffect(() => {
         let url = base_url;
+        let ml_url = base_ml_url
         //const url = "/"
         let form = new FormData();
         form.append("wakeup", "wakeup server");
@@ -30,6 +31,14 @@ function MultiAnalysisPage(props) {
             body: form,
         };
         fetch(url, analyze_options)
+        .then((response) => {
+            if (!response.ok) throw Error(response.statusText);
+                return response.json();
+            })
+        .catch((error) => console.log(error));
+
+        
+        fetch(ml_url, analyze_options)
         .then((response) => {
             if (!response.ok) throw Error(response.statusText);
                 return response.json();
