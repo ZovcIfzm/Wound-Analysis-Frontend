@@ -18,11 +18,10 @@ const useStyles = makeStyles(style);
 
 function MaskSelector(props) {
   
-  const { lowerMaskOne, setLowerMaskOne, lowerMaskTwo, setLowerMaskTwo, upperMaskOne, setUpperMaskOne, upperMaskTwo, setUpperMaskTwo, setMask } = React.useContext(Context)
+  const { lowerMaskOne, setLowerMaskOne, lowerMaskTwo, setLowerMaskTwo, upperMaskOne, setUpperMaskOne, upperMaskTwo, setUpperMaskTwo, setMask, isManualMask, setIsManualMask } = React.useContext(Context)
   
   const classes = useStyles();
   const placeholder = "hue, sat, val";
-  const [isManualMask, setIsManualMask] = useState(false);
 
   const modifyLowerSat = (val) => {
     let newLowerMaskOne = [...lowerMaskOne];
