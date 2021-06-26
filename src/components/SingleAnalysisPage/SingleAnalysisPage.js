@@ -281,12 +281,13 @@ function SingleAnalysisPage (props) {
           <p>Stricter farther right (+sat) and down (+val)</p>
           {currentImages.map((row, i) => (
             <div key={i} className={classes.row}>
-            {row.map((obj) => (
+            {row.map((obj, i) => (
               <img
-              src={obj["drawn_image"]}
-              className={classes.gridImage}
-              alt=""
-              onClick={() => reanalyzeImage(obj)}
+                key={i}
+                src={obj["drawn_image"]}
+                className={classes.gridImage}
+                alt=""
+                onClick={() => reanalyzeImage(obj)}
               />
             ))}
             </div>
@@ -294,12 +295,6 @@ function SingleAnalysisPage (props) {
         </div>
         : null
         }
-        <div style={{"height": 100}}/>
-        <DebugToolbar
-          originalImage={originalImage}
-          testImage={testImage}
-          changeTestImage={handleChangeTestImage}
-        />   
       </div>
     </div>
   );
