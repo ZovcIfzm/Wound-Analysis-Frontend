@@ -96,6 +96,7 @@ function SingleAnalysisPage (props) {
   };
 
   const reanalyzeImage = async (obj) => {
+    setIsManualMask(true)
     setLowerMaskOne(obj["lower_range"][0])
     setLowerMaskTwo(obj["lower_range"][1])
     setUpperMaskOne(obj["upper_range"][0])
