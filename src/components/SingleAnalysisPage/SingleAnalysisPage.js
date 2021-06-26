@@ -101,10 +101,10 @@ function SingleAnalysisPage (props) {
     setLowerMaskTwo(obj["lower_range"][1])
     setUpperMaskOne(obj["upper_range"][0])
     setUpperMaskTwo(obj["upper_range"][1])
-    analyzeImage(obj["lower_range"][0], obj["lower_range"][1], obj["upper_range"][0], obj["upper_range"][1])
+    analyzeImage(obj["lower_range"][0], obj["lower_range"][1], obj["upper_range"][0], obj["upper_range"][1], true)
   };
 
-  const analyzeImage = async (lowMaskOne, lowMaskTwo, upMaskOne, upMaskTwo) => {
+  const analyzeImage = async (lowMaskOne, lowMaskTwo, upMaskOne, upMaskTwo, specifiedManualMask=false) => {
     if (currentImage && imageWidth) {
       const url = base_url + "/measure";
       //const url = "/measure"
@@ -116,7 +116,12 @@ function SingleAnalysisPage (props) {
       form.append("lower_mask_two", lowMaskTwo);
       form.append("upper_mask_one", upMaskOne);
       form.append("upper_mask_two", upMaskTwo);
-      form.append("manual_mask", isManualMask);
+      if (specifiedManualMask){
+        form.append("manual_mask", specifiedManualMask);
+      }
+      else{
+        form.append("manual_mask", isManualMask);
+      }
 
       //Then analyze
       const analyze_options = {
