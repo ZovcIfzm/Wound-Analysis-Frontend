@@ -3,9 +3,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Provider } from "./components/context";
-import HomePage from "./features/Home/HomeScreen";
-import SingleAnalysisPage from "./features/SingleAnalysis/SingleAnalysisView";
-import MultiAnalysisPage from "./features/MultiAnalysis/MultiAnalysisView";
+import HomeScreen from "./features/Home/HomeScreen";
+import SingleAnalysisScreen from "./features/analysis/screens/SingleAnalysisScreen";
+import MultiAnalysisScreen from "./features/analysis/screens/MultiAnalysisScreen";
 require("typeface-roboto-slab");
 // Your routes.js file
 
@@ -13,9 +13,9 @@ ReactDOM.render(
   <Provider>
     <BrowserRouter>
       <Switch>
-        <Route path="/single" component={SingleAnalysisPage} exact />
-        <Route path="/multi" component={MultiAnalysisPage} exact />
-        <Route path="/home" component={HomePage} exact />
+        <Route path="/single" component={SingleAnalysisScreen} exact />
+        <Route path="/multi" component={MultiAnalysisScreen} exact />
+        <Route path="/home" component={HomeScreen} exact />
         <Redirect from="/" to="/home" />
       </Switch>
     </BrowserRouter>
