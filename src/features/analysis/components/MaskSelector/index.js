@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import styles from "./style.js";
+import style from "./style.js";
 import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
 
 import maskAImg from "../../assets/maskAImg.JPG";
 import maskBImg from "../../assets/maskBImg.JPG";

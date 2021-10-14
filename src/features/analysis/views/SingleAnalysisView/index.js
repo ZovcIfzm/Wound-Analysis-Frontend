@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Cropper from "../../../components/ImageCropper/imageCropper";
 
 import { Button, Checkbox, Tooltip, TextField } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
 
 import styles from "./style.js";
+import styles from "styles";
 
 import MaskSelector from "../../../components/MaskSelector/index.js";
+import DebugToolbar from "../../../components/DebugToolbar/index.js";
+
+import { maskConstants } from "../../../components/MaskSelector/constants.js";
+import { base_url } from "../../../constants.js";
+
+import { Context } from "../../../components/context";
 
 const completeCrop = (image, setUseCrop, setCurrentImage, setOriginalImage) => {
   setUseCrop(false);
@@ -28,19 +36,12 @@ const goToHome = (history) => {
   history.push("/home");
 };
 
-const getBase64 = (file, cb) => {
-  let reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = function () {
-    cb(reader.result);
-  };
-  reader.onerror = function (error) {
-    console.log("Error: ", error);
-  };
-};
-
 const handleWidthChange = (event, setImageWidth) => {
   setImageWidth(event.target.value);
+};
+
+const handleCropChange = (setUseCrop) => {
+  setUseCrop(true);
 };
 
 const isManualWidth = (setManualWidth) => {
@@ -51,12 +52,11 @@ const SingleAnalysisView = (props) => {
   const [useCrop, setUseCrop] = useState(false);
   const [areas, setAreas] = useState([]);
   const [jumpHeading, setJumpHeading] = useState();
-
-  const [analyzed, setAnalyzed] = useState(false);
-  const [useCrop, setUseCrop] = useState(false);
-  const [areas, setAreas] = useState([]);
-  const [obj, setObj] = useState();
-  const [jumpHeading, setJumpHeading] = useState();
+  const [currentImage, setCurrentImage] = useState();
+  const [currentImages, setCurrentImages] = useState();
+  const [originalImage, setOriginalImage] = useState();
+  const [imageWidth, setImageWidth] = useState(2.54);
+  const [manualWidth, setManualWidth] = useState(false);
 
   return (
     <div style={{ ...styles.main, ...styles.mainRaised }}>
@@ -93,14 +93,7 @@ const SingleAnalysisView = (props) => {
                   type="file"
                   name="myImage"
                   hidden
-                  onChange={(event) =>
-                    onImageUpload(
-                      event,
-                      getBase64,
-                      setCurrentImage,
-                      setOriginalImage
-                    )
-                  }
+                  onChange={props.onImageUpload}
                 />
               </Button>
             </div>
@@ -115,8 +108,7 @@ const SingleAnalysisView = (props) => {
                   label="Enter reference width (cm)"
                   defaultValue={imageWidth}
                   InputProps={{
-                    onChange: (event) =>
-                      handleWidthChange(event, setImageWidth),
+                    onChange: () => handleWidthChange(setImageWidth),
                   }}
                 />
               </Tooltip>
@@ -135,7 +127,7 @@ const SingleAnalysisView = (props) => {
             {useCrop ? (
               <Cropper
                 currentImage={originalImage}
-                completeCrop={completeCrop}
+                completeCrop={props.completeCrop}
               />
             ) : (
               <>
@@ -146,7 +138,7 @@ const SingleAnalysisView = (props) => {
                     style={styles.cropButton}
                     variant="contained"
                     color="primary"
-                    onClick={() => setUseCrop(true)}
+                    onClick={() => handleCropChange(setUseCrop)}
                   >
                     Crop Image
                   </Button>
