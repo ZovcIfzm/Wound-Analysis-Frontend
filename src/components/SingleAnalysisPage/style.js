@@ -8,9 +8,7 @@ const styles = {
     display: "flex",
     flex: 1,
     flexDirection: "column",
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center",
+    textAlign: "center"
   },
   cropperContainer: {
     width: 50,
@@ -39,7 +37,9 @@ const styles = {
     boxShadow:
       "0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)",
   },
-
+  centeredText: {
+    alignSelf: "center"
+  },
   title: {
     color: "#3C4858",
     margin: "1.75rem 0 0.875rem",
@@ -63,6 +63,7 @@ const styles = {
     boxShadow:
       "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)",
   },
+
   images: {
     display: "flex",
     flex: 1,
@@ -73,26 +74,20 @@ const styles = {
     display: "flex",
     flex: 1,
     width: "33%",
-    alignSelf: "center",
+    alignSelf: "center"
   },
-  colImage: {
-    display: "flex",
-    flex: 1,
-    width: "80%",
-    alignSelf: "center",
-  },
+
   cropButton: {
     display: "flex",
     flex: 1,
-    width: "25%",
+    width: "50%",
     alignSelf: "center",
   },
-  analyzeButton: {
+  hsvButton: {
     display: "flex",
     flex: 1,
-    width: "75%",
     alignSelf: "center",
-  },
+  }
 };
 
 export default styles;

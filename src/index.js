@@ -2,10 +2,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import { Provider } from "./components/context";
-import HomePage from "./features/Home/HomeScreen";
-import SingleAnalysisPage from "./features/SingleAnalysis/SingleAnalysisView";
-import MultiAnalysisPage from "./features/MultiAnalysis/MultiAnalysisView";
+import { Provider } from "./components/context"
+import HomePage from "./components/HomePage/HomePage"
+import SingleAnalysisPage from "./components/SingleAnalysisPage/SingleAnalysisPage";
+import MultiAnalysisPage from "./components/MultiAnalysisPage/MultiAnalysisPage";
 require("typeface-roboto-slab");
 // Your routes.js file
 
