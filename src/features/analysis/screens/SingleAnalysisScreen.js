@@ -2,23 +2,18 @@ import React, { useEffect, useState } from "react";
 
 import { base_url } from "../../../constants.js";
 
-import { Context } from "../featureContext";
+import { Context } from "../../../components/context";
 
 import SingleAnalysisView from "./views/SingleAnalysisView";
 
-const goToMulti = (history) => {
-  if (zipImgList != null) {
-    history.push({
-      pathname: "/multi",
-      state: { zipImgList: zipImgList },
+const onImageUpload = (event, getBase64, setCurrentImage, setOriginalImage) => {
+  if (event.target.files && event.target.files[0]) {
+    let imgFile = event.target.files[0];
+    getBase64(imgFile, (result) => {
+      setCurrentImage(result);
+      setOriginalImage(result);
     });
-  } else {
-    history.push("/multi");
   }
-};
-
-const goToHome = (history) => {
-  history.push("/home");
 };
 
 const SingleAnalysisScreen = (props) => {
@@ -56,6 +51,8 @@ const SingleAnalysisScreen = (props) => {
       analyzeImage={analyzeImage}
       reanalyzeImage={reanalyzeImage}
       onImageUpload={onImageUpload}
+      completeCrop={completeCrop}
+      getBase64={getBase64}
       goToHome={goToHome}
       goToMulti={goToMulti}
       imageWidth={imageWidth}

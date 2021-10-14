@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 
-import { base_url, base_ml_url } from "../../../constants.js";
+import { base_url, base_ml_url } from "../../constants.js";
 
-import HomeView from "../views/HomeView";
+import HomeView from "./HomeView";
 
 const HomeScreen = (props) => {
   useEffect(() => {
