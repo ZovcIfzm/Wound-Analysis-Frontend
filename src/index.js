@@ -2,8 +2,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import { Provider } from "./components/context";
-import HomeScreen from "./features/Home/HomeScreen";
+import { Provider } from "./features/analysis/analysisContext";
+import HomeScreen from "./features/Home/screens/HomeScreen";
 import SingleAnalysisScreen from "./features/analysis/screens/SingleAnalysisScreen";
 import MultiAnalysisScreen from "./features/analysis/screens/MultiAnalysisScreen";
 require("typeface-roboto-slab");

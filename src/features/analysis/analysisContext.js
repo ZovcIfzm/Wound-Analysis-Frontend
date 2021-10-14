@@ -16,13 +16,14 @@ const Provider = (props) => {
   const [upperMaskTwo, setUpperMaskTwo] = useState(
     maskConstants["B"]["upper_range"][1]
   );
+  const [imageWidth, setImageWidth] = useState(2.54);
+  const [manualWidth, setManualWidth] = useState(false);
   const [isManualMask, setIsManualMask] = useState(false);
-  const [zipImgList, setZipImgList] = useState([]);
   const [currentImage, setCurrentImage] = useState();
   const [currentImages, setCurrentImages] = useState();
   const [originalImage, setOriginalImage] = useState();
-  const [imageWidth, setImageWidth] = useState(2.54);
-  const [manualWidth, setManualWidth] = useState(false);
+
+  const [zipImgList, setZipImgList] = useState([]);
 
   const setMask = async (mask) => {
     setIsManualMask(true);
@@ -35,7 +36,6 @@ const Provider = (props) => {
   const analyzeImage = async () => {
     if (currentImage && imageWidth) {
       const url = base_url + "/measure";
-      //const url = "/measure"
       const form = new FormData();
       form.append("base64", originalImage);
       form.append("width", imageWidth);
@@ -44,30 +44,25 @@ const Provider = (props) => {
       form.append("lower_mask_two", mask["lower_range"][1]);
       form.append("upper_mask_one", mask["upper_range"][0]);
       form.append("upper_mask_two", mask["upper_range"][1]);
-      if (specifiedManualMask) {
-        form.append("manual_mask", specifiedManualMask);
-      } else {
-        form.append("manual_mask", isManualMask);
-      }
+      form.append("manual_mask", isManualMask);
 
-      //Then analyze
-      const analyze_options = {
+      const config = {
         method: "POST",
         body: form,
       };
-      fetch(url, analyze_options)
+      fetch(url, config)
         .then((response) => {
           if (!response.ok) throw Error(response.statusText);
           return response.json();
         })
         .then((matrix) => {
           if (matrix[1][1]["error"] == false) {
-            setAnalyzed(true);
             setCurrentImage(matrix[1][1]["drawn_image"]);
             setOriginalImage(matrix[1][1]["orig"]);
             setEdgedImage(matrix[1][1]["edged_image"]);
             setCurrentImages(matrix);
             setAreas(matrix[1][1]["areas"]);
+            setAnalyzed(true);
             alert("Images analyzed");
           } else {
             alert(matrix[1][1]["error_message"]);
@@ -83,9 +78,9 @@ const Provider = (props) => {
     }
   };
 
-  const reanalyzeImage = async (obj, setMask) => {
+  const reanalyzeImage = async (obj) => {
     setMask(obj);
-    analyzeImage(obj, true);
+    analyzeImage();
   };
 
   return (
@@ -101,10 +96,13 @@ const Provider = (props) => {
         setUpperMaskTwo: setUpperMaskTwo,
         zipImgList: zipImgList,
         setZipImgList: setZipImgList,
+
         setMask: setMask,
         isManualMask: isManualMask,
-        setIsManualMask,
-        setIsManualMask,
+        setIsManualMask: setIsManualMask,
+
+        setCurrentImage: setCurrentImage,
+        setOriginalImage: setOriginalImage,
       }}
     >
       {props.children}

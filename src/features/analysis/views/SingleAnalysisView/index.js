@@ -13,21 +13,6 @@ const completeCrop = (image, setUseCrop, setCurrentImage, setOriginalImage) => {
   setOriginalImage(image);
 };
 
-const goToMulti = (history) => {
-  if (zipImgList != null) {
-    history.push({
-      pathname: "/multi",
-      state: { zipImgList: zipImgList },
-    });
-  } else {
-    history.push("/multi");
-  }
-};
-
-const goToHome = (history) => {
-  history.push("/home");
-};
-
 const getBase64 = (file, cb) => {
   let reader = new FileReader();
   reader.readAsDataURL(file);
@@ -45,6 +30,16 @@ const handleWidthChange = (event, setImageWidth) => {
 
 const isManualWidth = (setManualWidth) => {
   setManualWidth(!manualWidth);
+};
+
+const onImageUpload = (event, getBase64, setCurrentImage, setOriginalImage) => {
+  if (event.target.files && event.target.files[0]) {
+    let imgFile = event.target.files[0];
+    getBase64(imgFile, (result) => {
+      setCurrentImage(result);
+      setOriginalImage(result);
+    });
+  }
 };
 
 const SingleAnalysisView = (props) => {
@@ -122,8 +117,8 @@ const SingleAnalysisView = (props) => {
               </Tooltip>
               <div style={styles.row}>
                 <Checkbox
-                  checked={manualWidth}
-                  onChange={() => isManualWidth(setManualWidth)}
+                  checked={props.manualWidth}
+                  onChange={() => isManualWidth(props.setManualWidth)}
                   value="manualWidth"
                 />
                 <div style={styles.centeredText}>Set width to manual</div>
@@ -134,14 +129,14 @@ const SingleAnalysisView = (props) => {
           <div style={styles.column}>
             {useCrop ? (
               <Cropper
-                currentImage={originalImage}
+                currentImage={props.originalImage}
                 completeCrop={completeCrop}
               />
             ) : (
               <>
                 <h3>Image {jumpHeading}</h3>
                 <div style={styles.column}>
-                  <img src={currentImage} style={styles.images} alt="" />
+                  <img src={props.currentImage} style={styles.images} alt="" />
                   <Button
                     style={styles.cropButton}
                     variant="contained"
