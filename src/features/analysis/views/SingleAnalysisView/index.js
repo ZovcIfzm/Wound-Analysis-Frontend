@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Cropper from "../../../components/ImageCropper/imageCropper";
+import Cropper from "../../components/ImageCropper/imageCropper";
 
 import { Button, Checkbox, Tooltip, TextField } from "@material-ui/core";
 
 import styles from "./style.js";
 
-import MaskSelector from "../../../components/MaskSelector/index.js";
+import MaskSelector from "../../components/MaskSelector";
 
 const completeCrop = (image, setUseCrop, setCurrentImage, setOriginalImage) => {
   setUseCrop(false);
@@ -43,10 +43,6 @@ const onImageUpload = (event, getBase64, setCurrentImage, setOriginalImage) => {
 };
 
 const SingleAnalysisView = (props) => {
-  const [useCrop, setUseCrop] = useState(false);
-  const [areas, setAreas] = useState([]);
-  const [jumpHeading, setJumpHeading] = useState();
-
   const [analyzed, setAnalyzed] = useState(false);
   const [useCrop, setUseCrop] = useState(false);
   const [areas, setAreas] = useState([]);

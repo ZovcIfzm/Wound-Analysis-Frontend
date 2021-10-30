@@ -3,15 +3,13 @@ import TextField from "@material-ui/core/TextField";
 import styles from "./style.js";
 import Button from "@material-ui/core/Button";
 
-import maskAImg from "../../assets/maskAImg.JPG";
-import maskBImg from "../../assets/maskBImg.JPG";
-import maskCImg from "../../assets/maskCImg.JPG";
-import maskDImg from "../../assets/maskDImg.JPG";
-import maskEImg from "../../assets/maskEImg.JPG";
+import maskAImg from "./assets/maskAImg.JPG";
+import maskBImg from "./assets/maskBImg.JPG";
+import maskCImg from "./assets/maskCImg.JPG";
+import maskDImg from "./assets/maskDImg.JPG";
+import maskEImg from "./assets/maskEImg.JPG";
 
-import { maskConstants } from "./constants.js";
-
-import { Context } from "../context";
+import { maskConstants } from "../../../../constants.js";
 
 const MaskSelector = (props) => {
   const {
@@ -28,10 +26,9 @@ const MaskSelector = (props) => {
     setIsManualMask,
   } = React.useContext(Context);
 
-  const styles = useStyles();
   const placeholder = "hue, sat, val";
 
-  const modifyLowerSat = (val) => {
+  const modifyLowerSat = (val, masks) => {
     let newLowerMaskOne = [...lowerMaskOne];
     let newLowerMaskTwo = [...lowerMaskTwo];
     newLowerMaskOne[1] += val;

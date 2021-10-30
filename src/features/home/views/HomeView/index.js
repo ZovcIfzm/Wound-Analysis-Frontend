@@ -4,17 +4,17 @@ import { Button } from "@material-ui/core";
 
 import styles from "./style.js";
 
-import multiAnalysisPageImg from "../../../assets/tutorial/single/multiAnalysisPageImg.PNG";
-import stepAreas from "../../../assets/tutorial/single/stepAreas.PNG";
-import stepChooseWidth from "../../../assets/tutorial/single/stepChooseWidth.PNG";
-import stepGridMasks from "../../../assets/tutorial/single/stepGridMasks.PNG";
-import stepGridMasks2 from "../../../assets/tutorial/single/stepGridMasks2.PNG";
-import stepImageMasked from "../../../assets/tutorial/single/stepImageMasked.PNG";
-import stepManualMask from "../../../assets/tutorial/single/stepManualMask.PNG";
-import stepMeasure from "../../../assets/tutorial/single/stepMeasure.PNG";
-import stepPressOk from "../../../assets/tutorial/single/stepPressOk.PNG";
-import uploadImageImg from "../../../assets/tutorial/single/uploadImageImg.PNG";
-import stepMultiSelect from "../../../assets/tutorial/single/stepMultiSelect.PNG";
+import multiAnalysisPageImg from "../../assets/tutorial/single/multiAnalysisPageImg.PNG";
+import stepAreas from "../../assets/tutorial/single/stepAreas.PNG";
+import stepChooseWidth from "../../assets/tutorial/single/stepChooseWidth.PNG";
+import stepGridMasks from "../../assets/tutorial/single/stepGridMasks.PNG";
+import stepGridMasks2 from "../../assets/tutorial/single/stepGridMasks2.PNG";
+import stepImageMasked from "../../assets/tutorial/single/stepImageMasked.PNG";
+import stepManualMask from "../../assets/tutorial/single/stepManualMask.PNG";
+import stepMeasure from "../../assets/tutorial/single/stepMeasure.PNG";
+import stepPressOk from "../../assets/tutorial/single/stepPressOk.PNG";
+import uploadImageImg from "../../assets/tutorial/single/uploadImageImg.PNG";
+import stepMultiSelect from "../../assets/tutorial/single/stepMultiSelect.PNG";
 
 const HomeView = (props) => {
   return (

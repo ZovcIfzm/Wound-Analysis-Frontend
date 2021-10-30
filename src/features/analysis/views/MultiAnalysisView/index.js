@@ -4,7 +4,7 @@ import { Button, Checkbox, Tooltip, TextField } from "@material-ui/core";
 
 import styles from "./style.js";
 
-import MaskSelector from "../../../../components/MaskSelector/index.js";
+import MaskSelector from "../../components/MaskSelector";
 
 const MultiAnalysisView = (props) => {
   const [imageWidth, setImageWidth] = useState(2.54);

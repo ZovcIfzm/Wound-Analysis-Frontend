@@ -2,7 +2,9 @@ import React, { useContext, useState } from "react";
 
 import { base_url } from "../../../constants.js";
 
-import { Context } from "../featureContext";
+import { Context } from "../analysisContext";
+
+import MultiAnalysisView from "../views/MultiAnalysisView";
 
 const MultiAnalysisScreen = (props) => {
   const {

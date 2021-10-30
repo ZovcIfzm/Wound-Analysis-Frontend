@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { maskConstants } from "./MaskSelector/constants.js";
+import { maskConstants } from "../../constants.js";
 
 const Context = React.createContext();
 

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import { base_url } from "../../../constants.js";
 
-import { Context } from "../featureContext";
+import { Context } from "../analysisContext";
 
-import SingleAnalysisView from "./views/SingleAnalysisView";
+import SingleAnalysisView from "../views/SingleAnalysisView";
 
 const goToMulti = (history) => {
   if (zipImgList != null) {
