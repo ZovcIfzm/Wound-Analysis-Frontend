@@ -26,7 +26,6 @@ function SingleAnalysisPage(props) {
     setUpperMaskOne,
     upperMaskTwo,
     setUpperMaskTwo,
-    setMask,
     zipImgList,
     setZipImgList,
     isManualMask,
@@ -35,13 +34,9 @@ function SingleAnalysisPage(props) {
   const [currentImage, setCurrentImage] = useState();
   const [originalImage, setOriginalImage] = useState();
   const [currentImages, setCurrentImages] = useState();
-  const [edgedImage, setEdgedImage] = useState();
-  const [analyzed, setAnalyzed] = useState(false);
   const [imageWidth, setImageWidth] = useState(6);
   const [useCrop, setUseCrop] = useState(false);
   const [areas, setAreas] = useState([]);
-  const [testImage, setTestImage] = useState();
-  const [obj, setObj] = useState();
   const [manualWidth, setManualWidth] = useState(false);
   const [jumpHeading, setJumpHeading] = useState();
 

@@ -22,7 +22,6 @@ function MultiAnalysisPage(props) {
     zipImgList,
     setZipImgList,
     isManualMask,
-    setIsManualMask,
   } = React.useContext(Context);
   const [imageWidth, setImageWidth] = useState(6);
   const [manualWidth, setManualWidth] = useState(false);
