@@ -17,20 +17,8 @@ import { Context } from "../context";
 
 function SingleAnalysisPage(props) {
   const { classes } = props;
-  const {
-    lowerMaskOne,
-    setLowerMaskOne,
-    lowerMaskTwo,
-    setLowerMaskTwo,
-    upperMaskOne,
-    setUpperMaskOne,
-    upperMaskTwo,
-    setUpperMaskTwo,
-    zipImgList,
-    setZipImgList,
-    isManualMask,
-    setIsManualMask,
-  } = React.useContext(Context);
+  const { mask, setMask, zipImgList, setZipImgList } =
+    React.useContext(Context);
   const [currentImage, setCurrentImage] = useState();
   const [originalImage, setOriginalImage] = useState();
   const [currentImages, setCurrentImages] = useState();
@@ -92,7 +80,6 @@ function SingleAnalysisPage(props) {
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let imgFile = event.target.files[0];
-      //let idCardBase64 = '';
       getBase64(imgFile, (result) => {
         setCurrentImage(result);
         setOriginalImage(result);
@@ -101,50 +88,29 @@ function SingleAnalysisPage(props) {
   };
 
   const reanalyzeImage = async (obj) => {
-    setIsManualMask(true);
-    setLowerMaskOne(obj["lower_range"][0]);
-    setLowerMaskTwo(obj["lower_range"][1]);
-    setUpperMaskOne(obj["upper_range"][0]);
-    setUpperMaskTwo(obj["upper_range"][1]);
-    analyzeImage(
-      obj["lower_range"][0],
-      obj["lower_range"][1],
-      obj["upper_range"][0],
-      obj["upper_range"][1],
-      true
-    );
+    let maskObj = {
+      ...mask,
+      lowerBound: obj["lowerBound"],
+      upperBound: obj["upperBound"],
+      autoMask: False,
+    };
+    setMask(maskObj);
+    analyzeImage(maskObj);
   };
 
-  const analyzeImage = async (
-    lowMaskOne,
-    lowMaskTwo,
-    upMaskOne,
-    upMaskTwo,
-    specifiedManualMask = false
-  ) => {
+  const analyzeImage = async (mask) => {
     if (currentImage && imageWidth) {
       const url = base_url + "/measure";
       //const url = "/measure"
+
       const form = new FormData();
       form.append("base64", originalImage);
-      form.append("width", imageWidth);
-      form.append("manual_width", manualWidth);
-      form.append("lower_mask_one", lowMaskOne);
-      form.append("lower_mask_two", lowMaskTwo);
-      form.append("upper_mask_one", upMaskOne);
-      form.append("upper_mask_two", upMaskTwo);
-      if (specifiedManualMask) {
-        form.append("manual_mask", specifiedManualMask);
-      } else {
-        form.append("manual_mask", isManualMask);
-      }
+      form.append("mask", mask);
 
-      //Then analyze
-      const analyze_options = {
+      fetch(url, {
         method: "POST",
         body: form,
-      };
-      fetch(url, analyze_options)
+      })
         .then((response) => {
           if (!response.ok) throw Error(response.statusText);
           return response.json();
@@ -180,12 +146,8 @@ function SingleAnalysisPage(props) {
     setUseCrop(true);
   };
 
-  const handleChangeTestImage = (image) => {
-    setTestImage(image);
-  };
-
-  const isManualWidth = () => {
-    setManualWidth(!manualWidth);
+  const changeManualWidth = () => {
+    setMask((prevMask) => ({ ...prevMask, autoWidth: !prevMask["autoWidth"] }));
   };
 
   return (
@@ -245,7 +207,7 @@ function SingleAnalysisPage(props) {
               <div className={classes.row}>
                 <Checkbox
                   checked={manualWidth}
-                  onChange={() => isManualWidth()}
+                  onChange={() => changeManualWidth()}
                   value="manualWidth"
                 />
                 <div className={classes.centeredText}>Set width to manual</div>
@@ -288,14 +250,7 @@ function SingleAnalysisPage(props) {
             <Button
               variant="contained"
               color="primary"
-              onClick={() =>
-                analyzeImage(
-                  lowerMaskOne,
-                  lowerMaskTwo,
-                  upperMaskOne,
-                  upperMaskTwo
-                )
-              }
+              onClick={analyzeImage}
               className={classes.cropButton}
             >
               Measure area
