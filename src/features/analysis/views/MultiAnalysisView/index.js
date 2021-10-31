@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import { Button, Checkbox, Tooltip, TextField } from "@material-ui/core";
 
@@ -9,6 +10,8 @@ import MaskSelector from "../../components/MaskSelector";
 const MultiAnalysisView = (props) => {
   const [imageWidth, setImageWidth] = useState(2.54);
   const [manualWidth, setManualWidth] = useState(false);
+
+  let history = useHistory();
 
   const handleWidthChange = (event) => {
     setImageWidth(event.target.value);
@@ -22,7 +25,9 @@ const MultiAnalysisView = (props) => {
             style={styles.cropButton}
             variant="contained"
             color="primary"
-            onClick={goToHome}
+            onClick={() => {
+              history.push("/home");
+            }}
           >
             Go to home page
           </Button>
@@ -30,7 +35,9 @@ const MultiAnalysisView = (props) => {
             style={styles.cropButton}
             variant="contained"
             color="primary"
-            onClick={goToSingle}
+            onClick={() => {
+              history.push("/single");
+            }}
           >
             Go to single-image measurement
           </Button>

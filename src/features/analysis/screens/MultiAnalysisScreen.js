@@ -62,14 +62,6 @@ const MultiAnalysisScreen = (props) => {
     }
   };
 
-  const goToSingle = () => {
-    props.history.push("/single");
-  };
-
-  const goToHome = () => {
-    props.history.push("/home");
-  };
-
   const reanalyzeImage = async (obj, i) => {
     obj["id"] = i;
     props.history.push({

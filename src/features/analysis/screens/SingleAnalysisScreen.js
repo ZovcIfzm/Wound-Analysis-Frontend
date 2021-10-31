@@ -6,33 +6,9 @@ import { Context } from "../analysisContext";
 
 import SingleAnalysisView from "../views/SingleAnalysisView";
 
-const goToMulti = (history) => {
-  if (zipImgList != null) {
-    history.push({
-      pathname: "/multi",
-      state: { zipImgList: zipImgList },
-    });
-  } else {
-    history.push("/multi");
-  }
-};
-
-const goToHome = (history) => {
-  history.push("/home");
-};
-
 const SingleAnalysisScreen = (props) => {
-  const {
-    setLowerMaskOne,
-    setLowerMaskTwo,
-    setUpperMaskOne,
-    setUpperMaskTwo,
-    setMask,
-    zipImgList,
-    setZipImgList,
-    isManualMask,
-    setIsManualMask,
-  } = React.useContext(Context);
+  const { setMask, zipImgList, setZipImgList, isManualMask, setIsManualMask } =
+    React.useContext(Context);
 
   useEffect(() => {
     if (props.location.state != null) {
@@ -51,28 +27,7 @@ const SingleAnalysisScreen = (props) => {
     }
   }, []);
 
-  return (
-    <SingleAnalysisView
-      analyzeImage={analyzeImage}
-      reanalyzeImage={reanalyzeImage}
-      onImageUpload={onImageUpload}
-      goToHome={goToHome}
-      goToMulti={goToMulti}
-      imageWidth={imageWidth}
-      manualWidth={manualWidth}
-      isManualWidth={isManualWidth}
-      handleWidthChange={handleWidthChange}
-      handleCropChange={handleCropChange}
-      originalImage={originalImage}
-      currentImages={currentImages}
-      currentImage={currentImage}
-      history={props.history}
-      lowerMaskOne={props.lowerMaskOne}
-      lowerMaskTwo={props.lowerMaskTwo}
-      upperMaskOne={props.upperMaskOne}
-      upperMaskTwo={props.upperMaskTwo}
-    />
-  );
+  return <SingleAnalysisView />;
 };
 
 export default SingleAnalysisScreen;

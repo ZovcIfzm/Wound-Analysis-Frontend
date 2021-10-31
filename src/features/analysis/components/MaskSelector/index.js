@@ -12,25 +12,14 @@ import maskEImg from "./assets/maskEImg.JPG";
 import { maskConstants } from "../../../../constants.js";
 
 const MaskSelector = (props) => {
-  const {
-    lowerMaskOne,
-    setLowerMaskOne,
-    lowerMaskTwo,
-    setLowerMaskTwo,
-    upperMaskOne,
-    setUpperMaskOne,
-    upperMaskTwo,
-    setUpperMaskTwo,
-    setMask,
-    isManualMask,
-    setIsManualMask,
-  } = React.useContext(Context);
+  const { mask, setMask, isManualMask, setIsManualMask } =
+    React.useContext(Context);
 
   const placeholder = "hue, sat, val";
 
-  const modifyLowerSat = (val, masks) => {
-    let newLowerMaskOne = [...lowerMaskOne];
-    let newLowerMaskTwo = [...lowerMaskTwo];
+  const modifyLowerSat = (val) => {
+    let newLowerMaskOne = [...mask["lowerMaskOne"]];
+    let newLowerMaskTwo = [...mask["lowerMaskTwo"]];
     newLowerMaskOne[1] += val;
     newLowerMaskTwo[1] += val;
 
@@ -46,13 +35,16 @@ const MaskSelector = (props) => {
     ) {
       alert("Cannot increase lower sat above upper sat");
     } else {
-      setLowerMaskOne(newLowerMaskOne);
-      setLowerMaskTwo(newLowerMaskTwo);
+      setMask((prevMask) => ({
+        ...prevMask,
+        lowerMaskOne: newLowerMaskOne,
+        lowerMaskTwo: newLowerMaskTwo,
+      }));
     }
   };
   const modifyUpperSat = (val) => {
-    let newUpperMaskOne = [...upperMaskOne];
-    let newUpperMaskTwo = [...upperMaskTwo];
+    let newUpperMaskOne = [...mask["upperMaskOne"]];
+    let newUpperMaskTwo = [...mask["upperMaskTwo"]];
     newUpperMaskOne[1] += val;
     newUpperMaskTwo[1] += val;
 
@@ -68,14 +60,17 @@ const MaskSelector = (props) => {
     ) {
       alert("Cannot lower upper sat below lower sat");
     } else {
-      setUpperMaskOne(newUpperMaskOne);
-      setUpperMaskTwo(newUpperMaskTwo);
+      setMask((prevMask) => ({
+        ...prevMask,
+        upperMaskOne: newUpperMaskOne,
+        upperMaskTwo: newUpperMaskTwo,
+      }));
     }
   };
 
   const modifyLowerVal = (val) => {
-    let newLowerMaskOne = [...lowerMaskOne];
-    let newLowerMaskTwo = [...lowerMaskTwo];
+    let newLowerMaskOne = [...mask["lowerMaskOne"]];
+    let newLowerMaskTwo = [...mask["lowerMaskTwo"]];
     newLowerMaskOne[2] += val;
     newLowerMaskTwo[2] += val;
 
@@ -91,13 +86,16 @@ const MaskSelector = (props) => {
     ) {
       alert("Cannot increase lower val above upper val");
     } else {
-      setLowerMaskOne(newLowerMaskOne);
-      setLowerMaskTwo(newLowerMaskTwo);
+      setMask((setMask) => ({
+        ...prevMask,
+        lowerMaskOne: newLowerMaskOne,
+        lowerMaskTwo: newLowerMaskTwo,
+      }));
     }
   };
   const modifyUpperVal = (val) => {
-    let newUpperMaskOne = [...upperMaskOne];
-    let newUpperMaskTwo = [...upperMaskTwo];
+    let newUpperMaskOne = [...mask["upperMaskOne"]];
+    let newUpperMaskTwo = [...mask["upperMaskTwo"]];
     newUpperMaskOne[2] += val;
     newUpperMaskTwo[2] += val;
 
@@ -113,14 +111,17 @@ const MaskSelector = (props) => {
     ) {
       alert("Cannot lower upper val below lower val");
     } else {
-      setUpperMaskOne(newUpperMaskOne);
-      setUpperMaskTwo(newUpperMaskTwo);
+      setMask((prevMask) => ({
+        ...prevMask,
+        upperMaskOne: newUpperMaskOne,
+        upperMaskTwo: newUpperMaskTwo,
+      }));
     }
   };
 
   const modifyHueRange = (val) => {
-    let newLowerMaskTwo = [...lowerMaskTwo];
-    let newUpperMaskOne = [...upperMaskOne];
+    let newLowerMaskTwo = [...mask["lowerMaskTwo"]];
+    let newUpperMaskOne = [...mask["upperMaskOne"]];
 
     newLowerMaskTwo[0] -= val;
     newUpperMaskOne[0] += val;
@@ -132,24 +133,11 @@ const MaskSelector = (props) => {
       newUpperMaskOne[0] = 180;
     }
 
-    setLowerMaskTwo(newLowerMaskTwo);
-    setUpperMaskOne(newUpperMaskOne);
-  };
-
-  const handleLowerMaskOneChange = (event) => {
-    setLowerMaskOne(event.target.value);
-  };
-
-  const handleLowerMaskTwoChange = (event) => {
-    setLowerMaskTwo(event.target.value);
-  };
-
-  const handleUpperMaskOneChange = (event) => {
-    setUpperMaskOne(event.target.value);
-  };
-
-  const handleUpperMaskTwoChange = (event) => {
-    setUpperMaskTwo(event.target.value);
+    setMask((prevMask) => ({
+      ...prevMask,
+      lowerMaskTwo: newLowerMaskTwo,
+      upperMaskOne: newUpperMaskOne,
+    }));
   };
 
   return (
@@ -173,7 +161,12 @@ const MaskSelector = (props) => {
                   style={styles.textField}
                   value={lowerMaskOne}
                   placeholder={placeholder}
-                  onChange={handleLowerMaskOneChange}
+                  onChange={() =>
+                    setMask((prevMask) => ({
+                      ...prevMask,
+                      lowerMaskOne: event.target.value,
+                    }))
+                  }
                   margin="normal"
                 />
                 <TextField
@@ -181,7 +174,12 @@ const MaskSelector = (props) => {
                   style={styles.textField}
                   value={lowerMaskTwo}
                   placeholder={placeholder}
-                  onChange={handleLowerMaskTwoChange}
+                  onChange={() =>
+                    setMask((prevMask) => ({
+                      ...prevMask,
+                      lowerMaskTwo: event.target.value,
+                    }))
+                  }
                   margin="normal"
                 />
               </div>
@@ -191,7 +189,12 @@ const MaskSelector = (props) => {
                   style={styles.textField}
                   value={upperMaskOne}
                   placeholder={placeholder}
-                  onChange={handleUpperMaskOneChange}
+                  onChange={() =>
+                    setMask((prevMask) => ({
+                      ...prevMask,
+                      upperMaskOne: event.target.value,
+                    }))
+                  }
                   margin="normal"
                 />
                 <TextField
@@ -199,7 +202,12 @@ const MaskSelector = (props) => {
                   style={styles.textField}
                   value={upperMaskTwo}
                   placeholder={placeholder}
-                  onChange={handleUpperMaskTwoChange}
+                  onChange={() =>
+                    setMask((prevMask) => ({
+                      ...prevMask,
+                      upperMaskTwo: event.target.value,
+                    }))
+                  }
                   margin="normal"
                 />
               </div>

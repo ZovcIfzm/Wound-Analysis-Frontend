@@ -1,50 +1,36 @@
 import React, { useState } from "react";
-import { maskConstants } from "../../constants.js";
+import { maskConstants, base_url } from "../../constants.js";
 
 const Context = React.createContext();
 
 const Provider = (props) => {
-  const [lowerMaskOne, setLowerMaskOne] = useState(
-    maskConstants["B"]["lower_range"][0]
-  );
-  const [lowerMaskTwo, setLowerMaskTwo] = useState(
-    maskConstants["B"]["lower_range"][1]
-  );
-  const [upperMaskOne, setUpperMaskOne] = useState(
-    maskConstants["B"]["upper_range"][0]
-  );
-  const [upperMaskTwo, setUpperMaskTwo] = useState(
-    maskConstants["B"]["upper_range"][1]
-  );
-  const [imageWidth, setImageWidth] = useState(2.54);
-  const [manualWidth, setManualWidth] = useState(false);
-  const [isManualMask, setIsManualMask] = useState(false);
+  const [mask, setMask] = useState({
+    lowerMaskOne: maskConstants["B"]["lower_range"][0],
+    lowerMaskTwo: maskConstants["B"]["lower_range"][1],
+    upperMaskOne: maskConstants["B"]["upper_range"][0],
+    upperMaskTwo: maskConstants["B"]["upper_range"][1],
+    width: 6,
+    auto: True,
+  });
+
   const [currentImage, setCurrentImage] = useState();
   const [currentImages, setCurrentImages] = useState();
   const [originalImage, setOriginalImage] = useState();
 
   const [zipImgList, setZipImgList] = useState([]);
 
-  const setMask = async (mask) => {
-    setIsManualMask(true);
-    setLowerMaskOne(mask["lower_range"][0]);
-    setLowerMaskTwo(mask["lower_range"][1]);
-    setUpperMaskOne(mask["upper_range"][0]);
-    setUpperMaskTwo(mask["upper_range"][1]);
-  };
-
   const analyzeImage = async () => {
     if (currentImage && imageWidth) {
       const url = base_url + "/measure";
       const form = new FormData();
       form.append("base64", originalImage);
-      form.append("width", imageWidth);
-      form.append("manual_width", manualWidth);
-      form.append("lower_mask_one", mask["lower_range"][0]);
-      form.append("lower_mask_two", mask["lower_range"][1]);
-      form.append("upper_mask_one", mask["upper_range"][0]);
-      form.append("upper_mask_two", mask["upper_range"][1]);
-      form.append("manual_mask", isManualMask);
+      form.append("width", width);
+      form.append("manual_width", width);
+      form.append("lower_mask_one", mask["lowerMaskOne"]);
+      form.append("lower_mask_two", mask["lowerMaskTwo"]);
+      form.append("upper_mask_one", mask["upperMaskOne"]);
+      form.append("upper_mask_two", mask["upperMaskTwo"]);
+      form.append("manual_mask", !auto);
 
       const config = {
         method: "POST",
@@ -86,14 +72,6 @@ const Provider = (props) => {
   return (
     <Context.Provider
       value={{
-        lowerMaskOne: lowerMaskOne,
-        setLowerMaskOne: setLowerMaskOne,
-        lowerMaskTwo: lowerMaskTwo,
-        setLowerMaskTwo: setLowerMaskTwo,
-        upperMaskOne: upperMaskOne,
-        setUpperMaskOne: setUpperMaskOne,
-        upperMaskTwo: upperMaskTwo,
-        setUpperMaskTwo: setUpperMaskTwo,
         zipImgList: zipImgList,
         setZipImgList: setZipImgList,
 

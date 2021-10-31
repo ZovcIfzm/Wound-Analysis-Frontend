@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Cropper from "../../components/ImageCropper/imageCropper";
 
 import { Button, Checkbox, Tooltip, TextField } from "@material-ui/core";
@@ -13,32 +14,18 @@ const completeCrop = (image, setUseCrop, setCurrentImage, setOriginalImage) => {
   setOriginalImage(image);
 };
 
-const getBase64 = (file, cb) => {
-  let reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = function () {
-    cb(reader.result);
-  };
-  reader.onerror = function (error) {
-    console.log("Error: ", error);
-  };
-};
-
-const handleWidthChange = (event, setImageWidth) => {
-  setImageWidth(event.target.value);
-};
-
-const isManualWidth = (setManualWidth) => {
-  setManualWidth(!manualWidth);
-};
-
-const onImageUpload = (event, getBase64, setCurrentImage, setOriginalImage) => {
-  if (event.target.files && event.target.files[0]) {
-    let imgFile = event.target.files[0];
-    getBase64(imgFile, (result) => {
-      setCurrentImage(result);
-      setOriginalImage(result);
-    });
+const onImageUpload = (files, setCurrentImage, setOriginalImage) => {
+  if (files && files[0]) {
+    let imgFile = files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(imgFile);
+    reader.onload = function () {
+      setCurrentImage(reader.result);
+      setOriginalImage(reader.result);
+    };
+    reader.onerror = function (error) {
+      console.log("Error: ", error);
+    };
   }
 };
 
@@ -49,6 +36,11 @@ const SingleAnalysisView = (props) => {
   const [obj, setObj] = useState();
   const [jumpHeading, setJumpHeading] = useState();
 
+  const { analyzeImage, reanalyzeImage, currentImage, setCurrentImage, originalImage, setOriginalImage } =
+    React.useContext(Context);
+
+  let history = useHistory();
+
   return (
     <div style={{ ...styles.main, ...styles.mainRaised }}>
       <div style={styles.container}>
@@ -57,7 +49,7 @@ const SingleAnalysisView = (props) => {
             style={styles.cropButton}
             variant="contained"
             color="primary"
-            onClick={() => goToHome(props.history)}
+            onClick={() => history.push("/home")}
           >
             Go to home page
           </Button>
@@ -65,7 +57,7 @@ const SingleAnalysisView = (props) => {
             style={styles.cropButton}
             variant="contained"
             color="primary"
-            onClick={() => goToMulti(props.history)}
+            onClick={() => history.push("/multi")}
           >
             Go to multi-image measurement
           </Button>
@@ -86,8 +78,7 @@ const SingleAnalysisView = (props) => {
                   hidden
                   onChange={(event) =>
                     onImageUpload(
-                      event,
-                      getBase64,
+                      event.target.files,
                       setCurrentImage,
                       setOriginalImage
                     )
@@ -107,14 +98,19 @@ const SingleAnalysisView = (props) => {
                   defaultValue={imageWidth}
                   InputProps={{
                     onChange: (event) =>
-                      handleWidthChange(event, setImageWidth),
+                      setMask((prevMask) => ({
+                        ...prevMask,
+                        width: event.target.value,
+                      })),
                   }}
                 />
               </Tooltip>
               <div style={styles.row}>
                 <Checkbox
-                  checked={props.manualWidth}
-                  onChange={() => isManualWidth(props.setManualWidth)}
+                  checked={}
+                  onChange={() =>
+                    setMask((prevMask) => ({ ...prevMask, auto: False }))
+                  }
                   value="manualWidth"
                 />
                 <div style={styles.centeredText}>Set width to manual</div>
@@ -125,14 +121,14 @@ const SingleAnalysisView = (props) => {
           <div style={styles.column}>
             {useCrop ? (
               <Cropper
-                currentImage={props.originalImage}
+                currentImage={originalImage}
                 completeCrop={completeCrop}
               />
             ) : (
               <>
                 <h3>Image {jumpHeading}</h3>
                 <div style={styles.column}>
-                  <img src={props.currentImage} style={styles.images} alt="" />
+                  <img src={currentImage} style={styles.images} alt="" />
                   <Button
                     style={styles.cropButton}
                     variant="contained"
@@ -158,12 +154,7 @@ const SingleAnalysisView = (props) => {
               variant="contained"
               color="primary"
               onClick={() =>
-                props.analyzeImage(
-                  props.lowerMaskOne,
-                  props.lowerMaskTwo,
-                  props.upperMaskOne,
-                  props.upperMaskTwo
-                )
+                analyzeImage()
               }
               style={styles.cropButton}
             >
@@ -182,7 +173,7 @@ const SingleAnalysisView = (props) => {
                     src={obj["drawn_image"]}
                     style={styles.gridImage}
                     alt=""
-                    onClick={() => props.reanalyzeImage(obj)}
+                    onClick={() => reanalyzeImage(obj)}
                   />
                 ))}
               </div>
