@@ -8,12 +8,6 @@ import styles from "./style.js";
 
 import MaskSelector from "../../components/MaskSelector";
 
-const completeCrop = (image, setUseCrop, setCurrentImage, setOriginalImage) => {
-  setUseCrop(false);
-  setCurrentImage(image);
-  setOriginalImage(image);
-};
-
 const onImageUpload = (files, setCurrentImage, setOriginalImage) => {
   if (files && files[0]) {
     let imgFile = files[0];
@@ -30,13 +24,11 @@ const onImageUpload = (files, setCurrentImage, setOriginalImage) => {
 };
 
 const SingleAnalysisView = (props) => {
-  const [analyzed, setAnalyzed] = useState(false);
   const [useCrop, setUseCrop] = useState(false);
   const [areas, setAreas] = useState([]);
-  const [obj, setObj] = useState();
   const [jumpHeading, setJumpHeading] = useState();
 
-  const { analyzeImage, reanalyzeImage, currentImage, setCurrentImage, originalImage, setOriginalImage } =
+  const { analyzeImage, reanalyzeImage, currentImage, setCurrentImage, originalImage, setOriginalImage, completeCrop } =
     React.useContext(Context);
 
   let history = useHistory();

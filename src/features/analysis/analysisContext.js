@@ -69,6 +69,12 @@ const Provider = (props) => {
     analyzeImage();
   };
 
+  const completeCrop = (image) => {
+    setUseCrop(false);
+    setCurrentImage(image);
+    setOriginalImage(image);
+  };
+
   return (
     <Context.Provider
       value={{
