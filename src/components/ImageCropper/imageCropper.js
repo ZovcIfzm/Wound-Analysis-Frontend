@@ -28,11 +28,10 @@ export default function CustomCropper(props) {
         croppedAreaPixels,
         rotation
       );
-      fetch(croppedImage)
-        .then(function (response) {
-          completeCrop(croppedImage)
-          return response.blob();
-        });
+      fetch(croppedImage).then(function (response) {
+        completeCrop(croppedImage);
+        return response.blob();
+      });
     } catch (e) {
       console.error(e);
     }
