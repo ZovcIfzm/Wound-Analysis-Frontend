@@ -34,9 +34,9 @@ const MaskSelector = (props) => {
 
   const modifyLowerVal = (val) => {
     let newLowerBound = [...settings.lowerBound];
-    newLowerBound[2] = Math.min(255, newLowerBound[1] + val);
+    newLowerBound[2] = Math.min(255, newLowerBound[2] + val);
 
-    if (newLowerBound[1] > settings.upperBound[1]) {
+    if (newLowerBound[2] > settings.upperBound[2]) {
       alert("Cannot increase lower val above upper val");
     } else {
       setSettings((prevSettings) => ({
@@ -49,12 +49,12 @@ const MaskSelector = (props) => {
     let newUpperBound = [...settings.upperBound];
     newUpperBound[2] = Math.min(255, newUpperBound[2] + val);
 
-    if (newUpperBound[1] > settings.upperBound[1]) {
+    if (newUpperBound[2] < settings.lowerBound[2]) {
       alert("Cannot lower upper val below lower val");
     } else {
       setSettings((prevSettings) => ({
         ...prevSettings,
-        lowerBound: newUpperBound,
+        upperBound: newUpperBound,
       }));
     }
   };
@@ -63,10 +63,8 @@ const MaskSelector = (props) => {
     let newLowerBound = [...settings.lowerBound];
     let newUpperBound = [...settings.upperBound];
 
-    newLowerBound[0] = Math.max(0, newLowerBound[0] - val);
-    newUpperBound[0] = Math.min(180, newUpperBound[0] + val);
-    newLowerBound[0] -= val;
-    newUpperBound[0] += val;
+    newLowerBound[0] = Math.min(0, newLowerBound[0] - val);
+    newUpperBound[0] = Math.max(0, newUpperBound[0] + val);
 
     setSettings((prevSettings) => ({
       ...prevSettings,
@@ -112,7 +110,7 @@ const MaskSelector = (props) => {
               <TextField
                 label="HSV Lower Range"
                 style={styles.textField}
-                value={settings.lowerMask}
+                value={settings.lowerBound}
                 placeholder={placeholder}
                 onChange={handleLowerBoundChange}
                 margin="normal"
