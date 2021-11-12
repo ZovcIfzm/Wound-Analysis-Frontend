@@ -8,9 +8,7 @@ import styles from "./style.js";
 import classNames from "classnames";
 
 import MaskSelector from "../MaskSelector/index.js";
-import DebugToolbar from "../DebugToolbar/index.js";
 
-import { maskConstants } from "../MaskSelector/constants.js";
 import { base_url } from "../../constants.js";
 
 import { Context } from "../context";
@@ -45,21 +43,6 @@ function SingleAnalysisPage(props) {
     }
   });
 
-  const goToMulti = () => {
-    if (zipImgList != null) {
-      props.history.push({
-        pathname: "/multi",
-        state: { zipImgList: zipImgList },
-      });
-    } else {
-      props.history.push("/multi");
-    }
-  };
-
-  const goToHome = () => {
-    props.history.push("/home");
-  };
-
   const getBase64 = (file, cb) => {
     let reader = new FileReader();
     reader.readAsDataURL(file);
@@ -92,7 +75,7 @@ function SingleAnalysisPage(props) {
       ...mask,
       lowerBound: obj["lowerBound"],
       upperBound: obj["upperBound"],
-      autoMask: False,
+      autoMask: false,
     };
     setMask(maskObj);
     analyzeImage(maskObj);
@@ -117,10 +100,8 @@ function SingleAnalysisPage(props) {
         })
         .then((matrix) => {
           if (matrix[1][1]["error"] == false) {
-            setAnalyzed(true);
             setCurrentImage(matrix[1][1]["drawn_image"]);
             setOriginalImage(matrix[1][1]["orig"]);
-            setEdgedImage(matrix[1][1]["edged_image"]);
             setCurrentImages(matrix);
             setAreas(matrix[1][1]["areas"]);
             alert("Images analyzed");
@@ -158,7 +139,7 @@ function SingleAnalysisPage(props) {
             className={classes.cropButton}
             variant="contained"
             color="primary"
-            onClick={goToHome}
+            onClick={() => props.history.push("/home")}
           >
             Go to home page
           </Button>
@@ -166,7 +147,7 @@ function SingleAnalysisPage(props) {
             className={classes.cropButton}
             variant="contained"
             color="primary"
-            onClick={goToMulti}
+            onClick={() => props.history.push("/multi")}
           >
             Go to multi-image measurement
           </Button>

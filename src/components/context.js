@@ -4,12 +4,12 @@ import { maskConstants } from "./MaskSelector/constants.js";
 const Context = React.createContext();
 
 function Provider(props) {
-  const [mask, setMask] = useState({
+  const [settings, setSettings] = useState({
     lowerBound: maskConstants["B"]["lowerBound"],
     upperBound: maskConstants["B"]["upperBound"],
     width: 6,
-    autoWidth: True,
-    autoMask: False,
+    autoWidth: true,
+    autoMask: false,
   });
 
   const [zipImgList, setZipImgList] = useState([]);
@@ -17,8 +17,8 @@ function Provider(props) {
   return (
     <Context.Provider
       value={{
-        mask: mask,
-        setMask: setMask,
+        settings: settings,
+        setSettings: setSettings,
         zipImgList: zipImgList,
         setZipImgList: setZipImgList,
       }}

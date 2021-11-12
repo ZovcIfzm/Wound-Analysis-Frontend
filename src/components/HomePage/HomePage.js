@@ -25,16 +25,6 @@ import { maskConstants } from "../MaskSelector/constants.js";
 import { base_url } from "../../constants.js";
 
 class HomePage extends React.Component {
-  state = {
-    zipImgList: [],
-    lowerMaskOne: maskConstants["B"]["lower_range"][0],
-    lowerMaskTwo: maskConstants["B"]["lower_range"][1],
-    upperMaskOne: maskConstants["B"]["upper_range"][0],
-    upperMaskTwo: maskConstants["B"]["upper_range"][1],
-    imageWidth: 6,
-    manualWidth: false,
-  };
-
   componentDidMount() {
     //Wake up backend server
     //By sending a fetch request to the backend server, this will wake it up
