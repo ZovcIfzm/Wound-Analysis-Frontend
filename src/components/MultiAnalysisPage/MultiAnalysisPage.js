@@ -11,17 +11,8 @@ import { base_url, base_ml_url } from "../../constants.js";
 import { Context } from "../context";
 
 function MultiAnalysisPage(props) {
-  const {
-    lowerMaskOne,
-    lowerMaskTwo,
-    upperMaskOne,
-    upperMaskTwo,
-    zipImgList,
-    setZipImgList,
-    isManualMask,
-  } = React.useContext(Context);
-  const [imageWidth, setImageWidth] = useState(6);
-  const [manualWidth, setManualWidth] = useState(false);
+  const { settings, setSettings, zipImgList, setZipImgList } =
+    React.useContext(Context);
 
   useEffect(() => {
     let url = base_url;
@@ -46,7 +37,7 @@ function MultiAnalysisPage(props) {
         return response.json();
       })
       .catch((error) => console.log(error));
-  });
+  }, []);
 
   const uploadDayZip = async (event) => {
     let zipFile = event.target.files[0];
@@ -55,13 +46,8 @@ function MultiAnalysisPage(props) {
       //let url = "/zipMeasure"
       let form = new FormData();
       form.append("file", zipFile);
-      form.append("width", imageWidth);
-      form.append("manual_width", manualWidth);
-      form.append("lower_mask_one", lowerMaskOne);
-      form.append("lower_mask_two", lowerMaskTwo);
-      form.append("upper_mask_one", upperMaskOne);
-      form.append("upper_mask_two", upperMaskTwo);
-      form.append("manual_mask", isManualMask);
+      form.append("width", settings.width);
+      form.append("settings", settings);
 
       //Then analyze
       const analyze_options = {
@@ -90,14 +76,6 @@ function MultiAnalysisPage(props) {
     }
   };
 
-  const goToSingle = () => {
-    props.history.push("/single");
-  };
-
-  const goToHome = () => {
-    props.history.push("/home");
-  };
-
   const reanalyzeImage = async (obj, i) => {
     obj["id"] = i;
     props.history.push({
@@ -107,7 +85,10 @@ function MultiAnalysisPage(props) {
   };
 
   const handleWidthChange = (event) => {
-    setImageWidth(event.target.value);
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      width: event.target.value,
+    }));
   };
 
   return (
@@ -118,7 +99,7 @@ function MultiAnalysisPage(props) {
             style={styles.cropButton}
             variant="contained"
             color="primary"
-            onClick={goToHome}
+            onClick={() => props.history.push("/home")}
           >
             Go to home page
           </Button>
@@ -126,7 +107,7 @@ function MultiAnalysisPage(props) {
             style={styles.cropButton}
             variant="contained"
             color="primary"
-            onClick={goToSingle}
+            onClick={() => props.history.push("/single")}
           >
             Go to single-image measurement
           </Button>
@@ -146,7 +127,7 @@ function MultiAnalysisPage(props) {
             <TextField
               id="standard-number"
               label="Enter reference width (cm)"
-              defaultValue={imageWidth}
+              defaultValue={settings.width}
               InputProps={{
                 onChange: handleWidthChange,
               }}

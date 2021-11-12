@@ -12,20 +12,16 @@ import { base_url } from "../../constants.js";
 import { Context } from "../context";
 
 function SingleAnalysisPage(props) {
-  const { mask, setMask, zipImgList, setZipImgList } =
-    React.useContext(Context);
+  const { settings, setSettings } = React.useContext(Context);
   const [currentImage, setCurrentImage] = useState();
   const [originalImage, setOriginalImage] = useState();
   const [currentImages, setCurrentImages] = useState();
-  const [imageWidth, setImageWidth] = useState(6);
   const [useCrop, setUseCrop] = useState(false);
   const [areas, setAreas] = useState([]);
-  const [manualWidth, setManualWidth] = useState(false);
   const [jumpHeading, setJumpHeading] = useState();
 
   useEffect(() => {
     if (props.location.state != null) {
-      const inState = props.location.state;
       const obj = props.location.state.obj;
       if (obj != null) {
         if (obj["drawn_image"]) {
@@ -36,9 +32,8 @@ function SingleAnalysisPage(props) {
         setOriginalImage(obj["orig"]);
         setJumpHeading(obj["id"]);
       }
-      setZipImgList(inState.zipImgList);
     }
-  });
+  }, []);
 
   const getBase64 = (file, cb) => {
     let reader = new FileReader();
@@ -68,24 +63,24 @@ function SingleAnalysisPage(props) {
   };
 
   const reanalyzeImage = async (obj) => {
-    let maskObj = {
-      ...mask,
+    let newSettings = {
+      ...settings,
       lowerBound: obj["lowerBound"],
       upperBound: obj["upperBound"],
       autoMask: false,
     };
-    setMask(maskObj);
-    analyzeImage(maskObj);
+    setSettings(newSettings);
+    analyzeImage(newSettings);
   };
 
-  const analyzeImage = async (mask) => {
-    if (currentImage && imageWidth) {
+  const analyzeImage = async (settings) => {
+    if (currentImage && settings.width) {
       const url = base_url + "/measure";
       //const url = "/measure"
 
       const form = new FormData();
       form.append("base64", originalImage);
-      form.append("mask", mask);
+      form.append("settings", settings);
 
       fetch(url, {
         method: "POST",
@@ -107,9 +102,9 @@ function SingleAnalysisPage(props) {
           }
         })
         .catch((error) => console.log(error));
-    } else if (currentImage && !imageWidth) {
+    } else if (currentImage && !settings.width) {
       alert("Please specify an image width");
-    } else if (!currentImage && imageWidth) {
+    } else if (!currentImage && settings.width) {
       alert("Please upload an image");
     } else {
       alert("Please upload an image and specify it's real width");
@@ -117,15 +112,14 @@ function SingleAnalysisPage(props) {
   };
 
   const handleWidthChange = (event) => {
-    setImageWidth(event.target.value);
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      width: event.target.value,
+    }));
   };
 
   const handleCropChange = () => {
     setUseCrop(true);
-  };
-
-  const changeManualWidth = () => {
-    setMask((prevMask) => ({ ...prevMask, autoWidth: !prevMask["autoWidth"] }));
   };
 
   return (
@@ -176,7 +170,7 @@ function SingleAnalysisPage(props) {
                 <TextField
                   id="standard-number"
                   label="Enter reference width (cm)"
-                  defaultValue={imageWidth}
+                  defaultValue={settings.width}
                   InputProps={{
                     onChange: handleWidthChange,
                   }}
@@ -184,9 +178,14 @@ function SingleAnalysisPage(props) {
               </Tooltip>
               <div style={styles.row}>
                 <Checkbox
-                  checked={manualWidth}
-                  onChange={() => changeManualWidth()}
-                  value="manualWidth"
+                  checked={!settings.autoWidth}
+                  onChange={() =>
+                    setSettings((prevSettings) => ({
+                      ...prevSettings,
+                      autoWidth: !prevSettings["autoWidth"],
+                    }))
+                  }
+                  value="autoMask"
                 />
                 <div style={styles.centeredText}>Set width to manual</div>
               </div>

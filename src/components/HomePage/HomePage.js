@@ -55,7 +55,7 @@ const HomePage = (props) => {
             style={styles.cropButton}
             variant="contained"
             color="primary"
-            onClick={() => this.props.history.push("/multi")}
+            onClick={() => props.history.push("/multi")}
           >
             Go to multi-image measurement
           </Button>
