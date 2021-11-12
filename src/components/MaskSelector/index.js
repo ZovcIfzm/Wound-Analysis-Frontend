@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import style from "./style.js";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 
 import maskAImg from "../../assets/maskAImg.JPG";
 import maskBImg from "../../assets/maskBImg.JPG";
@@ -11,271 +9,214 @@ import maskDImg from "../../assets/maskDImg.JPG";
 import maskEImg from "../../assets/maskEImg.JPG";
 
 import { maskConstants } from "./constants.js";
+import styles from "./style.js";
 
 import { Context } from "../context";
 
-const useStyles = makeStyles(style);
+const MaskSelector = (props) => {
+  const { settings, setSettings } = React.useContext(Context);
 
-function MaskSelector(props) {
-  const {
-    lowerMaskOne,
-    setLowerMaskOne,
-    lowerMaskTwo,
-    setLowerMaskTwo,
-    upperMaskOne,
-    setUpperMaskOne,
-    upperMaskTwo,
-    setUpperMaskTwo,
-    setMask,
-    isManualMask,
-    setIsManualMask,
-  } = React.useContext(Context);
-
-  const classes = useStyles();
   const placeholder = "hue, sat, val";
 
   const modifyLowerSat = (val) => {
-    let newLowerMaskOne = [...lowerMaskOne];
-    let newLowerMaskTwo = [...lowerMaskTwo];
-    newLowerMaskOne[1] += val;
-    newLowerMaskTwo[1] += val;
+    let newLowerBound = [...settings.lowerBound];
+    newLowerBound[1] = Math.min(255, newLowerBound[1] + val);
 
-    if (newLowerMaskOne[1] > 255) {
-      newLowerMaskOne[1] = 255;
-    }
-    if (newLowerMaskTwo[1] > 255) {
-      newLowerMaskTwo[1] = 255;
-    }
-    if (
-      newLowerMaskOne[1] > upperMaskOne[1] ||
-      newLowerMaskTwo[1] > upperMaskTwo[1]
-    ) {
+    if (newLowerBound[1] > settings.upperBound[1]) {
       alert("Cannot increase lower sat above upper sat");
     } else {
-      setLowerMaskOne(newLowerMaskOne);
-      setLowerMaskTwo(newLowerMaskTwo);
-    }
-  };
-  const modifyUpperSat = (val) => {
-    let newUpperMaskOne = [...upperMaskOne];
-    let newUpperMaskTwo = [...upperMaskTwo];
-    newUpperMaskOne[1] += val;
-    newUpperMaskTwo[1] += val;
-
-    if (newUpperMaskOne[1] > 255) {
-      newUpperMaskOne[1] = 255;
-    }
-    if (newUpperMaskTwo[1] > 255) {
-      newUpperMaskTwo[1] = 255;
-    }
-    if (
-      newUpperMaskOne[1] < lowerMaskOne[1] ||
-      newUpperMaskTwo[1] < lowerMaskTwo[1]
-    ) {
-      alert("Cannot lower upper sat below lower sat");
-    } else {
-      setUpperMaskOne(newUpperMaskOne);
-      setUpperMaskTwo(newUpperMaskTwo);
+      setSettings((prevSettings) => ({
+        ...prevSettings,
+        lowerBound: newLowerBound,
+      }));
     }
   };
 
   const modifyLowerVal = (val) => {
-    let newLowerMaskOne = [...lowerMaskOne];
-    let newLowerMaskTwo = [...lowerMaskTwo];
-    newLowerMaskOne[2] += val;
-    newLowerMaskTwo[2] += val;
+    let newLowerBound = [...settings.lowerBound];
+    newLowerBound[2] = Math.min(255, newLowerBound[1] + val);
 
-    if (newLowerMaskOne[2] > 255) {
-      newLowerMaskOne[2] = 255;
-    }
-    if (newLowerMaskTwo[2] > 255) {
-      newLowerMaskTwo[2] = 255;
-    }
-    if (
-      newLowerMaskOne[2] > upperMaskOne[2] ||
-      newLowerMaskTwo[2] > upperMaskTwo[2]
-    ) {
+    if (newLowerBound[1] > settings.upperBound[1]) {
       alert("Cannot increase lower val above upper val");
     } else {
-      setLowerMaskOne(newLowerMaskOne);
-      setLowerMaskTwo(newLowerMaskTwo);
+      setSettings((prevSettings) => ({
+        ...prevSettings,
+        lowerBound: newLowerBound,
+      }));
     }
   };
   const modifyUpperVal = (val) => {
-    let newUpperMaskOne = [...upperMaskOne];
-    let newUpperMaskTwo = [...upperMaskTwo];
-    newUpperMaskOne[2] += val;
-    newUpperMaskTwo[2] += val;
+    let newUpperBound = [...settings.upperBound];
+    newUpperBound[2] = Math.min(255, newUpperBound[2] + val);
 
-    if (newUpperMaskOne[2] > 255) {
-      newUpperMaskOne[2] = 255;
-    }
-    if (newUpperMaskTwo[2] > 255) {
-      newUpperMaskTwo[2] = 255;
-    }
-    if (
-      newUpperMaskOne[2] < lowerMaskOne[2] ||
-      newUpperMaskTwo[2] < lowerMaskTwo[2]
-    ) {
+    if (newUpperBound[1] > settings.upperBound[1]) {
       alert("Cannot lower upper val below lower val");
     } else {
-      setUpperMaskOne(newUpperMaskOne);
-      setUpperMaskTwo(newUpperMaskTwo);
+      setSettings((prevSettings) => ({
+        ...prevSettings,
+        lowerBound: newUpperBound,
+      }));
     }
   };
 
   const modifyHueRange = (val) => {
-    let newLowerMaskTwo = [...lowerMaskTwo];
-    let newUpperMaskOne = [...upperMaskOne];
+    let newLowerBound = [...settings.lowerBound];
+    let newUpperBound = [...settings.upperBound];
 
-    newLowerMaskTwo[0] -= val;
-    newUpperMaskOne[0] += val;
+    newLowerBound[0] = Math.max(0, newLowerBound[0] - val);
+    newUpperBound[0] = Math.min(180, newUpperBound[0] + val);
+    newLowerBound[0] -= val;
+    newUpperBound[0] += val;
 
-    if (newLowerMaskTwo[0] < 0) {
-      newLowerMaskTwo[0] = 0;
-    }
-    if (newUpperMaskOne[0] > 180) {
-      newUpperMaskOne[0] = 180;
-    }
-
-    setLowerMaskTwo(newLowerMaskTwo);
-    setUpperMaskOne(newUpperMaskOne);
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      lowerBound: newLowerBound,
+      upperBound: newUpperBound,
+    }));
   };
 
-  const handleLowerMaskOneChange = (event) => {
-    setLowerMaskOne(event.target.value);
+  const handleLowerBoundChange = (event) => {
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      lowerBound: event.target.value,
+    }));
   };
 
-  const handleLowerMaskTwoChange = (event) => {
-    setLowerMaskTwo(event.target.value);
-  };
-
-  const handleUpperMaskOneChange = (event) => {
-    setUpperMaskOne(event.target.value);
-  };
-
-  const handleUpperMaskTwoChange = (event) => {
-    setUpperMaskTwo(event.target.value);
+  const handleUpperBoundChange = (event) => {
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      upperBound: event.target.value,
+    }));
   };
 
   return (
-    <div className={classes.column}>
+    <div style={styles.column}>
       <div style={{ height: 20 }} />
       <Button
         variant="contained"
         color="primary"
-        onClick={() => setIsManualMask(!isManualMask)}
+        onClick={() =>
+          setSettings((prevSettings) => ({
+            ...prevSettings,
+            autoMask: !prevSettings.autoMask,
+          }))
+        }
       >
         Change mask type
       </Button>
-      {isManualMask ? (
-        <div>
+      {!settings.autoMask ? (
+        <div style={styles.container}>
           <h4>Selecting mask manually</h4>
-          <div className={classes.row}>
-            <div className={classes.column}>
-              <div className={classes.row}>
-                <TextField
-                  label="HSV Lower Range 1"
-                  className={classes.textField}
-                  value={lowerMaskOne}
-                  placeholder={placeholder}
-                  onChange={handleLowerMaskOneChange}
-                  margin="normal"
-                />
-                <TextField
-                  label="HSV Lower Range 2"
-                  className={classes.textField}
-                  value={lowerMaskTwo}
-                  placeholder={placeholder}
-                  onChange={handleLowerMaskTwoChange}
-                  margin="normal"
-                />
-              </div>
-              <div className={classes.row}>
-                <TextField
-                  label="HSV Upper Range 1"
-                  className={classes.textField}
-                  value={upperMaskOne}
-                  placeholder={placeholder}
-                  onChange={handleUpperMaskOneChange}
-                  margin="normal"
-                />
-                <TextField
-                  label="HSV Upper Range 2"
-                  className={classes.textField}
-                  value={upperMaskTwo}
-                  placeholder={placeholder}
-                  onChange={handleUpperMaskTwoChange}
-                  margin="normal"
-                />
-              </div>
+          <div style={styles.row}>
+            <div style={styles.column}>
+              <TextField
+                label="HSV Lower Range"
+                style={styles.textField}
+                value={settings.lowerMask}
+                placeholder={placeholder}
+                onChange={handleLowerBoundChange}
+                margin="normal"
+              />
+              <TextField
+                label="HSV Upper Range"
+                style={styles.textField}
+                value={settings.upperBound}
+                placeholder={placeholder}
+                onChange={handleUpperBoundChange}
+                margin="normal"
+              />
             </div>
 
-            <div className={classes.column}>
+            <div style={styles.column}>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => setMask(maskConstants["A"])}
+                onClick={() =>
+                  setSettings((prevSettings) => ({
+                    ...prevSettings,
+                    ...maskConstants["A"],
+                  }))
+                }
               >
                 Select Lightest Mask
               </Button>
               Best for:
-              <img src={maskAImg} className={classes.exampleImage} alt="" />
+              <img src={maskAImg} style={styles.exampleImage} alt="" />
             </div>
-            <div className={classes.column}>
+            <div style={styles.column}>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => setMask(maskConstants["B"])}
+                onClick={() =>
+                  setSettings((prevSettings) => ({
+                    ...prevSettings,
+                    ...maskConstants["B"],
+                  }))
+                }
               >
                 Select Light Mask
               </Button>
               Best for:
-              <img src={maskBImg} className={classes.exampleImage} alt="" />
+              <img src={maskBImg} style={styles.exampleImage} alt="" />
             </div>
-            <div className={classes.column}>
+            <div style={styles.column}>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => setMask(maskConstants["C"])}
+                onClick={() =>
+                  setSettings((prevSettings) => ({
+                    ...prevSettings,
+                    ...maskConstants["C"],
+                  }))
+                }
               >
                 Select Standard Mask
               </Button>
               Best for:
-              <img src={maskCImg} className={classes.exampleImage} alt="" />
+              <img src={maskCImg} style={styles.exampleImage} alt="" />
             </div>
-            <div className={classes.column}>
+            <div style={styles.column}>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => setMask(maskConstants["D"])}
+                onClick={() =>
+                  setSettings((prevSettings) => ({
+                    ...prevSettings,
+                    ...maskConstants["D"],
+                  }))
+                }
               >
                 Select Darker Mask
               </Button>
               Best for:
-              <img src={maskDImg} className={classes.exampleImage} alt="" />
+              <img src={maskDImg} style={styles.exampleImage} alt="" />
             </div>
-            <div className={classes.column}>
+            <div style={styles.column}>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => setMask(maskConstants["E"])}
+                onClick={() =>
+                  setSettings((prevSettings) => ({
+                    ...prevSettings,
+                    ...maskConstants["E"],
+                  }))
+                }
               >
                 Select Darkest Mask
               </Button>
               Best for:
-              <img src={maskEImg} className={classes.exampleImage} alt="" />
+              <img src={maskEImg} style={styles.exampleImage} alt="" />
             </div>
           </div>
           <div style={{ height: 10 }} />
-          <div className={classes.row}>
-            <div className={classes.column}>
+          <div style={styles.row}>
+            <div style={styles.column}>
               <Button
                 variant="contained"
                 color="primary"
                 style={{ backgroundColor: "maroon" }}
                 onClick={() => modifyLowerSat(5)}
-                className={classes.hsvButton}
+                style={styles.hsvButton}
               >
                 Look for redder wounds (+sat)
               </Button>
@@ -284,18 +225,18 @@ function MaskSelector(props) {
                 color="primary"
                 style={{ backgroundColor: "pink" }}
                 onClick={() => modifyLowerSat(-5)}
-                className={classes.hsvButton}
+                style={styles.hsvButton}
               >
                 Look for pinker wounds (-sat)
               </Button>
             </div>
-            <div className={classes.column}>
+            <div style={styles.column}>
               <Button
                 variant="contained"
                 color="primary"
                 style={{ backgroundColor: "#800200" }}
                 onClick={() => modifyLowerVal(5)}
-                className={classes.hsvButton}
+                style={styles.hsvButton}
               >
                 Look for brighter wounds (+val)
               </Button>
@@ -304,18 +245,18 @@ function MaskSelector(props) {
                 color="primary"
                 style={{ backgroundColor: "black" }}
                 onClick={() => modifyLowerVal(-5)}
-                className={classes.hsvButton}
+                style={styles.hsvButton}
               >
                 Look for darker wounds (-val)
               </Button>
             </div>
-            <div className={classes.column}>
+            <div style={styles.column}>
               <Button
                 variant="contained"
                 color="primary"
                 style={{ backgroundColor: "green" }}
                 onClick={() => modifyUpperVal(5)}
-                className={classes.hsvButton}
+                style={styles.hsvButton}
               >
                 Include more skin (+upperVal)
               </Button>
@@ -324,18 +265,18 @@ function MaskSelector(props) {
                 color="primary"
                 style={{ backgroundColor: "green" }}
                 onClick={() => modifyUpperVal(-5)}
-                className={classes.hsvButton}
+                style={styles.hsvButton}
               >
                 Include less skin (-upperVal)
               </Button>
             </div>
-            <div className={classes.column}>
+            <div style={styles.column}>
               <Button
                 variant="contained"
                 color="primary"
                 style={{ backgroundColor: "green" }}
                 onClick={() => modifyHueRange(5)}
-                className={classes.hsvButton}
+                style={styles.hsvButton}
               >
                 Include more wound colors (+hue range)
               </Button>
@@ -344,7 +285,7 @@ function MaskSelector(props) {
                 color="primary"
                 style={{ backgroundColor: "green" }}
                 onClick={() => modifyHueRange(-5)}
-                className={classes.hsvButton}
+                style={styles.hsvButton}
               >
                 Reduce range of possible colors (-hue range)
               </Button>
@@ -357,6 +298,6 @@ function MaskSelector(props) {
       <div style={{ height: 20 }} />
     </div>
   );
-}
+};
 
 export default MaskSelector;

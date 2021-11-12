@@ -43,7 +43,6 @@ function MultiAnalysisPage(props) {
     let zipFile = event.target.files[0];
     if (zipFile) {
       let url = base_url + "/zipMeasure";
-      //let url = "/zipMeasure"
       let form = new FormData();
       form.append("file", zipFile);
       form.append("width", settings.width);

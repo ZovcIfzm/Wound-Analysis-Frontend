@@ -76,7 +76,6 @@ function SingleAnalysisPage(props) {
   const analyzeImage = async (settings) => {
     if (currentImage && settings.width) {
       const url = base_url + "/measure";
-      //const url = "/measure"
 
       const form = new FormData();
       form.append("base64", originalImage);

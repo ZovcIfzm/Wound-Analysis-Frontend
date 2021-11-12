@@ -15,6 +15,7 @@ const styles = {
     height: 50,
   },
   container: {
+    flex: 1,
     padding: "15px",
     marginRight: "auto",
     marginLeft: "auto",
@@ -51,6 +52,7 @@ const styles = {
   },
 
   main: {
+    flex: 1,
     background: "#FFFFFF",
     position: "relative",
     zIndex: "3",

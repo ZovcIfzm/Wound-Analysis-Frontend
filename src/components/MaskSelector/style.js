@@ -1,4 +1,7 @@
 const styles = {
+  container: {
+    flex: 1,
+  },
   textField: {
     width: 140,
     paddingRight: 20,
@@ -14,19 +17,19 @@ const styles = {
     flexDirection: "column",
     textAlign: "center",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   exampleImage: {
     display: "flex",
     flex: 1,
     width: "100%",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   hsvButton: {
     display: "flex",
     flex: 1,
     alignSelf: "center",
-  }
+  },
 };
 
 export default styles;
