@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import Cropper from "../ImageCropper/imageCropper";
 
 import { Button, Checkbox, Tooltip, TextField } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
 
 import styles from "./style.js";
-import classNames from "classnames";
 
 import MaskSelector from "../MaskSelector/index.js";
 
@@ -14,7 +12,6 @@ import { base_url } from "../../constants.js";
 import { Context } from "../context";
 
 function SingleAnalysisPage(props) {
-  const { classes } = props;
   const { mask, setMask, zipImgList, setZipImgList } =
     React.useContext(Context);
   const [currentImage, setCurrentImage] = useState();
@@ -132,11 +129,11 @@ function SingleAnalysisPage(props) {
   };
 
   return (
-    <div className={classNames(classes.main, classes.mainRaised)}>
-      <div className={classes.container}>
-        <div className={classes.row}>
+    <div style={{ ...styles.main, ...styles.mainRaised }}>
+      <div style={styles.container}>
+        <div style={styles.row}>
           <Button
-            className={classes.cropButton}
+            style={styles.cropButton}
             variant="contained"
             color="primary"
             onClick={() => props.history.push("/home")}
@@ -144,7 +141,7 @@ function SingleAnalysisPage(props) {
             Go to home page
           </Button>
           <Button
-            className={classes.cropButton}
+            style={styles.cropButton}
             variant="contained"
             color="primary"
             onClick={() => props.history.push("/multi")}
@@ -152,13 +149,13 @@ function SingleAnalysisPage(props) {
             Go to multi-image measurement
           </Button>
         </div>
-        <div className={classes.title}>
+        <div style={styles.title}>
           <h2>Automatic Wound Area Measurement</h2>
           <h4>Single-image measurement</h4>
         </div>
-        <div className={classes.row}>
-          <div className={classes.column}>
-            <div className={classes.button} style={{ flex: 1 }}>
+        <div style={styles.row}>
+          <div style={styles.column}>
+            <div style={styles.button} style={{ flex: 1 }}>
               <h3>Upload Image</h3>
               <Button variant="contained" component="label">
                 Upload Image
@@ -170,7 +167,7 @@ function SingleAnalysisPage(props) {
                 />
               </Button>
             </div>
-            <div className={classes.column}>
+            <div style={styles.column}>
               <div style={{ height: 40 }} />
               <Tooltip
                 title="This is the length of the green line, if manual, this is the width of the image"
@@ -185,18 +182,18 @@ function SingleAnalysisPage(props) {
                   }}
                 />
               </Tooltip>
-              <div className={classes.row}>
+              <div style={styles.row}>
                 <Checkbox
                   checked={manualWidth}
                   onChange={() => changeManualWidth()}
                   value="manualWidth"
                 />
-                <div className={classes.centeredText}>Set width to manual</div>
+                <div style={styles.centeredText}>Set width to manual</div>
               </div>
             </div>
           </div>
 
-          <div className={classes.column}>
+          <div style={styles.column}>
             {useCrop ? (
               <Cropper
                 currentImage={originalImage}
@@ -205,10 +202,10 @@ function SingleAnalysisPage(props) {
             ) : (
               <>
                 <h3>Image {jumpHeading}</h3>
-                <div className={classes.column}>
-                  <img src={currentImage} className={classes.images} alt="" />
+                <div style={styles.column}>
+                  <img src={currentImage} style={styles.images} alt="" />
                   <Button
-                    className={classes.cropButton}
+                    style={styles.cropButton}
                     variant="contained"
                     color="primary"
                     onClick={handleCropChange}
@@ -221,8 +218,8 @@ function SingleAnalysisPage(props) {
           </div>
         </div>
         <MaskSelector />
-        <div className={classes.row}>
-          <div className={classes.column}>
+        <div style={styles.row}>
+          <div style={styles.column}>
             <h3>Current areas:</h3>
             {areas.map((value, i) => (
               <b key={i}>{value}cm^2</b>
@@ -232,22 +229,22 @@ function SingleAnalysisPage(props) {
               variant="contained"
               color="primary"
               onClick={analyzeImage}
-              className={classes.cropButton}
+              style={styles.cropButton}
             >
               Measure area
             </Button>
           </div>
         </div>
         {currentImages ? (
-          <div className={classes.column}>
+          <div style={styles.column}>
             <p>Stricter farther right (+sat) and down (+val)</p>
             {currentImages.map((row, i) => (
-              <div key={i} className={classes.row}>
+              <div key={i} style={styles.row}>
                 {row.map((obj, i) => (
                   <img
                     key={i}
                     src={obj["drawn_image"]}
-                    className={classes.gridImage}
+                    style={styles.gridImage}
                     alt=""
                     onClick={() => reanalyzeImage(obj)}
                   />
@@ -261,4 +258,4 @@ function SingleAnalysisPage(props) {
   );
 }
 
-export default withStyles(styles)(SingleAnalysisPage);
+export default SingleAnalysisPage;

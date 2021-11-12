@@ -3,12 +3,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Checkbox, Tooltip, TextField } from "@material-ui/core";
 
 import styles from "./style.js";
-import classNames from "classnames";
-import { withStyles } from "@material-ui/core/styles";
 
 import MaskSelector from "../MaskSelector/index.js";
 
-import { maskConstants } from "../MaskSelector/constants.js";
 import { base_url, base_ml_url } from "../../constants.js";
 
 import { Context } from "../context";
@@ -25,7 +22,6 @@ function MultiAnalysisPage(props) {
   } = React.useContext(Context);
   const [imageWidth, setImageWidth] = useState(6);
   const [manualWidth, setManualWidth] = useState(false);
-  const { classes } = props;
 
   useEffect(() => {
     let url = base_url;
@@ -115,11 +111,11 @@ function MultiAnalysisPage(props) {
   };
 
   return (
-    <div className={classNames(classes.main, classes.mainRaised)}>
-      <div className={classes.container}>
-        <div className={classes.row}>
+    <div style={{ ...styles.main, ...styles.mainRaised }}>
+      <div style={styles.container}>
+        <div style={styles.row}>
           <Button
-            className={classes.cropButton}
+            style={styles.cropButton}
             variant="contained"
             color="primary"
             onClick={goToHome}
@@ -127,7 +123,7 @@ function MultiAnalysisPage(props) {
             Go to home page
           </Button>
           <Button
-            className={classes.cropButton}
+            style={styles.cropButton}
             variant="contained"
             color="primary"
             onClick={goToSingle}
@@ -135,13 +131,13 @@ function MultiAnalysisPage(props) {
             Go to single-image measurement
           </Button>
         </div>
-        <div className={classes.column}>
-          <div className={classes.title}>
+        <div style={styles.column}>
+          <div style={styles.title}>
             <h2>Automatic Wound Area Measurement</h2>
             <h4>Multi-image measurement</h4>
           </div>
         </div>
-        <div className={classes.column}>
+        <div style={styles.column}>
           <div style={{ height: 20 }} />
           <Tooltip
             title="This is the length of the green line"
@@ -157,32 +153,32 @@ function MultiAnalysisPage(props) {
             />
           </Tooltip>
         </div>
-        <div className={classes.column}>
+        <div style={styles.column}>
           <MaskSelector />
         </div>
-        <div className={classes.column}>
+        <div style={styles.column}>
           <Button
             variant="contained"
             component="label"
             color="primary"
-            className={classes.analyzeButton}
+            style={styles.analyzeButton}
           >
             Upload and analyze ZIP file
             <input type="file" name="myImage" hidden onChange={uploadDayZip} />
           </Button>
         </div>
-        <div className={classes.column}>
+        <div style={styles.column}>
           {zipImgList.map((obj, i) => (
             <div key={i} id={"zipImg" + i}>
               {obj["error"] === false ? (
-                <div className={classes.row}>
+                <div style={styles.row}>
                   <img
                     src={obj["drawn_image"]}
-                    className={classes.colImage}
+                    style={styles.colImage}
                     alt=""
                     onClick={() => reanalyzeImage(obj, i)}
                   />
-                  <div className={classes.column}>
+                  <div style={styles.column}>
                     <h3>Image: {i}</h3>
                     <h3>Areas</h3>
                     {obj["areas"].map((area) => (
@@ -191,10 +187,10 @@ function MultiAnalysisPage(props) {
                   </div>
                 </div>
               ) : (
-                <div className={classes.row}>
+                <div style={styles.row}>
                   <img
                     src={obj["orig"]}
-                    className={classes.colImage}
+                    style={styles.colImage}
                     alt=""
                     onClick={() => reanalyzeImage(obj, i)}
                   />
@@ -209,4 +205,4 @@ function MultiAnalysisPage(props) {
   );
 }
 
-export default withStyles(styles)(MultiAnalysisPage);
+export default MultiAnalysisPage;
