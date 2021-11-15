@@ -212,18 +212,16 @@ const MaskSelector = (props) => {
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ backgroundColor: "maroon" }}
+                  style={{ ...styles.hsvButton, backgroundColor: "maroon" }}
                   onClick={() => modifyLowerSat(5)}
-                  style={styles.hsvButton}
                 >
                   Look for redder wounds (+sat)
                 </Button>
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ backgroundColor: "pink" }}
+                  style={{ ...styles.hsvButton, backgroundColor: "pink" }}
                   onClick={() => modifyLowerSat(-5)}
-                  style={styles.hsvButton}
                 >
                   Look for pinker wounds (-sat)
                 </Button>
@@ -232,18 +230,16 @@ const MaskSelector = (props) => {
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ backgroundColor: "#800200" }}
+                  style={{ ...styles.hsvButton, backgroundColor: "#800200" }}
                   onClick={() => modifyLowerVal(5)}
-                  style={styles.hsvButton}
                 >
                   Look for brighter wounds (+val)
                 </Button>
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ backgroundColor: "black" }}
+                  style={{ ...styles.hsvButton, backgroundColor: "black" }}
                   onClick={() => modifyLowerVal(-5)}
-                  style={styles.hsvButton}
                 >
                   Look for darker wounds (-val)
                 </Button>
@@ -252,18 +248,16 @@ const MaskSelector = (props) => {
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ backgroundColor: "green" }}
+                  style={{ ...styles.hsvButton, backgroundColor: "green" }}
                   onClick={() => modifyUpperVal(5)}
-                  style={styles.hsvButton}
                 >
                   Include more skin (+upperVal)
                 </Button>
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ backgroundColor: "green" }}
+                  style={{ ...styles.hsvButton, backgroundColor: "green" }}
                   onClick={() => modifyUpperVal(-5)}
-                  style={styles.hsvButton}
                 >
                   Include less skin (-upperVal)
                 </Button>
@@ -272,18 +266,16 @@ const MaskSelector = (props) => {
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ backgroundColor: "green" }}
+                  style={{ ...styles.hsvButton, backgroundColor: "green" }}
                   onClick={() => modifyHueRange(5)}
-                  style={styles.hsvButton}
                 >
                   Include more wound colors (+hue range)
                 </Button>
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ backgroundColor: "green" }}
+                  style={{ ...styles.hsvButton, backgroundColor: "green" }}
                   onClick={() => modifyHueRange(-5)}
-                  style={styles.hsvButton}
                 >
                   Reduce range of possible colors (-hue range)
                 </Button>

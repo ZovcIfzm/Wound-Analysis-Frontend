@@ -5,6 +5,7 @@ import { Button, Checkbox, Tooltip, TextField } from "@material-ui/core";
 import styles from "./style.js";
 
 import MaskSelector from "../MaskSelector/index.js";
+import NavBar from "../NavBar";
 
 import { base_url, base_ml_url } from "../../constants.js";
 
@@ -93,60 +94,36 @@ function MultiAnalysisPage(props) {
   return (
     <div style={{ ...styles.main, ...styles.mainRaised }}>
       <div style={styles.container}>
-        <div style={styles.row}>
-          <Button
-            style={styles.cropButton}
-            variant="contained"
-            color="primary"
-            onClick={() => props.history.push("/home")}
-          >
-            Go to home page
-          </Button>
-          <Button
-            style={styles.cropButton}
-            variant="contained"
-            color="primary"
-            onClick={() => props.history.push("/single")}
-          >
-            Go to single-image measurement
-          </Button>
+        <div style={styles.title}>
+          <h2>Automatic Wound Area Measurement</h2>
+          <h4>Multi-image measurement</h4>
         </div>
-        <div style={styles.column}>
-          <div style={styles.title}>
-            <h2>Automatic Wound Area Measurement</h2>
-            <h4>Multi-image measurement</h4>
-          </div>
-        </div>
-        <div style={styles.column}>
-          <div style={{ height: 20 }} />
-          <Tooltip
-            title="This is the length of the green line"
-            placement="top-start"
-          >
-            <TextField
-              id="standard-number"
-              label="Enter reference width (cm)"
-              defaultValue={settings.width}
-              InputProps={{
-                onChange: handleWidthChange,
-              }}
-            />
-          </Tooltip>
-        </div>
-        <div style={styles.column}>
-          <MaskSelector />
-        </div>
-        <div style={styles.column}>
-          <Button
-            variant="contained"
-            component="label"
-            color="primary"
-            style={styles.analyzeButton}
-          >
-            Upload and analyze ZIP file
-            <input type="file" name="myImage" hidden onChange={uploadDayZip} />
-          </Button>
-        </div>
+        <NavBar history={props.history} />
+
+        <Button
+          variant="contained"
+          component="label"
+          color="primary"
+          style={styles.analyzeButton}
+        >
+          Upload and analyze ZIP file
+          <input type="file" name="myImage" hidden onChange={uploadDayZip} />
+        </Button>
+        <div style={{ height: 20 }} />
+        <Tooltip
+          title="This is the length of the green line"
+          placement="top-start"
+        >
+          <TextField
+            id="standard-number"
+            label="Enter reference width (cm)"
+            defaultValue={settings.width}
+            InputProps={{
+              onChange: handleWidthChange,
+            }}
+          />
+        </Tooltip>
+        <MaskSelector />
         <div style={styles.column}>
           {zipImgList.map((obj, i) => (
             <div key={i} id={"zipImg" + i}>

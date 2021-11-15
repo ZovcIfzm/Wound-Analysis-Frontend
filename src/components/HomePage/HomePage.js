@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Button } from "@material-ui/core";
+import NavBar from "../NavBar";
 
 import styles from "./style.js";
 
@@ -42,30 +42,11 @@ const HomePage = (props) => {
   return (
     <div style={{ ...styles.main, ...styles.mainRaised }}>
       <div style={styles.container}>
-        <div style={styles.row}>
-          <Button
-            style={styles.cropButton}
-            variant="contained"
-            color="primary"
-            onClick={() => props.history.push("/single")}
-          >
-            Go to single-image measurement
-          </Button>
-          <Button
-            style={styles.cropButton}
-            variant="contained"
-            color="primary"
-            onClick={() => props.history.push("/multi")}
-          >
-            Go to multi-image measurement
-          </Button>
+        <div style={styles.title}>
+          <h2>Automatic Wound Area Measurement</h2>
+          <h4>Home/Tutorial page</h4>
         </div>
-        <div style={styles.column}>
-          <div style={styles.title}>
-            <h2>Automatic Wound Area Measurement</h2>
-            <h3>Home Page</h3>
-          </div>
-        </div>
+        <NavBar history={props.history} />
         <div style={styles.column}>
           <h3>Tutorial</h3>
           <div style={styles.column}>

@@ -28,13 +28,13 @@ const styles = {
     display: "flex",
     flex: 1,
     width: "100%",
-    height: "100%",
     alignSelf: "center",
   },
   hsvButton: {
     display: "flex",
     flex: 1,
     alignSelf: "center",
+    width: "100%",
   },
 };
 

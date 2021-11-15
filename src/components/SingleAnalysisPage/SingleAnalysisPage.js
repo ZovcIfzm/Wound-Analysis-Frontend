@@ -6,6 +6,7 @@ import { Button, Checkbox, Tooltip, TextField } from "@material-ui/core";
 import styles from "./style.js";
 
 import MaskSelector from "../MaskSelector/index.js";
+import NavBar from "../NavBar";
 
 import { base_url } from "../../constants.js";
 
@@ -19,6 +20,7 @@ function SingleAnalysisPage(props) {
   const [useCrop, setUseCrop] = useState(false);
   const [areas, setAreas] = useState([]);
   const [jumpHeading, setJumpHeading] = useState();
+  const [minDisplayWidth, setMinDisplayWidth] = useState(0.1);
 
   useEffect(() => {
     if (props.location.state != null) {
@@ -128,133 +130,134 @@ function SingleAnalysisPage(props) {
   return (
     <div style={{ ...styles.main, ...styles.mainRaised }}>
       <div style={styles.container}>
-        <div style={styles.row}>
-          <Button
-            style={styles.cropButton}
-            variant="contained"
-            color="primary"
-            onClick={() => props.history.push("/home")}
-          >
-            Go to home page
-          </Button>
-          <Button
-            style={styles.cropButton}
-            variant="contained"
-            color="primary"
-            onClick={() => props.history.push("/multi")}
-          >
-            Go to multi-image measurement
-          </Button>
-        </div>
         <div style={styles.title}>
           <h2>Automatic Wound Area Measurement</h2>
           <h4>Single-image measurement</h4>
         </div>
-        <div style={styles.row}>
-          <div style={styles.column}>
-            <div style={styles.button} style={{ flex: 1 }}>
-              <h3>Upload Image</h3>
-              <Button variant="contained" component="label">
-                Upload Image
-                <input
-                  type="file"
-                  name="myImage"
-                  hidden
-                  onChange={onImageChange}
-                />
-              </Button>
-            </div>
+        <NavBar history={props.history} />
+        <div style={styles.borderedContainer}>
+          <div style={styles.row}>
             <div style={styles.column}>
-              <div style={{ height: 40 }} />
-              <Tooltip
-                title="This is the length of the green line, if manual, this is the width of the image"
-                placement="top-start"
-              >
-                <TextField
-                  id="standard-number"
-                  label="Enter reference width (cm)"
-                  defaultValue={settings.width}
-                  InputProps={{
-                    onChange: handleWidthChange,
-                  }}
-                />
-              </Tooltip>
-              <div style={styles.row}>
-                <Checkbox
-                  checked={!settings.autoWidth}
-                  onChange={() =>
-                    setSettings((prevSettings) => ({
-                      ...prevSettings,
-                      autoWidth: !prevSettings["autoWidth"],
-                    }))
-                  }
-                  value="autoMask"
-                />
-                <div style={styles.centeredText}>Set width to manual</div>
+              <div style={styles.button} style={{ flex: 1 }}>
+                <h3>Upload Image</h3>
+                <Button variant="contained" component="label">
+                  Upload Image
+                  <input
+                    type="file"
+                    name="myImage"
+                    hidden
+                    onChange={onImageChange}
+                  />
+                </Button>
+              </div>
+              <div style={styles.column}>
+                <div style={{ height: 40 }} />
+                <Tooltip
+                  title="This is the length of the green line, if manual, this is the width of the image"
+                  placement="top-start"
+                >
+                  <TextField
+                    id="standard-number"
+                    label="Enter reference width (cm)"
+                    defaultValue={settings.width}
+                    InputProps={{
+                      onChange: handleWidthChange,
+                    }}
+                  />
+                </Tooltip>
+                <div style={styles.row}>
+                  <Checkbox
+                    checked={!settings.autoWidth}
+                    onChange={() =>
+                      setSettings((prevSettings) => ({
+                        ...prevSettings,
+                        autoWidth: !prevSettings["autoWidth"],
+                      }))
+                    }
+                    value="autoMask"
+                  />
+                  <div style={styles.centeredText}>Set width to manual</div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div style={styles.column}>
-            {useCrop ? (
-              <Cropper
-                currentImage={originalImage}
-                completeCrop={completeCrop}
-              />
-            ) : (
-              <>
-                <h3>Image {jumpHeading}</h3>
-                <div style={styles.column}>
-                  <img src={currentImage} style={styles.images} alt="" />
-                  <Button
-                    style={styles.cropButton}
-                    variant="contained"
-                    color="primary"
-                    onClick={handleCropChange}
-                  >
-                    Crop Image
-                  </Button>
-                </div>
-              </>
-            )}
+            <div style={styles.column}>
+              {useCrop ? (
+                <Cropper
+                  currentImage={originalImage}
+                  completeCrop={completeCrop}
+                />
+              ) : (
+                <>
+                  <h3>Image {jumpHeading}</h3>
+                  <div style={styles.column}>
+                    <img src={currentImage} style={styles.images} alt="" />
+                    <Button
+                      style={styles.cropButton}
+                      variant="contained"
+                      color="primary"
+                      onClick={handleCropChange}
+                    >
+                      Crop Image
+                    </Button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
         <MaskSelector />
-        <div style={styles.row}>
-          <div style={styles.column}>
-            <h3>Current areas:</h3>
-            {areas.map((value, i) => (
-              <b key={i}>{value}cm^2</b>
-            ))}
-
+        <div style={styles.borderedContainer}>
+          <div style={styles.areasColumn}>
+            <h2>Areas</h2>
             <Button
               variant="contained"
               color="primary"
               onClick={analyzeImage}
-              style={styles.cropButton}
+              style={styles.thinButton}
             >
               Measure area
             </Button>
+            <TextField
+              id="standard-number"
+              label="Minimum area displayed"
+              defaultValue={minDisplayWidth}
+              InputProps={{
+                onChange: (event) => setMinDisplayWidth(event.target.value),
+              }}
+              style={styles.thinButton}
+            />
+            <h3>
+              Current areas <br /> (left to right)
+            </h3>
+            {areas.map((value, i) =>
+              parseFloat(value) > minDisplayWidth ? (
+                <b key={i}>{value}cm^2</b>
+              ) : null
+            )}
           </div>
-        </div>
-        {currentImages ? (
           <div style={styles.column}>
-            <p>Stricter farther right (+sat) and down (+val)</p>
-            {currentImages.map((row, i) => (
-              <div key={i} style={styles.row}>
-                {row.map((obj, i) => (
-                  <img
-                    key={i}
-                    src={obj["drawn_image"]}
-                    style={styles.gridImage}
-                    alt=""
-                    onClick={() => reanalyzeImage(obj)}
-                  />
+            {currentImages ? (
+              <div style={styles.column}>
+                <h1>Adjusted Masks</h1>
+                <p>Stricter farther right (+sat) and down (+val)</p>
+                {currentImages.map((row, i) => (
+                  <div key={i} style={styles.row}>
+                    {row.map((obj, i) => (
+                      <img
+                        key={i}
+                        src={obj["drawn_image"]}
+                        style={styles.gridImage}
+                        alt=""
+                        onClick={() => reanalyzeImage(obj)}
+                      />
+                    ))}
+                  </div>
                 ))}
               </div>
-            ))}
+            ) : null}
           </div>
-        ) : null}
+        </div>
       </div>
     </div>
   );

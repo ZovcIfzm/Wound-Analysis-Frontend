@@ -3,6 +3,7 @@ const styles = {
     display: "flex",
     flex: 1,
     flexDirection: "row",
+    alignItems: "center",
   },
   column: {
     display: "flex",
@@ -10,14 +11,30 @@ const styles = {
     flexDirection: "column",
     textAlign: "center",
   },
+  areasColumn: {
+    display: "flex",
+    flexDirection: "column",
+    textAlign: "center",
+    width: "20%",
+    alignItems: "center",
+  },
+  thinButton: {
+    margin: 5,
+  },
   cropperContainer: {
     width: 50,
     height: 50,
   },
+  borderedContainer: {
+    display: "flex",
+    flex: 1,
+    border: "1px black solid",
+    padding: 15,
+  },
   container: {
     display: "flex",
     flex: 1,
-    padding: "15px",
+    padding: 15,
     marginRight: "auto",
     marginLeft: "auto",
     width: "100%",
