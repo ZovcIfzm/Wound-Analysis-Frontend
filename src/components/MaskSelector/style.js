@@ -1,10 +1,10 @@
 const styles = {
   container: {
+    display: "flex",
     flex: 1,
   },
   textField: {
     width: 140,
-    paddingRight: 20,
   },
   row: {
     display: "flex",

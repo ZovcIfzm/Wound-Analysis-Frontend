@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
@@ -103,10 +103,10 @@ const MaskSelector = (props) => {
         Change mask type
       </Button>
       {!settings.autoMask ? (
-        <div style={styles.container}>
-          <h4>Selecting mask manually</h4>
+        <div style={styles.column}>
           <div style={styles.row}>
             <div style={styles.column}>
+              <h4>Selecting mask manually</h4>
               <TextField
                 label="HSV Lower Range"
                 style={styles.textField}
@@ -124,7 +124,6 @@ const MaskSelector = (props) => {
                 margin="normal"
               />
             </div>
-
             <div style={styles.column}>
               <Button
                 variant="contained"
