@@ -106,7 +106,10 @@ function SingleAnalysisPage(props) {
             alert(matrix[1][1]["error_message"]);
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          alert(error);
+        });
     } else if (currentImage && !settings.width) {
       alert("Please specify an image width");
     } else if (!currentImage && settings.width) {
