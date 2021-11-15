@@ -2,9 +2,14 @@ const styles = {
   container: {
     display: "flex",
     flex: 1,
+    border: "1px black solid",
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 10,
   },
   textField: {
-    width: 140,
+    marginLeft: 10,
+    marginRight: 10,
   },
   row: {
     display: "flex",
@@ -23,6 +28,7 @@ const styles = {
     display: "flex",
     flex: 1,
     width: "100%",
+    height: "100%",
     alignSelf: "center",
   },
   hsvButton: {

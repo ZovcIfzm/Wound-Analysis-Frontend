@@ -73,17 +73,21 @@ function SingleAnalysisPage(props) {
     analyzeImage(newSettings);
   };
 
-  const analyzeImage = async (settings) => {
+  const analyzeImage = async () => {
     if (currentImage && settings.width) {
       const url = base_url + "/measure";
 
-      const form = new FormData();
-      form.append("base64", originalImage);
-      form.append("settings", settings);
+      const data = {
+        base64: originalImage,
+        settings: settings,
+      };
 
       fetch(url, {
         method: "POST",
-        body: form,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       })
         .then((response) => {
           if (!response.ok) throw Error(response.statusText);

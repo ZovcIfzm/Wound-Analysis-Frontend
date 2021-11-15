@@ -61,6 +61,7 @@ const styles = {
     display: "flex",
     flex: 1,
     width: "70%",
+    height: "70%",
     alignSelf: "center",
   },
   gridImage: {

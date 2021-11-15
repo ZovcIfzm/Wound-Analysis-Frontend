@@ -88,211 +88,212 @@ const MaskSelector = (props) => {
   };
 
   return (
-    <div style={styles.column}>
-      <div style={{ height: 20 }} />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() =>
-          setSettings((prevSettings) => ({
-            ...prevSettings,
-            autoMask: !prevSettings.autoMask,
-          }))
-        }
-      >
-        Change mask type
-      </Button>
-      {!settings.autoMask ? (
-        <div style={styles.column}>
-          <div style={styles.row}>
-            <div style={styles.column}>
-              <h4>Selecting mask manually</h4>
-              <TextField
-                label="HSV Lower Range"
-                style={styles.textField}
-                value={settings.lowerBound}
-                placeholder={placeholder}
-                onChange={handleLowerBoundChange}
-                margin="normal"
-              />
-              <TextField
-                label="HSV Upper Range"
-                style={styles.textField}
-                value={settings.upperBound}
-                placeholder={placeholder}
-                onChange={handleUpperBoundChange}
-                margin="normal"
-              />
+    <div style={styles.container}>
+      <div style={styles.column}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() =>
+            setSettings((prevSettings) => ({
+              ...prevSettings,
+              autoMask: !prevSettings.autoMask,
+            }))
+          }
+        >
+          Change mask type
+        </Button>
+        <div style={{ height: 20 }} />
+        {!settings.autoMask ? (
+          <div style={styles.column}>
+            <div style={styles.row}>
+              <div style={styles.column}>
+                <h4>Selecting mask manually</h4>
+                <TextField
+                  label="HSV Lower Range"
+                  style={styles.textField}
+                  value={settings.lowerBound}
+                  placeholder={placeholder}
+                  onChange={handleLowerBoundChange}
+                  margin="normal"
+                />
+                <TextField
+                  label="HSV Upper Range"
+                  style={styles.textField}
+                  value={settings.upperBound}
+                  placeholder={placeholder}
+                  onChange={handleUpperBoundChange}
+                  margin="normal"
+                />
+              </div>
+              <div style={styles.column}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() =>
+                    setSettings((prevSettings) => ({
+                      ...prevSettings,
+                      ...maskConstants["A"],
+                    }))
+                  }
+                >
+                  Select Lightest Mask
+                </Button>
+                Best for:
+                <img src={maskAImg} style={styles.exampleImage} alt="" />
+              </div>
+              <div style={styles.column}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() =>
+                    setSettings((prevSettings) => ({
+                      ...prevSettings,
+                      ...maskConstants["B"],
+                    }))
+                  }
+                >
+                  Select Light Mask
+                </Button>
+                Best for:
+                <img src={maskBImg} style={styles.exampleImage} alt="" />
+              </div>
+              <div style={styles.column}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() =>
+                    setSettings((prevSettings) => ({
+                      ...prevSettings,
+                      ...maskConstants["C"],
+                    }))
+                  }
+                >
+                  Select Standard Mask
+                </Button>
+                Best for:
+                <img src={maskCImg} style={styles.exampleImage} alt="" />
+              </div>
+              <div style={styles.column}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() =>
+                    setSettings((prevSettings) => ({
+                      ...prevSettings,
+                      ...maskConstants["D"],
+                    }))
+                  }
+                >
+                  Select Darker Mask
+                </Button>
+                Best for:
+                <img src={maskDImg} style={styles.exampleImage} alt="" />
+              </div>
+              <div style={styles.column}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() =>
+                    setSettings((prevSettings) => ({
+                      ...prevSettings,
+                      ...maskConstants["E"],
+                    }))
+                  }
+                >
+                  Select Darkest Mask
+                </Button>
+                Best for:
+                <img src={maskEImg} style={styles.exampleImage} alt="" />
+              </div>
             </div>
-            <div style={styles.column}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() =>
-                  setSettings((prevSettings) => ({
-                    ...prevSettings,
-                    ...maskConstants["A"],
-                  }))
-                }
-              >
-                Select Lightest Mask
-              </Button>
-              Best for:
-              <img src={maskAImg} style={styles.exampleImage} alt="" />
-            </div>
-            <div style={styles.column}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() =>
-                  setSettings((prevSettings) => ({
-                    ...prevSettings,
-                    ...maskConstants["B"],
-                  }))
-                }
-              >
-                Select Light Mask
-              </Button>
-              Best for:
-              <img src={maskBImg} style={styles.exampleImage} alt="" />
-            </div>
-            <div style={styles.column}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() =>
-                  setSettings((prevSettings) => ({
-                    ...prevSettings,
-                    ...maskConstants["C"],
-                  }))
-                }
-              >
-                Select Standard Mask
-              </Button>
-              Best for:
-              <img src={maskCImg} style={styles.exampleImage} alt="" />
-            </div>
-            <div style={styles.column}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() =>
-                  setSettings((prevSettings) => ({
-                    ...prevSettings,
-                    ...maskConstants["D"],
-                  }))
-                }
-              >
-                Select Darker Mask
-              </Button>
-              Best for:
-              <img src={maskDImg} style={styles.exampleImage} alt="" />
-            </div>
-            <div style={styles.column}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() =>
-                  setSettings((prevSettings) => ({
-                    ...prevSettings,
-                    ...maskConstants["E"],
-                  }))
-                }
-              >
-                Select Darkest Mask
-              </Button>
-              Best for:
-              <img src={maskEImg} style={styles.exampleImage} alt="" />
+            <div style={{ height: 10 }} />
+            <div style={styles.row}>
+              <div style={styles.column}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ backgroundColor: "maroon" }}
+                  onClick={() => modifyLowerSat(5)}
+                  style={styles.hsvButton}
+                >
+                  Look for redder wounds (+sat)
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ backgroundColor: "pink" }}
+                  onClick={() => modifyLowerSat(-5)}
+                  style={styles.hsvButton}
+                >
+                  Look for pinker wounds (-sat)
+                </Button>
+              </div>
+              <div style={styles.column}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ backgroundColor: "#800200" }}
+                  onClick={() => modifyLowerVal(5)}
+                  style={styles.hsvButton}
+                >
+                  Look for brighter wounds (+val)
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ backgroundColor: "black" }}
+                  onClick={() => modifyLowerVal(-5)}
+                  style={styles.hsvButton}
+                >
+                  Look for darker wounds (-val)
+                </Button>
+              </div>
+              <div style={styles.column}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ backgroundColor: "green" }}
+                  onClick={() => modifyUpperVal(5)}
+                  style={styles.hsvButton}
+                >
+                  Include more skin (+upperVal)
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ backgroundColor: "green" }}
+                  onClick={() => modifyUpperVal(-5)}
+                  style={styles.hsvButton}
+                >
+                  Include less skin (-upperVal)
+                </Button>
+              </div>
+              <div style={styles.column}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ backgroundColor: "green" }}
+                  onClick={() => modifyHueRange(5)}
+                  style={styles.hsvButton}
+                >
+                  Include more wound colors (+hue range)
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ backgroundColor: "green" }}
+                  onClick={() => modifyHueRange(-5)}
+                  style={styles.hsvButton}
+                >
+                  Reduce range of possible colors (-hue range)
+                </Button>
+              </div>
             </div>
           </div>
-          <div style={{ height: 10 }} />
-          <div style={styles.row}>
-            <div style={styles.column}>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ backgroundColor: "maroon" }}
-                onClick={() => modifyLowerSat(5)}
-                style={styles.hsvButton}
-              >
-                Look for redder wounds (+sat)
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ backgroundColor: "pink" }}
-                onClick={() => modifyLowerSat(-5)}
-                style={styles.hsvButton}
-              >
-                Look for pinker wounds (-sat)
-              </Button>
-            </div>
-            <div style={styles.column}>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ backgroundColor: "#800200" }}
-                onClick={() => modifyLowerVal(5)}
-                style={styles.hsvButton}
-              >
-                Look for brighter wounds (+val)
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ backgroundColor: "black" }}
-                onClick={() => modifyLowerVal(-5)}
-                style={styles.hsvButton}
-              >
-                Look for darker wounds (-val)
-              </Button>
-            </div>
-            <div style={styles.column}>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ backgroundColor: "green" }}
-                onClick={() => modifyUpperVal(5)}
-                style={styles.hsvButton}
-              >
-                Include more skin (+upperVal)
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ backgroundColor: "green" }}
-                onClick={() => modifyUpperVal(-5)}
-                style={styles.hsvButton}
-              >
-                Include less skin (-upperVal)
-              </Button>
-            </div>
-            <div style={styles.column}>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ backgroundColor: "green" }}
-                onClick={() => modifyHueRange(5)}
-                style={styles.hsvButton}
-              >
-                Include more wound colors (+hue range)
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ backgroundColor: "green" }}
-                onClick={() => modifyHueRange(-5)}
-                style={styles.hsvButton}
-              >
-                Reduce range of possible colors (-hue range)
-              </Button>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <h4>Selecting mask automatically</h4>
-      )}
-      <div style={{ height: 20 }} />
+        ) : (
+          <h4>Selecting mask automatically</h4>
+        )}
+      </div>
     </div>
   );
 };
