@@ -6,6 +6,7 @@ import { Button, Checkbox, Tooltip, TextField } from "@material-ui/core";
 import styles from "./style.js";
 
 import MaskSelector from "../MaskSelector/index.js";
+import LineMaskSelector from "../LineMaskSelector/index.js";
 import NavBar from "../NavBar";
 
 import { base_url } from "../../constants.js";
@@ -156,31 +157,34 @@ function SingleAnalysisPage(props) {
               <div style={styles.column}>
                 <div style={{ height: 40 }} />
                 <Tooltip
-                  title="This is the length of the green line, if manual, this is the width of the image"
+                  title="If width is set to manual, the width of the image will be used as reference, otherwies the width of the green line will be used."
                   placement="top-start"
                 >
-                  <TextField
-                    id="standard-number"
-                    label="Enter reference width (cm)"
-                    defaultValue={settings.width}
-                    InputProps={{
-                      onChange: handleWidthChange,
-                    }}
-                  />
+                  <div style={styles.container}>
+                    <TextField
+                      id="standard-number"
+                      label="Enter reference width (cm)"
+                      defaultValue={settings.width}
+                      InputProps={{
+                        onChange: handleWidthChange,
+                      }}
+                    />
+                    <div style={styles.row}>
+                      <Checkbox
+                        checked={!settings.autoWidth}
+                        onChange={() =>
+                          setSettings((prevSettings) => ({
+                            ...prevSettings,
+                            autoWidth: !prevSettings["autoWidth"],
+                          }))
+                        }
+                        value="autoMask"
+                      />
+                      <div style={styles.centeredText}>Set width to manual</div>
+                    </div>
+                  </div>
                 </Tooltip>
-                <div style={styles.row}>
-                  <Checkbox
-                    checked={!settings.autoWidth}
-                    onChange={() =>
-                      setSettings((prevSettings) => ({
-                        ...prevSettings,
-                        autoWidth: !prevSettings["autoWidth"],
-                      }))
-                    }
-                    value="autoMask"
-                  />
-                  <div style={styles.centeredText}>Set width to manual</div>
-                </div>
+                {settings.autoWidth ? <LineMaskSelector /> : null}
               </div>
             </div>
 
