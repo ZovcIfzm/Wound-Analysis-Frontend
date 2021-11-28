@@ -188,7 +188,7 @@ function SingleAnalysisPage(props) {
               </div>
             </div>
 
-            <div style={styles.column}>
+            <div style={styles.imageColumn}>
               {useCrop ? (
                 <Cropper
                   currentImage={originalImage}

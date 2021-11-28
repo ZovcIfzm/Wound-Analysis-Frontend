@@ -22,6 +22,12 @@ const styles = {
     flexDirection: "column",
     textAlign: "center",
   },
+  imageColumn: {
+    display: "flex",
+    flex: 2,
+    flexDirection: "column",
+    textAlign: "center",
+  },
   areasColumn: {
     display: "flex",
     flexDirection: "column",
