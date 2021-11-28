@@ -215,54 +215,37 @@ function SingleAnalysisPage(props) {
         </div>
         <MaskSelector />
         <div style={styles.borderedContainer}>
-          <div style={styles.areasColumn}>
-            <h2>Areas</h2>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={analyzeImage}
-              style={styles.thinButton}
-            >
-              Measure area
-            </Button>
-            <TextField
-              id="standard-number"
-              label="Minimum area displayed"
-              defaultValue={minDisplayWidth}
-              InputProps={{
-                onChange: (event) => setMinDisplayWidth(event.target.value),
-              }}
-              style={styles.thinButton}
-            />
-            <h3>
-              Current areas <br /> (left to right)
-            </h3>
-            {areas.map((value, i) =>
-              parseFloat(value) > minDisplayWidth ? (
-                <b key={i}>{value}cm^2</b>
-              ) : null
-            )}
-          </div>
-          <div style={styles.column}>
-            {currentImages ? (
-              <div style={styles.column}>
-                <h1>Adjusted Masks</h1>
-                <p>Stricter farther right (+sat) and down (+val)</p>
-                {currentImages.map((row, i) => (
-                  <div key={i} style={styles.row}>
-                    {row.map((obj, i) => (
-                      <img
-                        key={i}
-                        src={obj["drawn_image"]}
-                        style={styles.gridImage}
-                        alt=""
-                        onClick={() => reanalyzeImage(obj)}
-                      />
-                    ))}
-                  </div>
-                ))}
-              </div>
-            ) : null}
+          <div style={styles.areasRow}>
+            <div style={styles.column}>
+              <h2>Areas</h2>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={analyzeImage}
+                style={styles.thinButton}
+              >
+                Measure area
+              </Button>
+              <TextField
+                id="standard-number"
+                label="Minimum area displayed"
+                defaultValue={minDisplayWidth}
+                InputProps={{
+                  onChange: (event) => setMinDisplayWidth(event.target.value),
+                }}
+                style={styles.thinButton}
+              />
+            </div>
+            <div style={styles.column}>
+              <h3>
+                Current areas <br /> (left to right)
+              </h3>
+              {areas.map((value, i) =>
+                parseFloat(value) > minDisplayWidth ? (
+                  <b key={i}>{value}cm^2</b>
+                ) : null
+              )}
+            </div>
           </div>
         </div>
       </div>

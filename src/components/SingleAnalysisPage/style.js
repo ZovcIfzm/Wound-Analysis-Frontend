@@ -9,6 +9,13 @@ const styles = {
     flexDirection: "row",
     alignItems: "center",
   },
+  areasRow: {
+    display: "flex",
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   column: {
     display: "flex",
     flex: 1,

@@ -23,14 +23,6 @@ const NavBar = (props) => {
       >
         Go to single-image measurement
       </Button>
-      <Button
-        style={styles.navButton}
-        variant="contained"
-        color="primary"
-        onClick={() => props.history.push("/multi")}
-      >
-        Go to multi-image measurement
-      </Button>
     </div>
   );
 };

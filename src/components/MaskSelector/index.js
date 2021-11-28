@@ -90,24 +90,12 @@ const MaskSelector = (props) => {
   return (
     <div style={styles.container}>
       <div style={styles.column}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() =>
-            setSettings((prevSettings) => ({
-              ...prevSettings,
-              autoMask: !prevSettings.autoMask,
-            }))
-          }
-        >
-          Change mask type
-        </Button>
         <div style={{ height: 20 }} />
         {!settings.autoMask ? (
           <div style={styles.column}>
             <div style={styles.row}>
               <div style={styles.column}>
-                <h4>Selecting mask manually</h4>
+                <h4>Edit wound detector</h4>
                 <TextField
                   label="HSV Lower Range"
                   style={styles.textField}
