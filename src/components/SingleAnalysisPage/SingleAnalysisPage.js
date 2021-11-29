@@ -123,7 +123,7 @@ function SingleAnalysisPage(props) {
   const handleWidthChange = (event) => {
     setSettings((prevSettings) => ({
       ...prevSettings,
-      width: event.target.value,
+      width: parseFloat(event.target.value),
     }));
   };
 
