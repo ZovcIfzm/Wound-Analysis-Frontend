@@ -140,7 +140,7 @@ const MaskSelector = (props) => {
                     }))
                   }
                 >
-                  Select Light Mask
+                  Select Light Mask (Most Used)
                 </Button>
                 Best for:
                 <img src={maskBImg} style={styles.exampleImage} alt="" />

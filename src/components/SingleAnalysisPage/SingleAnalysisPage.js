@@ -238,11 +238,11 @@ function SingleAnalysisPage(props) {
             </div>
             <div style={styles.column}>
               <h3>
-                Current areas <br /> (left to right)
+                Current areas (cm^2) <br /> (left to right)
               </h3>
               {areas.map((value, i) =>
                 parseFloat(value) > minDisplayWidth ? (
-                  <b key={i}>{value}cm^2</b>
+                  <b key={i}>{value}</b>
                 ) : null
               )}
             </div>

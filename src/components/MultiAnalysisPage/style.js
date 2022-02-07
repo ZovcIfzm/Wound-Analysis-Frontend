@@ -86,6 +86,9 @@ const styles = {
     width: "75%",
     alignSelf: "center",
   },
+  thinButton: {
+    margin: 5,
+  },
 };
 
 export default styles;

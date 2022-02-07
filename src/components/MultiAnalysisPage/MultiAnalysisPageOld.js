@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Button, Tooltip, TextField } from "@material-ui/core";
-import JSZip from "jszip";
+import { Button, Checkbox, Tooltip, TextField } from "@material-ui/core";
+
 import styles from "./style.js";
 
 import MaskSelector from "../MaskSelector/index.js";
@@ -15,16 +15,15 @@ function MultiAnalysisPage(props) {
   const { settings, setSettings, zipImgList, setZipImgList } =
     React.useContext(Context);
 
-  const [minDisplayWidth, setMinDisplayWidth] = useState(0.1);
   useEffect(() => {
     let url = base_url;
     let ml_url = base_ml_url;
-    const data = {
-      wakeup: "wakeupserver",
-    };
+    //const url = "/"
+    let form = new FormData();
+    form.append("wakeup", "wakeup server");
     let analyze_options = {
       method: "POST",
-      body: JSON.stringify(data),
+      body: form,
     };
     fetch(url, analyze_options)
       .then((response) => {
@@ -41,51 +40,37 @@ function MultiAnalysisPage(props) {
       .catch((error) => console.log(error));
   }, []);
 
-  const uploadMultiple = async (event) => {
-    const zip = new JSZip();
+  const uploadDayZip = async (event) => {
+    let zipFile = event.target.files[0];
+    if (zipFile) {
+      let url = base_url + "/zipMeasure";
+      let form = new FormData();
+      form.append("file", zipFile);
+      form.append("width", settings.width);
+      form.append("settings", settings);
 
-    let files = event.target.files;
-    if (files) {
-      for (let file = 0; file < files.length; file++) {
-        // Zip file with the file name.
-        zip.file(files[file].name, files[file]);
-      }
-      zip.generateAsync({ type: "blob" }).then((content) => {
-        let url = base_url + "/zipMeasure";
-
-        const data = {
-          zip: content,
-          settings: settings,
-        };
-
-        let form = new FormData();
-        form.append("file", content);
-        form.append("settings", JSON.stringify(settings));
-
-        //Then analyze
-        const analyze_options = {
-          method: "POST",
-          body: form,
-        };
-
-        fetch(url, analyze_options)
-          .then((response) => {
-            if (!response.ok) throw Error(response.statusText);
-            return response.json();
-          })
-          .then((imgList) => {
-            alert("Images analyzed");
-            setZipImgList(imgList);
-          })
-          .catch((error) => {
-            if (error instanceof TypeError) {
-              alert("Too many images, make a smaller Zip file");
-            } else {
-              console.log(error);
-              alert("Unknown error, let Alex know about this. Error:", error);
-            }
-          });
-      });
+      //Then analyze
+      const analyze_options = {
+        method: "POST",
+        body: form,
+      };
+      fetch(url, analyze_options)
+        .then((response) => {
+          if (!response.ok) throw Error(response.statusText);
+          return response.json();
+        })
+        .then((imgList) => {
+          alert("Images analyzed");
+          setZipImgList(imgList);
+        })
+        .catch((error) => {
+          if (error instanceof TypeError) {
+            alert("Too many images, make a smaller Zip file");
+          } else {
+            console.log(error);
+            alert("Unknown error, let Alex know about this. Error:", error);
+          }
+        });
     } else {
       alert("Please upload an zip file");
     }
@@ -115,8 +100,15 @@ function MultiAnalysisPage(props) {
         </div>
         <NavBar history={props.history} />
 
-        <MaskSelector />
-
+        <Button
+          variant="contained"
+          component="label"
+          color="primary"
+          style={styles.analyzeButton}
+        >
+          Upload and analyze ZIP file
+          <input type="file" name="myImage" hidden onChange={uploadDayZip} />
+        </Button>
         <div style={{ height: 20 }} />
         <Tooltip
           title="This is the length of the green line"
@@ -131,32 +123,7 @@ function MultiAnalysisPage(props) {
             }}
           />
         </Tooltip>
-        <TextField
-          id="standard-number"
-          label="Minimum area displayed"
-          defaultValue={minDisplayWidth}
-          InputProps={{
-            onChange: (event) => setMinDisplayWidth(event.target.value),
-          }}
-          style={styles.thinButton}
-        />
-        <div style={{ height: 20 }} />
-        <Button
-          variant="contained"
-          component="label"
-          color="primary"
-          style={styles.analyzeButton}
-        >
-          Upload and analyze multiple files
-          <input
-            type="file"
-            multiple
-            name="myImage"
-            hidden
-            onChange={uploadMultiple}
-          />
-        </Button>
-        <div style={{ height: 20 }} />
+        <MaskSelector />
         <div style={styles.column}>
           {zipImgList.map((obj, i) => (
             <div key={i} id={"zipImg" + i}>
@@ -171,11 +138,9 @@ function MultiAnalysisPage(props) {
                   <div style={styles.column}>
                     <h3>Image: {i}</h3>
                     <h3>Areas</h3>
-                    {obj["areas"].map((value, i) =>
-                      parseFloat(value) > minDisplayWidth ? (
-                        <b key={i}>{value}</b>
-                      ) : null
-                    )}
+                    {obj["areas"].map((area) => (
+                      <h5>{area}cm^2</h5>
+                    ))}
                   </div>
                 </div>
               ) : (
