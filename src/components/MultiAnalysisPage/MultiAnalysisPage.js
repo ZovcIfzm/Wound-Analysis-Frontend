@@ -16,6 +16,7 @@ function MultiAnalysisPage(props) {
     React.useContext(Context);
 
   const [minDisplayWidth, setMinDisplayWidth] = useState(0.1);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     let url = base_url;
     let ml_url = base_ml_url;
@@ -42,6 +43,7 @@ function MultiAnalysisPage(props) {
   }, []);
 
   const uploadMultiple = async (event) => {
+    setIsLoading(true);
     const zip = new JSZip();
 
     let files = event.target.files;
@@ -74,13 +76,16 @@ function MultiAnalysisPage(props) {
             return response.json();
           })
           .then((imgList) => {
+            setIsLoading(false);
             alert("Images analyzed");
             setZipImgList(imgList);
           })
           .catch((error) => {
             if (error instanceof TypeError) {
+              setIsLoading(false);
               alert("Too many images, make a smaller Zip file");
             } else {
+              setIsLoading(false);
               console.log(error);
               alert("Unknown error, let Alex know about this. Error:", error);
             }
@@ -147,7 +152,9 @@ function MultiAnalysisPage(props) {
           color="primary"
           style={styles.analyzeButton}
         >
-          Upload and analyze multiple files
+          {isLoading
+            ? "Analyzing images..."
+            : "Upload and analyze multiple files"}
           <input
             type="file"
             multiple
@@ -162,13 +169,15 @@ function MultiAnalysisPage(props) {
             <div key={i} id={"zipImg" + i}>
               {obj["error"] === false ? (
                 <div style={styles.row}>
-                  <img
-                    src={obj["drawn_image"]}
-                    style={styles.colImage}
-                    alt=""
-                    onClick={() => reanalyzeImage(obj, i)}
-                  />
-                  <div style={styles.column}>
+                  <div style={styles.imageColumn}>
+                    <img
+                      src={obj["drawn_image"]}
+                      style={styles.colImage}
+                      alt=""
+                      onClick={() => reanalyzeImage(obj, i)}
+                    />
+                  </div>
+                  <div style={styles.imageInfoColumn}>
                     <h3>Image: {i}</h3>
                     <h3>Areas</h3>
                     {obj["areas"].map((value, i) =>
@@ -180,13 +189,17 @@ function MultiAnalysisPage(props) {
                 </div>
               ) : (
                 <div style={styles.row}>
-                  <img
-                    src={obj["orig"]}
-                    style={styles.colImage}
-                    alt=""
-                    onClick={() => reanalyzeImage(obj, i)}
-                  />
-                  <p>Error: {obj["error_message"]}</p>
+                  <div style={styles.imageColumn}>
+                    <img
+                      src={obj["orig"]}
+                      style={styles.colImage}
+                      alt=""
+                      onClick={() => reanalyzeImage(obj, i)}
+                    />
+                  </div>
+                  <div style={styles.imageInfoColumn}>
+                    Error: {obj["error_message"]}
+                  </div>
                 </div>
               )}
             </div>

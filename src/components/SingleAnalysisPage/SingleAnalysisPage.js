@@ -22,6 +22,7 @@ function SingleAnalysisPage(props) {
   const [areas, setAreas] = useState([]);
   const [jumpHeading, setJumpHeading] = useState();
   const [minDisplayWidth, setMinDisplayWidth] = useState(0.1);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (props.location.state != null) {
@@ -77,6 +78,7 @@ function SingleAnalysisPage(props) {
   };
 
   const analyzeImage = async () => {
+    setIsLoading(true);
     if (currentImage && settings.width) {
       const url = base_url + "/measure";
 
@@ -97,17 +99,18 @@ function SingleAnalysisPage(props) {
           return response.json();
         })
         .then((matrix) => {
+          setIsLoading(false);
           if (matrix[1][1]["error"] == false) {
             setCurrentImage(matrix[1][1]["drawn_image"]);
             setOriginalImage(matrix[1][1]["orig"]);
             setCurrentImages(matrix);
             setAreas(matrix[1][1]["areas"]);
-            alert("Images analyzed");
           } else {
             alert(matrix[1][1]["error_message"]);
           }
         })
         .catch((error) => {
+          setIsLoading(false);
           console.log(error);
           alert(error);
         });
@@ -142,7 +145,7 @@ function SingleAnalysisPage(props) {
         <div style={styles.borderedContainer}>
           <div style={styles.row}>
             <div style={styles.column}>
-              <div style={styles.button} style={{ flex: 1 }}>
+              <div style={styles.button}>
                 <h3>Upload Image</h3>
                 <Button variant="contained" component="label">
                   Upload Image
@@ -224,7 +227,7 @@ function SingleAnalysisPage(props) {
                 onClick={analyzeImage}
                 style={styles.thinButton}
               >
-                Measure area
+                {isLoading ? "Analyzing images..." : "Measure area"}
               </Button>
               <TextField
                 id="standard-number"

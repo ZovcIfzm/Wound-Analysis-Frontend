@@ -12,6 +12,23 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
   },
+  imageInfoColumn: {
+    display: "flex",
+    flex: 1,
+    flexDirection: "column",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 20,
+  },
+  imageColumn: {
+    border: "1px blue solid",
+    display: "flex",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   cropperContainer: {
     width: 50,
     height: 50,
@@ -22,7 +39,6 @@ const styles = {
     padding: 15,
     marginRight: "auto",
     marginLeft: "auto",
-    width: "100%",
     justifyContent: "center",
     flexDirection: "column",
   },
@@ -71,8 +87,7 @@ const styles = {
   colImage: {
     display: "flex",
     flex: 1,
-    width: "80%",
-    alignSelf: "center",
+    width: "100%",
   },
   cropButton: {
     display: "flex",
