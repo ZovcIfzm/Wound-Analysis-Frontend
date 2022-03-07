@@ -11,6 +11,15 @@ const styles = {
     textAlign: "center",
     alignItems: "center",
   },
+  tutorialSingleColumn: {
+    display: "flex",
+    flex: 1,
+    flexDirection: "column",
+    textAlign: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    width: "65%",
+  },
   cropperContainer: {
     width: 50,
     height: 50,
@@ -73,7 +82,7 @@ const styles = {
 
   tutorialImage: {
     padding: 20,
-    width: "65%",
+    width: "100%",
   },
 
   cropButton: {
