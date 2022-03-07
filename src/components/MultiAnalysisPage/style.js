@@ -22,7 +22,7 @@ const styles = {
     marginLeft: 20,
   },
   imageColumn: {
-    border: "1px blue solid",
+    border: "1px black solid",
     display: "flex",
     flex: 1,
     flexDirection: "column",
