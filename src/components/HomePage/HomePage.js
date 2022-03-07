@@ -54,7 +54,15 @@ const HomePage = (props) => {
         <NavBar history={props.history} />
         <div style={styles.column}>
           <h1>Tutorial</h1>
-          <h2>Single-Image Measurement</h2>
+          <a href={`#single-image-measurement`}>Single Image Measurement</a>
+          <a href={`#multi-image-measurement`}>Multi Image Measurement</a>
+          <a href={`#adjustments-edge-cases`}>Adjustments/Edge Cases</a>
+          <a href={`#adjusting-borders`}>Adjusting Borders</a>
+          <a href={`#small-wounds`}>Small wounds</a>
+          <a href={`#short-green-lines`}>Short green lines</a>
+          <a href={`#split-green-lines`}>Split green lines</a>
+          <a href={`#manual-width`}>Manual Width</a>
+          <h2 id="single-image-measurement">Single-Image Measurement</h2>
           <div style={styles.column}>
             <div style={styles.row}>
               <div style={styles.column}>
@@ -117,7 +125,7 @@ const HomePage = (props) => {
               <img src={tutorial_5_areas} style={styles.tutorialImage} alt="" />
             </div>
 
-            <h2>Multi-Image Measurement</h2>
+            <h2 id="multi-image-measurement">Multi-Image Measurement</h2>
             <div style={styles.row}>
               <div style={styles.column}>
                 The first three steps are the same as in single-image
@@ -153,8 +161,8 @@ const HomePage = (props) => {
                 />
               </div>
             </div>
-            <h1>Adjustments/Edge cases</h1>
-            <h2>Adjusting borders</h2>
+            <h1 id="adjustments-edge-cases">Adjustments/Edge cases</h1>
+            <h2 id="adjusting-borders">Adjusting borders</h2>
             <div style={styles.row}>
               <div style={styles.column}>
                 About a third of the time the borders will require adjustments.
@@ -193,7 +201,7 @@ const HomePage = (props) => {
                 alt=""
               />
             </div>
-            <h2>Small wounds</h2>
+            <h2 id="small-wounds">Small wounds</h2>
             <div style={styles.row}>
               <div style={styles.column}>
                 Areas too small are automatically filtered out and not shown.
@@ -220,13 +228,13 @@ const HomePage = (props) => {
                 />
               </div>
             </div>
-            <h2>Short green lines</h2>
+            <h2 id="short-green-lines">Short green lines</h2>
             <div style={styles.tutorialSingleColumn}>
               Sometimes due to lighting, not all of the green line is detected.
               You can adjust the width value to account for that.
               <img src={tutorial_short_1} style={styles.tutorialImage} alt="" />
             </div>
-            <h2>Split green lines</h2>
+            <h2 id="split-green-lines">Split green lines</h2>
             <div style={styles.row}>
               <div style={styles.column}>
                 Sometimes, due to lighting, the green line might be split in the
@@ -257,7 +265,7 @@ const HomePage = (props) => {
             </div>
 
             <div style={styles.tutorialSingleColumn}>
-              <h2>Manual width</h2>
+              <h2 id="manual-width">Manual width</h2>
               Worst case scenario, you can change the width measurement to
               manual to use the image width as reference rather then length of
               the green line. To do so, check the checkbox to convert to manual,
